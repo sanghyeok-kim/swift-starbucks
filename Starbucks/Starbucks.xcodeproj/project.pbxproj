@@ -12,6 +12,12 @@
 		E01B527C28289D17009918AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B527B28289D17009918AE /* SceneDelegate.swift */; };
 		E01B527E28289D17009918AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B527D28289D17009918AE /* ViewController.swift */; };
 		E01B528328289D18009918AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01B528228289D18009918AE /* Assets.xcassets */; };
+		E01B5294282932CF009918AE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B5293282932CF009918AE /* HomeViewController.swift */; };
+		E01B5296282932D6009918AE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B5295282932D6009918AE /* HomeViewModel.swift */; };
+		E01B5298282932E3009918AE /* RootWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B5297282932E3009918AE /* RootWindow.swift */; };
+		E01B529B282934ED009918AE /* StarbucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B529A282934ED009918AE /* StarbucksViewController.swift */; };
+		E08BB6A328293746005ADEFA /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6A228293746005ADEFA /* PayViewController.swift */; };
+		E08BB6A62829398F005ADEFA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6A52829398F005ADEFA /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +29,12 @@
 		E01B527D28289D17009918AE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E01B528228289D18009918AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E01B528728289D18009918AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E01B5293282932CF009918AE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E01B5295282932D6009918AE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		E01B5297282932E3009918AE /* RootWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootWindow.swift; sourceTree = "<group>"; };
+		E01B529A282934ED009918AE /* StarbucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksViewController.swift; sourceTree = "<group>"; };
+		E08BB6A228293746005ADEFA /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
+		E08BB6A52829398F005ADEFA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		EB77E908CE60F89C1EB53248 /* Pods-Starbucks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.release.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +90,8 @@
 		E01B528E28289FBA009918AE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E01B529128293256009918AE /* Present */,
+				E08BB6A42829397E005ADEFA /* Extension */,
 				E01B527928289D17009918AE /* AppDelegate.swift */,
 				E01B527B28289D17009918AE /* SceneDelegate.swift */,
 				E01B527D28289D17009918AE /* ViewController.swift */,
@@ -99,6 +113,50 @@
 				E01B528728289D18009918AE /* Info.plist */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		E01B529128293256009918AE /* Present */ = {
+			isa = PBXGroup;
+			children = (
+				E01B5299282934D2009918AE /* TabBar */,
+				E01B5292282932BC009918AE /* Home */,
+				E08BB6A12829373D005ADEFA /* Pay */,
+				E01B5297282932E3009918AE /* RootWindow.swift */,
+			);
+			path = Present;
+			sourceTree = "<group>";
+		};
+		E01B5292282932BC009918AE /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E01B5293282932CF009918AE /* HomeViewController.swift */,
+				E01B5295282932D6009918AE /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E01B5299282934D2009918AE /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				E01B529A282934ED009918AE /* StarbucksViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		E08BB6A12829373D005ADEFA /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				E08BB6A228293746005ADEFA /* PayViewController.swift */,
+			);
+			path = Pay;
+			sourceTree = "<group>";
+		};
+		E08BB6A42829397E005ADEFA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E08BB6A52829398F005ADEFA /* UIColor+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		E7EA5F1EF67A45D40CCE639E /* Frameworks */ = {
@@ -210,7 +268,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"${PODS_ROOT}/SwiftLint/swiftlint\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		EC48B327C00CB96D6E9C2259 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -241,9 +299,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E01B5296282932D6009918AE /* HomeViewModel.swift in Sources */,
 				E01B527E28289D17009918AE /* ViewController.swift in Sources */,
 				E01B527A28289D17009918AE /* AppDelegate.swift in Sources */,
+				E08BB6A62829398F005ADEFA /* UIColor+Extension.swift in Sources */,
+				E08BB6A328293746005ADEFA /* PayViewController.swift in Sources */,
+				E01B529B282934ED009918AE /* StarbucksViewController.swift in Sources */,
+				E01B5298282932E3009918AE /* RootWindow.swift in Sources */,
 				E01B527C28289D17009918AE /* SceneDelegate.swift in Sources */,
+				E01B5294282932CF009918AE /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -354,7 +418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
