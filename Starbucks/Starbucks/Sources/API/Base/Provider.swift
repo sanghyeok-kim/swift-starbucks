@@ -11,8 +11,13 @@ import RxSwift
 
 class Provider<Target: BaseTarget> {
     private static func createRequest(_ target: Target) -> URLRequest? {
-        guard let url = target.baseURL?.appendingPathComponent(target.path) else {
+        guard let baseUrl = target.baseURL else {
             return nil
+        }
+        
+        var url = baseUrl
+        if let path = target.path {
+            url = baseUrl.appendingPathComponent(path)
         }
         
         var request = URLRequest(url: url)
@@ -38,7 +43,39 @@ class Provider<Target: BaseTarget> {
         return request
     }
     
-    func request(_ target: Target) {
-//        Single.crea
+    func request(_ target: Target) -> Single<Swift.Result<Response, APIError>> {
+        Single.create { observer in
+            guard let request = Self.createRequest(target) else {
+                let error = APIError.custom(message: "", debugMessage: "Request가 제대로 생성되지 않았습니다.")
+                observer(.success(.failure(error)))
+                return Disposables.create { AF.session.invalidateAndCancel() }
+            }
+            
+            let dataRequest: DataRequest = AF.request(request)
+            
+            dataRequest
+                .response { dataResponse in
+                    switch ( dataResponse.response, dataResponse.data, dataResponse.error) {
+                    case let (.some(urlResponse), data, .none):
+                        let response = Response(statusCode: urlResponse.statusCode, data: data ?? Data(), request: request, response: urlResponse)
+                        observer(.success(.success(response)))
+                        
+                    case let (.some(urlResponse), _, .some(error)):
+                        let response = Response(statusCode: urlResponse.statusCode, data: Data(), request: request, response: urlResponse)
+                        let apiError = APIError.underlying(error: error, response: response)
+                        observer(.success(.failure(apiError)))
+                        
+                    case let (_, _, .some(error)):
+                        let apiError = APIError.underlying(error: error, response: nil)
+                        observer(.success(.failure(apiError)))
+                        
+                    default:
+                        let apiError = APIError.underlying(error: NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil), response: nil)
+                        observer(.success(.failure(apiError)))
+                    }
+                }
+            
+            return Disposables.create { AF.session.invalidateAndCancel() }
+        }
     }
 }

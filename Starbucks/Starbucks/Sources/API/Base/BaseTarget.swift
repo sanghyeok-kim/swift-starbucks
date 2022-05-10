@@ -9,7 +9,7 @@ import Foundation
 
 protocol BaseTarget {
     var baseURL: URL? { get }
-    var path: String { get }
+    var path: String? { get }
     var parameter: [String: Any]? { get }
     var method: HTTPMethod { get }
     var content: HTTPContentType { get }
