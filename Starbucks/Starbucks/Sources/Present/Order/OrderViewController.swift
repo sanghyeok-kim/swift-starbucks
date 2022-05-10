@@ -21,6 +21,13 @@ class OrderViewController: UIViewController {
         return label
     }()
     
+    private let button: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .red
+        button.setTitle("asd", for: .normal)
+        return button
+    }()
+    
     private let viewModel: OrderViewModelProtocol
     private let disposeBag = DisposeBag()
     
@@ -47,6 +54,10 @@ class OrderViewController: UIViewController {
                 print($0)
             })
             .disposed(by: disposeBag)
+        
+        button.rx.tap
+            .bind(to: viewModel.action().viewDidLoad)
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -55,10 +66,17 @@ class OrderViewController: UIViewController {
     
     private func layout() {
         view.addSubview(orderLabel)
+        view.addSubview(button)
         
         orderLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
             $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        button.snp.makeConstraints {
+            $0.width.height.equalTo(100)
+            $0.top.equalTo(orderLabel.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(20)
         }
     }
 }
