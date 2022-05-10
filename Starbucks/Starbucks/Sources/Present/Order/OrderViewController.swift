@@ -13,6 +13,10 @@ import UIKit
 
 class OrderViewController: UIViewController {
     
+    private let tableView = UITableView()
+    private let tableViewDataSource = OrderTableViewDataSource()
+    private let tableViewDe1232131legate32132213213213 = OrderTableViewDelegate()
+    
     private let orderLabel: UILabel = {
         let label = UILabel()
         label.text = "Order"
@@ -54,6 +58,8 @@ class OrderViewController: UIViewController {
         bind()
         attribute()
         layout()
+        
+//        tableViewDe1232131legate32132213213213.delegate = self
     }
     
     @available(*, unavailable)
@@ -71,16 +77,30 @@ class OrderViewController: UIViewController {
                 print($0)
             })
             .disposed(by: disposeBag)
+        
+        tableViewDe1232131legate32132213213213.selectedCellIndex
+            .bind(to: tableViewDataSource.receiver)
+            .disposed(by: disposeBag)
+        
+        tableViewDataSource.sender
+            .bind {
+                let detailOrderView = DetailOrderViewController(title: $0)
+                self.navigationController?.pushViewController(detailOrderView, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
         view.backgroundColor = .systemBackground
+        configureTableView()
     }
     
     private func layout() {
         view.addSubview(orderLabel)
         view.addSubview(categoryView)
         categoryView.addSubview(categoryStackView)
+        
+        view.addSubview(tableView)
         
         categoryButtons.forEach {
             categoryStackView.addArrangedSubview($0)
@@ -102,6 +122,26 @@ class OrderViewController: UIViewController {
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(45)
         }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(categoryView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func configureTableView() {
+        tableView.rowHeight = 100
+        tableView.separatorStyle = .none
+        tableView.register(OrderTableViewCell.self, forCellReuseIdentifier: OrderTableViewCell.identifier)
+        tableView.dataSource = tableViewDataSource
+        tableView.delegate = tableViewDe1232131legate32132213213213
+    }
+}
+
+extension OrderViewController: CellSelectionDetectable {
+    func didSelectCell(indexPath: IndexPath) {
+        print(tableViewDataSource.mainLanguage[indexPath.row])
     }
 }
 
