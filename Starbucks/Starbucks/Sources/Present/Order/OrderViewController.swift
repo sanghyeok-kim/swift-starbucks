@@ -21,11 +21,28 @@ class OrderViewController: UIViewController {
         return label
     }()
     
-    private let button: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .red
-        button.setTitle("asd", for: .normal)
-        return button
+    private let categoryView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.systemGray.cgColor
+        return view
+    }()
+    
+    private let categoryStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private let categoryButtons: [UIButton] = {
+        Category.allCases.map {
+            let button = UIButton()
+            button.setTitle($0.name, for: .normal)
+            button.setTitleColor(.systemGray, for: .normal)
+            return button
+        }
     }()
     
     private let viewModel: OrderViewModelProtocol
@@ -54,10 +71,6 @@ class OrderViewController: UIViewController {
                 print($0)
             })
             .disposed(by: disposeBag)
-        
-        button.rx.tap
-            .bind(to: viewModel.action().viewDidLoad)
-            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -66,17 +79,43 @@ class OrderViewController: UIViewController {
     
     private func layout() {
         view.addSubview(orderLabel)
-        view.addSubview(button)
+        view.addSubview(categoryView)
+        categoryView.addSubview(categoryStackView)
+        
+        categoryButtons.forEach {
+            categoryStackView.addArrangedSubview($0)
+        }
         
         orderLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        button.snp.makeConstraints {
-            $0.width.height.equalTo(100)
-            $0.top.equalTo(orderLabel.snp.bottom).offset(20)
+        categoryView.snp.makeConstraints {
+            $0.top.equalTo(orderLabel.snp.bottom).offset(40)
+            $0.leading.trailing.equalToSuperview().inset(-1)
+            $0.bottom.equalTo(categoryStackView)
+        }
+        
+        categoryStackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(2)
             $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(45)
+        }
+    }
+}
+
+enum Category: CaseIterable {
+    case beverage, food, product
+    
+    var name: String {
+        switch self {
+        case .beverage:
+            return "음료"
+        case .food:
+            return "푸드"
+        case .product:
+            return "상품"
         }
     }
 }
