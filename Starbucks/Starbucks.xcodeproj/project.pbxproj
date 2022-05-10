@@ -11,6 +11,7 @@
 		1E89A093282A2D7400CD7625 /* OrderTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E89A092282A2D7400CD7625 /* OrderTableViewDataSource.swift */; };
 		1E89A095282A300000CD7625 /* mockImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E89A094282A300000CD7625 /* mockImage.png */; };
 		1E89A09B282A520200CD7625 /* OrderTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E89A09A282A520200CD7625 /* OrderTableViewDelegate.swift */; };
+		1E89A0A0282A628C00CD7625 /* DetailOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E89A09F282A628C00CD7625 /* DetailOrderViewController.swift */; };
 		71E1C78E63597B5AEE24B83E /* Pods_Starbucks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */; };
 		9CFF3F031A8A9E5CAA2DDC05 /* Pods_StarbucksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */; };
 		E01B528328289D18009918AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01B528228289D18009918AE /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		1E89A092282A2D7400CD7625 /* OrderTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewDataSource.swift; sourceTree = "<group>"; };
 		1E89A094282A300000CD7625 /* mockImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mockImage.png; sourceTree = "<group>"; };
 		1E89A09A282A520200CD7625 /* OrderTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewDelegate.swift; sourceTree = "<group>"; };
+		1E89A09F282A628C00CD7625 /* DetailOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderViewController.swift; sourceTree = "<group>"; };
 		3A9DAC6A7B755F657653AF4D /* Pods-StarbucksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarbucksTests.release.xcconfig"; path = "Target Support Files/Pods-StarbucksTests/Pods-StarbucksTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarbucksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Starbucks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,7 @@
 				1E89A092282A2D7400CD7625 /* OrderTableViewDataSource.swift */,
 				1E89A090282A2D6600CD7625 /* OrderTableViewCell.swift */,
 				E07230332829FDF900AF3E16 /* OrderViewModel.swift */,
+				1E89A09F282A628C00CD7625 /* DetailOrderViewController.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				E07230492829FDF900AF3E16 /* HomeViewModel.swift in Sources */,
 				E072304D2829FDF900AF3E16 /* StarbucksViewController.swift in Sources */,
 				E07230542829FDF900AF3E16 /* AppDelegate.swift in Sources */,
+				1E89A0A0282A628C00CD7625 /* DetailOrderViewController.swift in Sources */,
 				E07230552829FDF900AF3E16 /* SceneDelegate.swift in Sources */,
 				E07230482829FDF900AF3E16 /* OrderViewModel.swift in Sources */,
 				E072304B2829FDF900AF3E16 /* RootWindow.swift in Sources */,

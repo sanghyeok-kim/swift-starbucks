@@ -15,6 +15,7 @@ class OrderViewController: UIViewController {
     
     private let tableView = UITableView()
     private let tableViewDataSource = OrderTableViewDataSource()
+    private let tableViewDe1232131legate32132213213213 = OrderTableViewDelegate()
     
     private let orderLabel: UILabel = {
         let label = UILabel()
@@ -57,6 +58,8 @@ class OrderViewController: UIViewController {
         bind()
         attribute()
         layout()
+        
+//        tableViewDe1232131legate32132213213213.delegate = self
     }
     
     @available(*, unavailable)
@@ -73,6 +76,17 @@ class OrderViewController: UIViewController {
             .bind(onNext: {
                 print($0)
             })
+            .disposed(by: disposeBag)
+        
+        tableViewDe1232131legate32132213213213.selectedCellIndex
+            .bind(to: tableViewDataSource.receiver)
+            .disposed(by: disposeBag)
+        
+        tableViewDataSource.sender
+            .bind {
+                let detailOrderView = DetailOrderViewController(title: $0)
+                self.navigationController?.pushViewController(detailOrderView, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -121,6 +135,13 @@ class OrderViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.register(OrderTableViewCell.self, forCellReuseIdentifier: OrderTableViewCell.identifier)
         tableView.dataSource = tableViewDataSource
+        tableView.delegate = tableViewDe1232131legate32132213213213
+    }
+}
+
+extension OrderViewController: CellSelectionDetectable {
+    func didSelectCell(indexPath: IndexPath) {
+        print(tableViewDataSource.mainLanguage[indexPath.row])
     }
 }
 
