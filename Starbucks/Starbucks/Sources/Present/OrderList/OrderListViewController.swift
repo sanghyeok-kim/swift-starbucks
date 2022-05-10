@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailOrderViewController: UIViewController {
+class OrderListViewController: UIViewController {
 
     init(title: String) {
         super.init(nibName: nil, bundle: nil)

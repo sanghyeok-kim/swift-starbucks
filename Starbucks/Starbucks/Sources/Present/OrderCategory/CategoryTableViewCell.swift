@@ -7,9 +7,9 @@
 
 import UIKit
 
-class OrderTableViewCell: UITableViewCell {
+class CategoryTableViewCell: UITableViewCell {
     
-    static let identifier = "OrderTableViewCell"
+    static var identifier: String { "\(self)" }
     
     private let menuImageView: UIImageView = {
         let image = UIImage(named: "mockImage.png")
@@ -43,6 +43,7 @@ class OrderTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        selectionStyle = .none
     }
     
     @available(*, unavailable)
@@ -57,7 +58,7 @@ class OrderTableViewCell: UITableViewCell {
         menuNameStackView.addArrangedSubview(subNameLabel)
         
         menuImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
+            $0.leading.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(80)
         }
@@ -75,8 +76,4 @@ class OrderTableViewCell: UITableViewCell {
     func setSubName(text: String) {
         subNameLabel.text = text
     }
-    
-    //    func setMenuName(texts: [String: String]) {
-    //
-    //    }
 }
