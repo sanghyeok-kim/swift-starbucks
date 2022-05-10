@@ -17,6 +17,11 @@
 		E01B5296282932D6009918AE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B5295282932D6009918AE /* HomeViewModel.swift */; };
 		E01B5298282932E3009918AE /* RootWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B5297282932E3009918AE /* RootWindow.swift */; };
 		E01B529B282934ED009918AE /* StarbucksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B529A282934ED009918AE /* StarbucksViewController.swift */; };
+		E07230252829F23500AF3E16 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07230242829F23500AF3E16 /* BaseTarget.swift */; };
+		E07230282829F2E200AF3E16 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07230272829F2E200AF3E16 /* HTTPMethod.swift */; };
+		E072302A2829F33100AF3E16 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07230292829F33100AF3E16 /* Provider.swift */; };
+		E072302C2829F4C400AF3E16 /* HTTPContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E072302B2829F4C400AF3E16 /* HTTPContentType.swift */; };
+		E072302E2829F6D600AF3E16 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E072302D2829F6D600AF3E16 /* APIError.swift */; };
 		E08BB6A328293746005ADEFA /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6A228293746005ADEFA /* PayViewController.swift */; };
 		E08BB6A62829398F005ADEFA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6A52829398F005ADEFA /* UIColor+Extension.swift */; };
 		E08BB6AF28294347005ADEFA /* StarbucksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6AE28294347005ADEFA /* StarbucksTests.swift */; };
@@ -48,6 +53,11 @@
 		E01B5295282932D6009918AE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E01B5297282932E3009918AE /* RootWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootWindow.swift; sourceTree = "<group>"; };
 		E01B529A282934ED009918AE /* StarbucksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksViewController.swift; sourceTree = "<group>"; };
+		E07230242829F23500AF3E16 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
+		E07230272829F2E200AF3E16 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		E07230292829F33100AF3E16 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		E072302B2829F4C400AF3E16 /* HTTPContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPContentType.swift; sourceTree = "<group>"; };
+		E072302D2829F6D600AF3E16 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		E08BB6A228293746005ADEFA /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
 		E08BB6A52829398F005ADEFA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E08BB6AC28294347005ADEFA /* StarbucksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarbucksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +129,7 @@
 		E01B528E28289FBA009918AE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E07230232829F22C00AF3E16 /* API */,
 				E08BB6A728293F83005ADEFA /* Repository */,
 				E01B529128293256009918AE /* Present */,
 				E08BB6A42829397E005ADEFA /* Extension */,
@@ -171,6 +182,26 @@
 				E01B529A282934ED009918AE /* StarbucksViewController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		E07230232829F22C00AF3E16 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E07230262829F2D400AF3E16 /* Base */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		E07230262829F2D400AF3E16 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E07230242829F23500AF3E16 /* BaseTarget.swift */,
+				E07230292829F33100AF3E16 /* Provider.swift */,
+				E07230272829F2E200AF3E16 /* HTTPMethod.swift */,
+				E072302B2829F4C400AF3E16 /* HTTPContentType.swift */,
+				E072302D2829F6D600AF3E16 /* APIError.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		E08BB6A12829373D005ADEFA /* Pay */ = {
@@ -417,14 +448,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				E01B5296282932D6009918AE /* HomeViewModel.swift in Sources */,
+				E07230252829F23500AF3E16 /* BaseTarget.swift in Sources */,
 				E01B527E28289D17009918AE /* ViewController.swift in Sources */,
+				E07230282829F2E200AF3E16 /* HTTPMethod.swift in Sources */,
+				E072302A2829F33100AF3E16 /* Provider.swift in Sources */,
 				E01B527A28289D17009918AE /* AppDelegate.swift in Sources */,
 				E08BB6A62829398F005ADEFA /* UIColor+Extension.swift in Sources */,
 				E08BB6A328293746005ADEFA /* PayViewController.swift in Sources */,
+				E072302C2829F4C400AF3E16 /* HTTPContentType.swift in Sources */,
 				E01B529B282934ED009918AE /* StarbucksViewController.swift in Sources */,
 				E01B5298282932E3009918AE /* RootWindow.swift in Sources */,
 				E01B527C28289D17009918AE /* SceneDelegate.swift in Sources */,
 				E01B5294282932CF009918AE /* HomeViewController.swift in Sources */,
+				E072302E2829F6D600AF3E16 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
