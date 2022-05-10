@@ -27,7 +27,11 @@ class HomeViewController: UIViewController {
     
     private func bind() {
         rx.viewDidLoad
-            .bind(to: viewModel.action().loadHomeData)
+            .bind(to: viewModel.action().loadHome)
+            .disposed(by: disposeBag)
+        
+        rx.viewDidLoad
+            .bind(to: viewModel.action().loadEvent)
             .disposed(by: disposeBag)
     }
     

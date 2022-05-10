@@ -37,6 +37,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     let disposeBag = DisposeBag()
     
     init() {
+        
         viewDidLoad
             .map { "map test" }
             .bind(to: test)
