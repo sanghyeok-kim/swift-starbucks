@@ -32,8 +32,8 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
     let loadEvent = PublishRelay<Void>()
     
     func state() -> HomeViewModelState { self }
-    
-    private var starbucksRepository = StarbucksRepositoryImpl()
+        
+    @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
     private let disposeBag = DisposeBag()
     

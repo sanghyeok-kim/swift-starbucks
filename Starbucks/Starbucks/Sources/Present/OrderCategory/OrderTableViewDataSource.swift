@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import RxRelay
 import RxSwift
+import RxRelay
 
 class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     
@@ -29,6 +29,7 @@ class OrderTableViewDataSource: NSObject, UITableViewDataSource {
                 }
         cell.setMenuName(text: menus[indexPath.row].title)
         cell.setSubName(text: menus[indexPath.row].subTitle)
+        cell.setThumbnail(url: menus[indexPath.row].imagePath)
         return cell
     }
 }

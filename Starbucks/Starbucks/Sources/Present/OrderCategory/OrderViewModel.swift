@@ -40,9 +40,9 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     let loadedCategory = PublishRelay<[Category.Group]>()
     let selectedCategory = PublishRelay<Category.GroupType>()
-    let selectedMenu =  PublishRelay<Category.Group>()
+    let selectedMenu = PublishRelay<Category.Group>()
     
-    private var starbucksRepository = StarbucksRepositoryImpl()
+    @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
     private let disposeBag = DisposeBag()
     private var categoryMenu = Category.GroupType.allCases.reduce(into: [Category.GroupType: [Category.Group]]()) {
@@ -51,7 +51,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     init() {
         
-        //MARK: Repository에서 카테고리 Json 파일을 로드
+        // MARK: Repository에서 카테고리 Json 파일을 로드
         let requestCategory = action().loadCategory
             .withUnretained(self)
             .flatMapLatest { model, _ in
@@ -65,7 +65,8 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
             .map { groups in
                 groups.reduce(into: self.categoryMenu) { category, group in
                     category[group.category]?.append(group)
-                } } //값이 있으면 Array -> dic로 변환
+                }
+            } //값이 있으면 Array -> dic로 변환
             .withUnretained(self)           //weak self를 생략하기 위한 오퍼레이터
             .do { model, groups in model.categoryMenu = groups }    //모델의 dic에 값을 넣어주고
             .map { _ in .beverage }         //처음 보여질 테이블은 beverage이므로 값을 넘겨줌

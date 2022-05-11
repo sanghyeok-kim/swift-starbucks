@@ -41,6 +41,9 @@
 		E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A9282B7DB900AF3E16 /* SceneDelegate.swift */; };
 		E07233C8282B7F5200AF3E16 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */; };
 		E07233CA282B82BF00AF3E16 /* Category.json in Resources */ = {isa = PBXBuildFile; fileRef = E07233C9282B82BF00AF3E16 /* Category.json */; };
+		E07233D1282BCB5E00AF3E16 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D0282BCB5E00AF3E16 /* Container.swift */; };
+		E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D3282BCBBC00AF3E16 /* Inject.swift */; };
+		E07233D6282BCC8100AF3E16 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D5282BCC8100AF3E16 /* ImageManager.swift */; };
 		E08BB6AF28294347005ADEFA /* StarbucksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6AE28294347005ADEFA /* StarbucksTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +97,9 @@
 		E07233A9282B7DB900AF3E16 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
 		E07233C9282B82BF00AF3E16 /* Category.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Category.json; sourceTree = "<group>"; };
+		E07233D0282BCB5E00AF3E16 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		E07233D3282BCBBC00AF3E16 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
+		E07233D5282BCC8100AF3E16 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		E08BB6AC28294347005ADEFA /* StarbucksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarbucksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08BB6AE28294347005ADEFA /* StarbucksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksTests.swift; sourceTree = "<group>"; };
 		EB77E908CE60F89C1EB53248 /* Pods-Starbucks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.release.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.release.xcconfig"; sourceTree = "<group>"; };
@@ -297,7 +303,10 @@
 		E072339A282B7DB900AF3E16 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E07233D2282BCBA900AF3E16 /* PropertyWrapper */,
 				E072339B282B7DB900AF3E16 /* Log.swift */,
+				E07233D0282BCB5E00AF3E16 /* Container.swift */,
+				E07233D5282BCC8100AF3E16 /* ImageManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -331,6 +340,14 @@
 				E07233A7282B7DB900AF3E16 /* Response.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		E07233D2282BCBA900AF3E16 /* PropertyWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				E07233D3282BCBBC00AF3E16 /* Inject.swift */,
+			);
+			path = PropertyWrapper;
 			sourceTree = "<group>";
 		};
 		E08BB6AD28294347005ADEFA /* StarbucksTests */ = {
@@ -562,9 +579,11 @@
 				E07233C5282B7DB900AF3E16 /* AppDelegate.swift in Sources */,
 				E07233BE282B7DB900AF3E16 /* StarbucksTarget.swift in Sources */,
 				E07233C1282B7DB900AF3E16 /* Provider.swift in Sources */,
+				E07233D1282BCB5E00AF3E16 /* Container.swift in Sources */,
 				E07233BB282B7DB900AF3E16 /* Log.swift in Sources */,
 				E07233B1282B7DB900AF3E16 /* OrderTableViewDelegate.swift in Sources */,
 				E07233B7282B7DB900AF3E16 /* StarbucksRepositoryImpl.swift in Sources */,
+				E07233D6282BCC8100AF3E16 /* ImageManager.swift in Sources */,
 				E07233B8282B7DB900AF3E16 /* NetworkRepository.swift in Sources */,
 				E07233C3282B7DB900AF3E16 /* HTTPMethod.swift in Sources */,
 				E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */,
@@ -575,6 +594,7 @@
 				E07233AA282B7DB900AF3E16 /* HomeViewModel.swift in Sources */,
 				E07233B9282B7DB900AF3E16 /* UIColor+Extension.swift in Sources */,
 				E07233BD282B7DB900AF3E16 /* StarbucksEntity.swift in Sources */,
+				E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */,
 				E07233B0282B7DB900AF3E16 /* OrderListViewController.swift in Sources */,
 				E07233B2282B7DB900AF3E16 /* OrderTableViewDataSource.swift in Sources */,
 				E07233B4282B7DB900AF3E16 /* CategoryTableViewCell.swift in Sources */,

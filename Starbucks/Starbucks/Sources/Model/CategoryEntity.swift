@@ -59,6 +59,6 @@ extension Category {
         let groupId: String
         let title: String
         let subTitle: String
-        let imagePath: String
+        let imagePath: URL
     }
 }
