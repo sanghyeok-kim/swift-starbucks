@@ -1,5 +1,5 @@
 //
-//  OrderViewController.swift
+//  OrderCategoryViewController.swift
 //  Starbucks
 //
 //  Created by seongha shin on 2022/05/09.
@@ -11,11 +11,11 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class OrderViewController: UIViewController {
+class OrderCategoryViewController: UIViewController {
     
     private let tableView = UITableView()
-    private let tableViewDataSource = OrderTableViewDataSource()
-    private let tableViewDe1232131legate32132213213213 = OrderTableViewDelegate()
+    private var tableViewDataSource: OrderTableViewDataSource?
+    private let tableViewHandler = OrderTableViewDelegate()
     
     private let orderLabel: UILabel = {
         let label = UILabel()
@@ -58,8 +58,6 @@ class OrderViewController: UIViewController {
         bind()
         attribute()
         layout()
-        
-//        tableViewDe1232131legate32132213213213.delegate = self
     }
     
     @available(*, unavailable)
@@ -69,24 +67,18 @@ class OrderViewController: UIViewController {
     
     private func bind() {
         rx.viewDidLoad
-            .bind(to: viewModel.action().viewDidLoad)
+            .map { _ in Category.beverage }
+            .bind(to: viewModel.action().loadCategory)
             .disposed(by: disposeBag)
         
-        viewModel.state().test
-            .bind(onNext: {
-                print($0)
+        viewModel.state().loadedCategory
+            .bind(onNext: { menu in
+                self.updateDatasource(menu: menu)
             })
             .disposed(by: disposeBag)
         
-        tableViewDe1232131legate32132213213213.selectedCellIndex
-            .bind(to: tableViewDataSource.receiver)
-            .disposed(by: disposeBag)
-        
-        tableViewDataSource.sender
-            .bind {
-                let detailOrderView = DetailOrderViewController(title: $0)
-                self.navigationController?.pushViewController(detailOrderView, animated: true)
-            }
+        tableViewHandler.selectedCellIndex
+            .bind(to: viewModel.action().loadCategoryList)
             .disposed(by: disposeBag)
     }
     
@@ -119,7 +111,7 @@ class OrderViewController: UIViewController {
         
         categoryStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(2)
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(30)
             $0.height.equalTo(45)
         }
         
@@ -133,29 +125,17 @@ class OrderViewController: UIViewController {
     private func configureTableView() {
         tableView.rowHeight = 100
         tableView.separatorStyle = .none
-        tableView.register(OrderTableViewCell.self, forCellReuseIdentifier: OrderTableViewCell.identifier)
-        tableView.dataSource = tableViewDataSource
-        tableView.delegate = tableViewDe1232131legate32132213213213
+        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        tableView.delegate = tableViewHandler
     }
 }
 
-extension OrderViewController: CellSelectionDetectable {
-    func didSelectCell(indexPath: IndexPath) {
-        print(tableViewDataSource.mainLanguage[indexPath.row])
-    }
-}
-
-enum Category: CaseIterable {
-    case beverage, food, product
-    
-    var name: String {
-        switch self {
-        case .beverage:
-            return "음료"
-        case .food:
-            return "푸드"
-        case .product:
-            return "상품"
+extension OrderCategoryViewController {
+    private func updateDatasource(menu: [Menus]) {
+        self.tableViewDataSource = OrderTableViewDataSource(menus: menu)
+        DispatchQueue.main.async {
+            self.tableView.dataSource = self.tableViewDataSource
+            self.tableView.reloadData()
         }
     }
 }
