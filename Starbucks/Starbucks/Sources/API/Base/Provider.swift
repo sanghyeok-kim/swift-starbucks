@@ -54,7 +54,7 @@ class Provider<Target: BaseTarget> {
             let dataRequest: DataRequest = AF.request(request)
             
             dataRequest
-                .response { dataResponse in
+                .response(queue: nil) { dataResponse in
                     switch ( dataResponse.response, dataResponse.data, dataResponse.error) {
                     case let (.some(urlResponse), data, .none):
                         let response = Response(statusCode: urlResponse.statusCode, data: data ?? Data(), request: request, response: urlResponse)
@@ -75,7 +75,7 @@ class Provider<Target: BaseTarget> {
                     }
                 }
             
-            return Disposables.create { AF.session.invalidateAndCancel() }
+            return Disposables.create {  }
         }
     }
 }
