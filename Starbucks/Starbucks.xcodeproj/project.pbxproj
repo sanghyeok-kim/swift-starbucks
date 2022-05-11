@@ -40,6 +40,8 @@
 		E07233C4282B7DB900AF3E16 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A7282B7DB900AF3E16 /* Response.swift */; };
 		E07233C5282B7DB900AF3E16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A8282B7DB900AF3E16 /* AppDelegate.swift */; };
 		E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A9282B7DB900AF3E16 /* SceneDelegate.swift */; };
+		E07233C8282B7F5200AF3E16 /* CategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */; };
+		E07233CA282B82BF00AF3E16 /* Category.json in Resources */ = {isa = PBXBuildFile; fileRef = E07233C9282B82BF00AF3E16 /* Category.json */; };
 		E08BB6AF28294347005ADEFA /* StarbucksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6AE28294347005ADEFA /* StarbucksTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +94,8 @@
 		E07233A7282B7DB900AF3E16 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		E07233A8282B7DB900AF3E16 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E07233A9282B7DB900AF3E16 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEntity.swift; sourceTree = "<group>"; };
+		E07233C9282B82BF00AF3E16 /* Category.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Category.json; sourceTree = "<group>"; };
 		E08BB6AC28294347005ADEFA /* StarbucksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarbucksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08BB6AE28294347005ADEFA /* StarbucksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksTests.swift; sourceTree = "<group>"; };
 		EB77E908CE60F89C1EB53248 /* Pods-Starbucks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.release.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				E01B528228289D18009918AE /* Assets.xcassets */,
+				E07233C9282B82BF00AF3E16 /* Category.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				E072339E282B7DB900AF3E16 /* StarbucksEntity.swift */,
+				E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -435,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E01B528328289D18009918AE /* Assets.xcassets in Resources */,
+				E07233CA282B82BF00AF3E16 /* Category.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +562,7 @@
 				E07233C2282B7DB900AF3E16 /* BaseTarget.swift in Sources */,
 				E07233AF282B7DB900AF3E16 /* OrderDetailViewController.swift in Sources */,
 				E07233BA282B7DB900AF3E16 /* Result+Extension.swift in Sources */,
+				E07233C8282B7F5200AF3E16 /* CategoryEntity.swift in Sources */,
 				E07233C5282B7DB900AF3E16 /* AppDelegate.swift in Sources */,
 				E07233BE282B7DB900AF3E16 /* StarbucksTarget.swift in Sources */,
 				E07233C1282B7DB900AF3E16 /* Provider.swift in Sources */,
