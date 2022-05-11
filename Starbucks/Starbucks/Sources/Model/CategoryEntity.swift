@@ -28,6 +28,30 @@ extension Category {
                 return "상품"
             }
         }
+        
+        var index: Int {
+            switch self {
+            case .beverage:
+                return 0
+            case .food:
+                return 1
+            case .product:
+                return 2
+            }
+        }
+        
+        static func indexToCase(_ index: Int) -> GroupType? {
+            switch index {
+            case 0:
+                return .beverage
+            case 1:
+                return .food
+            case 2:
+                return .product
+            default:
+                return nil
+            }
+        }
     }
     
     struct Group: Codable {

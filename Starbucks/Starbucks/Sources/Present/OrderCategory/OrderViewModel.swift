@@ -16,6 +16,7 @@ protocol OrderViewModelAction {
 
 protocol OrderViewModelState {
     var loadedCategory: PublishRelay<[Category.Group]> { get }
+    var selectedCategory: PublishRelay<Category.GroupType> { get }
 }
 
 protocol OrderViewModelBinding {
@@ -28,42 +29,48 @@ typealias OrderViewModelProtocol = OrderViewModelBinding
 class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelBinding {
     
     func action() -> OrderViewModelAction { self }
-
+    
     let loadCategory = BehaviorRelay<Category.GroupType>(value: .beverage)
     let loadCategoryList = PublishRelay<Int>()
     
     func state() -> OrderViewModelState { self }
     let loadedCategory = PublishRelay<[Category.Group]>()
+    let selectedCategory = PublishRelay<Category.GroupType>()
     
     private let disposeBag = DisposeBag()
-    private var categoryMenu: [Category.GroupType : [Category.Group]] = [:]
+    private var categoryMenu = Category.GroupType.allCases.reduce(into: [Category.GroupType: [Category.Group]]()) {
+        $0[$1] = []
+    }
     
     init() {
+        load()
+
+        loadCategory
+            .compactMap { self.categoryMenu[$0] }
+            .do { _ in
+                self.selectedCategory.accept(self.loadCategory.value)
+            }
+            .bind(to: loadedCategory)
+            .disposed(by: disposeBag)
+
+        Observable
+            .combineLatest(loadCategory, loadCategoryList)
+            .bind(onNext: { category, menuIndex in
+            })
+            .disposed(by: disposeBag)
+    }
     
+    private func load() {
         guard let data = parseJsonFile(fileName: "Category", format: "json") else { return }
-        
+
         do {
             let category = try JSONDecoder().decode(Category.self, from: data)
-            
-            category.groups.forEach { item in //item => Group
-                categoryMenu[item.category] = category.groups
-                    .filter { $0.category == item.category }
+            category.groups.forEach {
+                categoryMenu[$0.category]?.append($0)
             }
         } catch {
             return
         }
-//
-//        loadCategory
-//            .compactMap { self.categoryMenu[$0] }
-//            .bind(to: loadedCategory)
-//            .disposed(by: disposeBag)
-//
-//        Observable
-//            .combineLatest(loadCategory, loadCategoryList)
-//            .bind(onNext: { category, menuIndex in
-//                // TODO: - List Category 뷰로 연결하는 로직
-//            })
-//            .disposed(by: disposeBag)
     }
     
     private func parseJsonFile(fileName: String, format: String) -> Data? {
