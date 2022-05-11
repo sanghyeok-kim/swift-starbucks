@@ -44,6 +44,7 @@ class OrderCategoryViewController: UIViewController {
         Category.GroupType.allCases.map {
             let button = UIButton()
             button.setTitle($0.name, for: .normal)
+            button.setTitleColor(.black, for: .selected)
             button.setTitleColor(.systemGray, for: .normal)
             return button
         }
@@ -80,6 +81,24 @@ class OrderCategoryViewController: UIViewController {
         tableViewHandler.selectedCellIndex
             .bind(to: viewModel.action().loadCategoryList)
             .disposed(by: disposeBag)
+        
+        viewModel.state().selectedCategory
+            .map { $0.index }
+            .bind(onNext: { selectIndex in
+                self.categoryButtons.enumerated().forEach { index, button in
+                    button.isSelected = index == selectIndex
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        categoryButtons.enumerated().forEach { index, button in
+            button.rx.tap
+                .compactMap { _ in
+                    Category.GroupType.indexToCase(index)
+                }
+                .bind(to: viewModel.action().loadCategory)
+                .disposed(by: disposeBag)
+        }
     }
     
     private func attribute() {
