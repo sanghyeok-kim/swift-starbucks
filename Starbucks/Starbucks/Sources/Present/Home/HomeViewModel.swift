@@ -51,6 +51,14 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
             })
             .disposed(by: disposeBag)
         
+        requestHome
+            .compactMap { $0.value }
+            .compactMap { $0.map { $0.yourRecommand } }
+            .bind(onNext: {
+                print($0)
+            })
+            .disposed(by: disposeBag)
+        
         let requestEvent = action().loadEvent
             .withUnretained(self)
             .flatMapLatest { model, _ in

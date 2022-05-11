@@ -40,7 +40,6 @@ extension StarbucksEntity {
 }
 
 extension StarbucksEntity {
-    
     struct HomeEvent: Decodable {
         let list: [Event]
     }
@@ -55,5 +54,11 @@ extension StarbucksEntity {
             case imageUploadPath = "img_UPLOAD_PATH"
             case thumbnail = "mob_THUM"
         }
+    }
+}
+
+extension StarbucksEntity {
+    struct ProductDetail: Decodable {
+        
     }
 }

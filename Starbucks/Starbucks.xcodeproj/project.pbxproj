@@ -44,6 +44,9 @@
 		E07233D1282BCB5E00AF3E16 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D0282BCB5E00AF3E16 /* Container.swift */; };
 		E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D3282BCBBC00AF3E16 /* Inject.swift */; };
 		E07233D6282BCC8100AF3E16 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D5282BCC8100AF3E16 /* ImageManager.swift */; };
+		E07233D9282BD60200AF3E16 /* SuggestionMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233D8282BD60200AF3E16 /* SuggestionMenuView.swift */; };
+		E07233DB282BD71900AF3E16 /* SuggestionMenuCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233DA282BD71900AF3E16 /* SuggestionMenuCellView.swift */; };
+		E07233DE282BDDB200AF3E16 /* SuggestionMenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233DD282BDDB200AF3E16 /* SuggestionMenuDataSource.swift */; };
 		E08BB6AF28294347005ADEFA /* StarbucksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6AE28294347005ADEFA /* StarbucksTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +103,9 @@
 		E07233D0282BCB5E00AF3E16 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		E07233D3282BCBBC00AF3E16 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
 		E07233D5282BCC8100AF3E16 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		E07233D8282BD60200AF3E16 /* SuggestionMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionMenuView.swift; sourceTree = "<group>"; };
+		E07233DA282BD71900AF3E16 /* SuggestionMenuCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionMenuCellView.swift; sourceTree = "<group>"; };
+		E07233DD282BDDB200AF3E16 /* SuggestionMenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionMenuDataSource.swift; sourceTree = "<group>"; };
 		E08BB6AC28294347005ADEFA /* StarbucksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarbucksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08BB6AE28294347005ADEFA /* StarbucksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksTests.swift; sourceTree = "<group>"; };
 		EB77E908CE60F89C1EB53248 /* Pods-Starbucks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.release.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 		E0723380282B7DB900AF3E16 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				E07233D7282BD5B800AF3E16 /* View */,
 				E0723381282B7DB900AF3E16 /* HomeViewModel.swift */,
 				E0723382282B7DB900AF3E16 /* HomeViewController.swift */,
 			);
@@ -348,6 +355,24 @@
 				E07233D3282BCBBC00AF3E16 /* Inject.swift */,
 			);
 			path = PropertyWrapper;
+			sourceTree = "<group>";
+		};
+		E07233D7282BD5B800AF3E16 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E07233DC282BDD9C00AF3E16 /* SuggestionMenu */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E07233DC282BDD9C00AF3E16 /* SuggestionMenu */ = {
+			isa = PBXGroup;
+			children = (
+				E07233D8282BD60200AF3E16 /* SuggestionMenuView.swift */,
+				E07233DA282BD71900AF3E16 /* SuggestionMenuCellView.swift */,
+				E07233DD282BDDB200AF3E16 /* SuggestionMenuDataSource.swift */,
+			);
+			path = SuggestionMenu;
 			sourceTree = "<group>";
 		};
 		E08BB6AD28294347005ADEFA /* StarbucksTests */ = {
@@ -577,6 +602,7 @@
 				E07233BA282B7DB900AF3E16 /* Result+Extension.swift in Sources */,
 				E07233C8282B7F5200AF3E16 /* CategoryEntity.swift in Sources */,
 				E07233C5282B7DB900AF3E16 /* AppDelegate.swift in Sources */,
+				E07233DB282BD71900AF3E16 /* SuggestionMenuCellView.swift in Sources */,
 				E07233BE282B7DB900AF3E16 /* StarbucksTarget.swift in Sources */,
 				E07233C1282B7DB900AF3E16 /* Provider.swift in Sources */,
 				E07233D1282BCB5E00AF3E16 /* Container.swift in Sources */,
@@ -585,12 +611,14 @@
 				E07233B7282B7DB900AF3E16 /* StarbucksRepositoryImpl.swift in Sources */,
 				E07233D6282BCC8100AF3E16 /* ImageManager.swift in Sources */,
 				E07233B8282B7DB900AF3E16 /* NetworkRepository.swift in Sources */,
+				E07233DE282BDDB200AF3E16 /* SuggestionMenuDataSource.swift in Sources */,
 				E07233C3282B7DB900AF3E16 /* HTTPMethod.swift in Sources */,
 				E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */,
 				E07233C0282B7DB900AF3E16 /* HTTPContentType.swift in Sources */,
 				E07233AC282B7DB900AF3E16 /* RootWindow.swift in Sources */,
 				E07233C4282B7DB900AF3E16 /* Response.swift in Sources */,
 				E07233B5282B7DB900AF3E16 /* OrderViewModel.swift in Sources */,
+				E07233D9282BD60200AF3E16 /* SuggestionMenuView.swift in Sources */,
 				E07233AA282B7DB900AF3E16 /* HomeViewModel.swift in Sources */,
 				E07233B9282B7DB900AF3E16 /* UIColor+Extension.swift in Sources */,
 				E07233BD282B7DB900AF3E16 /* StarbucksEntity.swift in Sources */,

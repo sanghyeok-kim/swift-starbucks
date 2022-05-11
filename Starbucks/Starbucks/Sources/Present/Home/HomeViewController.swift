@@ -14,9 +14,19 @@ class HomeViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = false
-        scrollView.backgroundColor = .blue
         scrollView.showsHorizontalScrollIndicator = true
         return scrollView
+    }()
+    
+    private let contentStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    private let suggestionMenuView: SuggestionMenuView = {
+        let suggestionView = SuggestionMenuView(frame: .zero)
+        return suggestionView
     }()
     
     private let viewModel: HomeViewModelProtocol
@@ -42,18 +52,32 @@ class HomeViewController: UIViewController {
         rx.viewDidLoad
             .bind(to: viewModel.action().loadEvent)
             .disposed(by: disposeBag)
+        
+        rx.viewDidLoad
+            .withUnretained(self)
+            .bind(onNext: { viewController, _ in
+                viewController.suggestionMenuView.updateDataSource(products: [])
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
         view.addSubview(scrollView)
+        scrollView.addSubview(contentStackView)
+        contentStackView.addArrangedSubview(suggestionMenuView)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
         scrollView.contentLayoutGuide.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(1000)
+            $0.bottom.equalTo(contentStackView)
+        }
+        
+        contentStackView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
         }
     }
 }
