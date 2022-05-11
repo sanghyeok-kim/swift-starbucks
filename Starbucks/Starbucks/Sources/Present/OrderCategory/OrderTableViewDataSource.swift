@@ -11,9 +11,9 @@ import RxSwift
 
 class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     
-    private let menus: [Menus]
+    private let menus: [Category.Group]
     
-    init(menus: [Menus]) {
+    init(menus: [Category.Group]) {
         self.menus = menus
         super.init()
     }
@@ -27,8 +27,8 @@ class OrderTableViewDataSource: NSObject, UITableViewDataSource {
                 as? CategoryTableViewCell else {
                     return UITableViewCell()
                 }
-        cell.setMenuName(text: menus[indexPath.row].name)
-        cell.setSubName(text: menus[indexPath.row].name)
+        cell.setMenuName(text: menus[indexPath.row].title)
+        cell.setSubName(text: menus[indexPath.row].subTitle)
         return cell
     }
 }

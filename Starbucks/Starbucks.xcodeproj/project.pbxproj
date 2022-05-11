@@ -29,7 +29,6 @@
 		E07233B9282B7DB900AF3E16 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723398282B7DB900AF3E16 /* UIColor+Extension.swift */; };
 		E07233BA282B7DB900AF3E16 /* Result+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723399282B7DB900AF3E16 /* Result+Extension.swift */; };
 		E07233BB282B7DB900AF3E16 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E072339B282B7DB900AF3E16 /* Log.swift */; };
-		E07233BC282B7DB900AF3E16 /* CategoryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E072339C282B7DB900AF3E16 /* CategoryMenu.swift */; };
 		E07233BD282B7DB900AF3E16 /* StarbucksEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E072339E282B7DB900AF3E16 /* StarbucksEntity.swift */; };
 		E07233BE282B7DB900AF3E16 /* StarbucksTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A0282B7DB900AF3E16 /* StarbucksTarget.swift */; };
 		E07233BF282B7DB900AF3E16 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233A2282B7DB900AF3E16 /* APIError.swift */; };
@@ -83,7 +82,6 @@
 		E0723398282B7DB900AF3E16 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E0723399282B7DB900AF3E16 /* Result+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Extension.swift"; sourceTree = "<group>"; };
 		E072339B282B7DB900AF3E16 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		E072339C282B7DB900AF3E16 /* CategoryMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryMenu.swift; sourceTree = "<group>"; };
 		E072339E282B7DB900AF3E16 /* StarbucksEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarbucksEntity.swift; sourceTree = "<group>"; };
 		E07233A0282B7DB900AF3E16 /* StarbucksTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarbucksTarget.swift; sourceTree = "<group>"; };
 		E07233A2282B7DB900AF3E16 /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				E072339B282B7DB900AF3E16 /* Log.swift */,
-				E072339C282B7DB900AF3E16 /* CategoryMenu.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -558,7 +555,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E07233BC282B7DB900AF3E16 /* CategoryMenu.swift in Sources */,
 				E07233C2282B7DB900AF3E16 /* BaseTarget.swift in Sources */,
 				E07233AF282B7DB900AF3E16 /* OrderDetailViewController.swift in Sources */,
 				E07233BA282B7DB900AF3E16 /* Result+Extension.swift in Sources */,

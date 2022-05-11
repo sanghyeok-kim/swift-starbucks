@@ -41,7 +41,7 @@ class OrderCategoryViewController: UIViewController {
     }()
     
     private let categoryButtons: [UIButton] = {
-        Category.allCases.map {
+        Category.GroupType.allCases.map {
             let button = UIButton()
             button.setTitle($0.name, for: .normal)
             button.setTitleColor(.systemGray, for: .normal)
@@ -67,7 +67,7 @@ class OrderCategoryViewController: UIViewController {
     
     private func bind() {
         rx.viewDidLoad
-            .map { _ in Category.beverage }
+            .map { _ in .beverage }
             .bind(to: viewModel.action().loadCategory)
             .disposed(by: disposeBag)
         
@@ -131,7 +131,7 @@ class OrderCategoryViewController: UIViewController {
 }
 
 extension OrderCategoryViewController {
-    private func updateDatasource(menu: [Menus]) {
+    private func updateDatasource(menu: [Category.Group]) {
         self.tableViewDataSource = OrderTableViewDataSource(menus: menu)
         DispatchQueue.main.async {
             self.tableView.dataSource = self.tableViewDataSource

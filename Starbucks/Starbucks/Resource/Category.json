@@ -1,62 +1,103 @@
 {
-  "beverageMenu": [
+  "groups": [
     {
       "groupId": "W0000171",
       "title": "콜드브루",
       "subTitle": "Cold Brew",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
       "groupId": "W0000003",
       "title": "에스프레소",
       "subTitle": "Espresso",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
       "groupId": "W0000004",
       "title": "프라프치노",
       "subTitle": "Frappuccino",
-      "imagePath": ""
-    }
-  ],
-  "foodMenu": [
-    {
-      "groupId": "W0000013",
-      "title": "빵",
-      "subTitle": "Cold Brew",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
-      "groupId": "W0000032",
+      "groupId": "W0000171",
+      "title": "브레드",
+      "subTitle": "Cold Brew",
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
+    },
+    {
+      "groupId": "W0000003",
       "title": "케이크",
       "subTitle": "Espresso",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
-      "groupId": "W0000033",
+      "groupId": "W0000004",
       "title": "샌드위치",
       "subTitle": "Frappuccino",
-      "imagePath": ""
-    }
-  ],
-  "productMenu": [
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
+    },
     {
-      "groupId": "W0000030",
-      "title": "머그컵",
+      "groupId": "W0000171",
+      "title": "머그",
       "subTitle": "Cold Brew",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
-      "groupId": "W0000164",
-      "title": "유리잔",
+      "groupId": "W0000003",
+      "title": "글라스",
       "subTitle": "Espresso",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     },
     {
-      "groupId": "W0000031",
-      "title": "텀블러",
+      "groupId": "W0000004",
+      "title": "텀플러",
       "subTitle": "Frappuccino",
-      "imagePath": ""
+      "imagePath": "",
+      "category": {
+        "beverage": {
+          
+        }
+      }
     }
   ]
 }

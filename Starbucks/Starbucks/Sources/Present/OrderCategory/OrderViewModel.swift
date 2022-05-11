@@ -10,12 +10,12 @@ import RxRelay
 import RxSwift
 
 protocol OrderViewModelAction {
-    var loadCategory: BehaviorRelay<Category> { get }
+    var loadCategory: BehaviorRelay<Category.GroupType> { get }
     var loadCategoryList: PublishRelay<Int> { get }
 }
 
 protocol OrderViewModelState {
-    var loadedCategory: PublishRelay<[Menus]> { get }
+    var loadedCategory: PublishRelay<[Category.Group]> { get }
 }
 
 protocol OrderViewModelBinding {
@@ -29,21 +29,19 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     func action() -> OrderViewModelAction { self }
 
-    let loadCategory = BehaviorRelay<Category>(value: .beverage)
+    let loadCategory = BehaviorRelay<Category.GroupType>(value: .beverage)
     let loadCategoryList = PublishRelay<Int>()
     
     func state() -> OrderViewModelState { self }
-    let loadedCategory = PublishRelay<[Menus]>()
+    let loadedCategory = PublishRelay<[Category.Group]>()
     
     
     private let disposeBag = DisposeBag()
-    private let categoryMenu: [Category : [Menus]] = [.beverage : BeverageMenu.allCases,
-                                                      .food : FoodMenu.allCases,
-                                                      .product : ProductMenu.allCases]
+    private var categoryMenu: [Category.GroupType : [Category.Group]]?
     
     init() {
         loadCategory
-            .compactMap { self.categoryMenu[$0] }
+            .compactMap { self.categoryMenu?[$0] }
             .bind(to: loadedCategory)
             .disposed(by: disposeBag)
         
