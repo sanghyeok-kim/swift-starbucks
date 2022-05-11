@@ -50,7 +50,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
         Observable
             .combineLatest(loadCategory, loadCategoryList)
             .bind(onNext: { category, menuIndex in
-                print(category, menuIndex)
+                // TODO: - List Category 뷰로 연결하는 로직
             })
             .disposed(by: disposeBag)
     }

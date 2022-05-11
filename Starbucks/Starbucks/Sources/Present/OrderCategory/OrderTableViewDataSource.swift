@@ -11,7 +11,7 @@ import RxSwift
 
 class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     
-    private let menus: [Menus]!
+    private let menus: [Menus]
     
     init(menus: [Menus]) {
         self.menus = menus
@@ -19,7 +19,6 @@ class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(menus.count)
         return menus.count
     }
     

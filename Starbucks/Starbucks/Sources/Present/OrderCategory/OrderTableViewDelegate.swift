@@ -22,6 +22,5 @@ class OrderTableViewDelegate: NSObject, UITableViewDelegate {
         selectedCellIndex
             .onNext(indexPath.row)
         
-        print(indexPath.row)
     }
 }
