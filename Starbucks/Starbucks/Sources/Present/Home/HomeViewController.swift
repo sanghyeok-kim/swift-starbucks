@@ -10,6 +10,15 @@ import RxSwift
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = false
+        scrollView.backgroundColor = .blue
+        scrollView.showsHorizontalScrollIndicator = true
+        return scrollView
+    }()
+    
     private let viewModel: HomeViewModelProtocol
     private let disposeBag = DisposeBag()
     
@@ -36,5 +45,15 @@ class HomeViewController: UIViewController {
     }
     
     private func layout() {
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        scrollView.contentLayoutGuide.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1000)
+        }
     }
 }

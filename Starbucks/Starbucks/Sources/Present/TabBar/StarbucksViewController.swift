@@ -17,7 +17,7 @@ class StarbucksViewController: UITabBarController {
     }
     
     private func setUpTabBar() {
-        let homeViewController = HomeViewController(viewModel: HomeViewModel())
+        let homeViewController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
         homeViewController.tabBarItem.title = "Home"
         homeViewController.tabBarItem.image = UIImage(named: "ic_temp")
         

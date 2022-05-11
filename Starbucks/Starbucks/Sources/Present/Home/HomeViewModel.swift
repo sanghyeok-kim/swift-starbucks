@@ -15,6 +15,7 @@ protocol HomeViewModelAction {
 }
 
 protocol HomeViewModelState {
+    var loadEvent: PublishRelay<Void> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -47,6 +48,7 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
         requestHome
             .compactMap { $0.value }
             .bind(onNext: {
+                state().loadEvent.accept(<#T##event: Void##Void#>)
             })
             .disposed(by: disposeBag)
         
