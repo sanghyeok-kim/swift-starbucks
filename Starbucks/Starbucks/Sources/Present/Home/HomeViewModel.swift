@@ -48,7 +48,6 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
         requestHome
             .compactMap { $0.value }
             .bind(onNext: {
-                state().loadEvent.accept(<#T##event: Void##Void#>)
             })
             .disposed(by: disposeBag)
         

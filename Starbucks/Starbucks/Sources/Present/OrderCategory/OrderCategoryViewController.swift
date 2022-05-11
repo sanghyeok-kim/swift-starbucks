@@ -68,7 +68,6 @@ class OrderCategoryViewController: UIViewController {
     
     private func bind() {
         rx.viewDidLoad
-            .map { _ in .beverage }
             .bind(to: viewModel.action().loadCategory)
             .disposed(by: disposeBag)
         
@@ -79,7 +78,7 @@ class OrderCategoryViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableViewHandler.selectedCellIndex
-            .bind(to: viewModel.action().loadCategoryList)
+            .bind(to: viewModel.action().tappedMenu)
             .disposed(by: disposeBag)
         
         viewModel.state().selectedCategory
@@ -96,7 +95,7 @@ class OrderCategoryViewController: UIViewController {
                 .compactMap { _ in
                     Category.GroupType.indexToCase(index)
                 }
-                .bind(to: viewModel.action().loadCategory)
+                .bind(to: viewModel.action().tappedCategory)
                 .disposed(by: disposeBag)
         }
     }
