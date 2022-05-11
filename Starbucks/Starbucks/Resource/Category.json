@@ -5,99 +5,63 @@
       "title": "콜드브루",
       "subTitle": "Cold Brew",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "BEVERAGE"
     },
     {
       "groupId": "W0000003",
       "title": "에스프레소",
       "subTitle": "Espresso",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "BEVERAGE"
     },
     {
       "groupId": "W0000004",
       "title": "프라프치노",
       "subTitle": "Frappuccino",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "BEVERAGE"
     },
     {
       "groupId": "W0000171",
       "title": "브레드",
       "subTitle": "Cold Brew",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "FOOD"
     },
     {
       "groupId": "W0000003",
       "title": "케이크",
       "subTitle": "Espresso",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "FOOD"
     },
     {
       "groupId": "W0000004",
       "title": "샌드위치",
       "subTitle": "Frappuccino",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "FOOD"
     },
     {
       "groupId": "W0000171",
       "title": "머그",
       "subTitle": "Cold Brew",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "PRODUCT"
     },
     {
       "groupId": "W0000003",
       "title": "글라스",
       "subTitle": "Espresso",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "PRODUCT"
     },
     {
       "groupId": "W0000004",
       "title": "텀플러",
       "subTitle": "Frappuccino",
       "imagePath": "",
-      "category": {
-        "beverage": {
-          
-        }
-      }
+      "category": "PRODUCT"
     }
   ]
 }

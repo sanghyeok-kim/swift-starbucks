@@ -13,8 +13,10 @@ struct Category: Codable {
 
 extension Category {
     
-    enum GroupType: Codable, CaseIterable {
-        case beverage, food, product
+    enum GroupType: String, Codable, CaseIterable {
+        case beverage = "BEVERAGE"
+        case food = "FOOD"
+        case product = "PRODUCT"
         
         var name: String {
             switch self {
@@ -36,4 +38,3 @@ extension Category {
         let imagePath: String
     }
 }
-
