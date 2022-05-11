@@ -37,30 +37,37 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
     private let disposeBag = DisposeBag()
     
     init() {
-        
-//        let requestHome = action().loadHome
-//            .flatMapLatest { [weak self] _ in
-//                self?.starbucksRepository.requestHome() ?? .never()
-//            }
-//            .share()
-//            
-//        requestHome
-//            .compactMap { $0.value }
-//            .bind(onNext: {
-//                print($0)
-//            })
-//            .disposed(by: disposeBag)
+        let requestHome = action().loadHome
+            .withUnretained(self)
+            .flatMapLatest { model, _ in
+                model.starbucksRepository.requestHome()
+            }
+            .share()
+            
+        requestHome
+            .compactMap { $0.value }
+            .bind(onNext: {
+            })
+            .disposed(by: disposeBag)
         
         let requestEvent = action().loadEvent
-            .flatMapLatest { [weak self] _ in
-                self?.starbucksRepository.requestEvent() ?? .never()
+            .withUnretained(self)
+            .flatMapLatest { model, _ in
+                model.starbucksRepository.requestEvent()
             }
             .share()
         
         requestEvent
             .compactMap { $0.value }
             .bind(onNext: {
-                print($0)
+            })
+            .disposed(by: disposeBag)
+        
+        Observable
+            .merge(
+                requestHome.compactMap { $0.error },
+                requestEvent.compactMap { $0.error })
+            .bind(onNext: {
             })
             .disposed(by: disposeBag)
     }

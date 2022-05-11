@@ -75,7 +75,7 @@ class Provider<Target: BaseTarget> {
                     }
                 }
             
-            return Disposables.create { AF.session.invalidateAndCancel() }
+            return Disposables.create {  }
         }
     }
 }

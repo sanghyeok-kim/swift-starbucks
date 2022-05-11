@@ -32,12 +32,12 @@ extension StarbucksTarget {
         }
     }
     
-    var parameter: [String : Any]?  {
+    var parameter: [String: Any]? {
         switch self {
         case .requestHome:
             return nil
         case .requestEvent:
-            return ["MENU_CD":"all"]
+            return ["MENU_CD": "all"]
         }
     }
     
