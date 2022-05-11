@@ -20,4 +20,21 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
             .request(.requestEvent)
             .map(StarbucksEntity.HomeEvent.self)
     }
+    
+    func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>> {
+        Single.create { observer in
+            guard let url = Bundle.main.url(forResource: "Category", withExtension: "json"),
+                  let data = try? Data(contentsOf: url),
+                  let category = try? JSONDecoder().decode(Category.self, from: data) else {
+                
+                let response = Response(statusCode: -999, data: Data())
+                let error = APIError.jsonMapping(response: response)
+                observer(.success(.failure(error)))
+                return Disposables.create { }
+            }
+            
+            observer(.success(.success(category.groups)))
+            return Disposables.create { }
+        }
+    }
 }
