@@ -15,7 +15,7 @@ protocol HomeViewModelAction {
 }
 
 protocol HomeViewModelState {
-    var loadEvent: PublishRelay<Void> { get }
+    var loadedRecommandMenu: PublishRelay<[StarbucksEntity.ProductDatailData]> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -32,6 +32,8 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
     let loadEvent = PublishRelay<Void>()
     
     func state() -> HomeViewModelState { self }
+    
+    let loadedRecommandMenu = PublishRelay<[StarbucksEntity.ProductDatailData]>()
         
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -52,11 +54,15 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
             .disposed(by: disposeBag)
         
         requestHome
-            .compactMap { $0.value }
-            .compactMap { $0.map { $0.yourRecommand } }
-            .bind(onNext: {
-                print($0)
-            })
+            .compactMap { $0.value?.yourRecommand.products }
+            .flatMapLatest { ids in
+                Observable.zip( ids.map { id in
+                    self.starbucksRepository.requestDetail(id).asObservable()
+                        .compactMap { $0.value }
+                })
+            }
+            .map { $0.compactMap { $0.view } }
+            .bind(to: loadedRecommandMenu)
             .disposed(by: disposeBag)
         
         let requestEvent = action().loadEvent

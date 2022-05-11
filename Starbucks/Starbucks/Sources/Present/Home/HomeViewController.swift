@@ -24,9 +24,9 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
-    private let suggestionMenuView: SuggestionMenuView = {
-        let suggestionView = SuggestionMenuView(frame: .zero)
-        return suggestionView
+    private let recommandMenuView: RecommandMenuView = {
+        let recommandMenuView = RecommandMenuView(frame: .zero)
+        return recommandMenuView
     }()
     
     private let viewModel: HomeViewModelProtocol
@@ -53,10 +53,10 @@ class HomeViewController: UIViewController {
             .bind(to: viewModel.action().loadEvent)
             .disposed(by: disposeBag)
         
-        rx.viewDidLoad
+        viewModel.state().loadedRecommandMenu
             .withUnretained(self)
-            .bind(onNext: { viewController, _ in
-                viewController.suggestionMenuView.updateDataSource(products: [])
+            .bind(onNext: { vc, details in
+                vc.recommandMenuView.updateDataSource(details)
             })
             .disposed(by: disposeBag)
     }
@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
     private func layout() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
-        contentStackView.addArrangedSubview(suggestionMenuView)
+        contentStackView.addArrangedSubview(recommandMenuView)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)

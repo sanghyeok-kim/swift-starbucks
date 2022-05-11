@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SuggestionMenuView: UIView {
+class RecommandMenuView: UIView {
     enum Constants {
         static let cellSize = CGSize(width: 130, height: 160)
     }
@@ -28,12 +28,12 @@ class SuggestionMenuView: UIView {
         flowLayout.minimumLineSpacing = 15
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.isScrollEnabled = true
-        collectionView.register(SuggestionMenuCellView.self, forCellWithReuseIdentifier: SuggestionMenuCellView.identifier)
+        collectionView.register(RecommandMenuCellView.self, forCellWithReuseIdentifier: RecommandMenuCellView.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
-    private var dataSource: SuggestionMenuDataSource?
+    private var dataSource: RecommandMenuDataSource?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,8 +71,8 @@ class SuggestionMenuView: UIView {
         }
     }
     
-    func updateDataSource(products: [StarbucksEntity.ProductDetail]) {
-        self.dataSource = SuggestionMenuDataSource(products: products)
+    func updateDataSource(_ products: [StarbucksEntity.ProductDatailData]) {
+        self.dataSource = RecommandMenuDataSource(products: products)
         DispatchQueue.main.async {
             self.menuCollectionView.dataSource = self.dataSource
             self.menuCollectionView.reloadData()
@@ -80,7 +80,7 @@ class SuggestionMenuView: UIView {
     }
 }
 
-extension SuggestionMenuView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RecommandMenuView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         Constants.cellSize
     }

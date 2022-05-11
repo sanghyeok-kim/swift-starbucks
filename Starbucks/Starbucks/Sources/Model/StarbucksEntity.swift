@@ -59,6 +59,14 @@ extension StarbucksEntity {
 
 extension StarbucksEntity {
     struct ProductDetail: Decodable {
+        let view: ProductDatailData?
+    }
+    
+    struct ProductDatailData: Decodable {
+        let productName: String
         
+        enum CodingKeys: String, CodingKey {
+            case productName = "product_NM"
+        }
     }
 }

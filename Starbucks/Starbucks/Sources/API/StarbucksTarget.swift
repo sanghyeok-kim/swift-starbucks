@@ -10,6 +10,7 @@ import Foundation
 enum StarbucksTarget: BaseTarget {
     case requestHome
     case requestEvent
+    case requestDetail(_ id: String)
 }
 
 extension StarbucksTarget {
@@ -20,12 +21,14 @@ extension StarbucksTarget {
             return URL(string: "https://api.codesquad.kr/starbuckst")
         case .requestEvent:
             return URL(string: "https://www.starbucks.co.kr")
+        case .requestDetail:
+            return URL(string: "https://www.starbucks.co.kr/menu/productViewAjax.do")
         }
     }
     
     var path: String? {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestDetail:
             return nil
         case .requestEvent:
             return "/whats_new/getIngList.do"
@@ -38,6 +41,8 @@ extension StarbucksTarget {
             return nil
         case .requestEvent:
             return ["MENU_CD": "all"]
+        case .requestDetail(let id):
+            return ["product_cd": id]
         }
     }
     
@@ -45,7 +50,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .get
-        case .requestEvent:
+        case .requestEvent, .requestDetail:
             return .post
         }
     }
@@ -54,7 +59,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .json
-        case .requestEvent:
+        case .requestEvent, .requestDetail:
             return .urlencode
         }
     }

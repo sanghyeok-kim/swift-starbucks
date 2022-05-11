@@ -21,6 +21,12 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
             .map(StarbucksEntity.HomeEvent.self)
     }
     
+    func requestDetail(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductDetail, APIError>> {
+        provider
+            .request(.requestDetail(id))
+            .map(StarbucksEntity.ProductDetail.self)
+    }
+    
     func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>> {
         Single.create { observer in
             guard let url = Bundle.main.url(forResource: "Category", withExtension: "json"),

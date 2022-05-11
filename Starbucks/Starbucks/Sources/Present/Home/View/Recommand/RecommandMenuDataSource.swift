@@ -8,22 +8,26 @@
 import Foundation
 import UIKit
 
-class SuggestionMenuDataSource: NSObject, UICollectionViewDataSource {
+class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
     
-    private let products: [StarbucksEntity.ProductDetail]
+    private let products: [StarbucksEntity.ProductDatailData]
     
-    init(products: [StarbucksEntity.ProductDetail]) {
+    init(products: [StarbucksEntity.ProductDatailData]) {
         self.products = products
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SuggestionMenuCellView.identifier, for: indexPath) as? SuggestionMenuCellView else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommandMenuCellView.identifier, for: indexPath) as? RecommandMenuCellView else {
             return UICollectionViewCell()
         }
+        
+        let product = products[indexPath.item]
+        
+        cell.setName(product.productName)
         return cell
     }
 }

@@ -7,15 +7,15 @@
 
 import UIKit
 
-class SuggestionMenuCellView: UICollectionViewCell {
-    static let identifier = "SuggestionMenuCellView"
+class RecommandMenuCellView: UICollectionViewCell {
+    static let identifier = "RecommandMenuCellView"
     
     private let thumbnailView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "mockImage")
         imageView.backgroundColor = .brown
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = SuggestionMenuView.Constants.cellSize.width / 2
+        imageView.layer.cornerRadius = RecommandMenuView.Constants.cellSize.width / 2
         return imageView
     }()
     
@@ -49,5 +49,9 @@ class SuggestionMenuCellView: UICollectionViewCell {
         nameLabel.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    func setName(_ name: String) {
+        nameLabel.text = name
     }
 }
