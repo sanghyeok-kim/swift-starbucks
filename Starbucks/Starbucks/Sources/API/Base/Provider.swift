@@ -54,7 +54,7 @@ class Provider<Target: BaseTarget> {
             let dataRequest: DataRequest = AF.request(request)
             
             dataRequest
-                .response(queue: nil) { dataResponse in
+                .response { dataResponse in
                     switch ( dataResponse.response, dataResponse.data, dataResponse.error) {
                     case let (.some(urlResponse), data, .none):
                         let response = Response(statusCode: urlResponse.statusCode, data: data ?? Data(), request: request, response: urlResponse)
