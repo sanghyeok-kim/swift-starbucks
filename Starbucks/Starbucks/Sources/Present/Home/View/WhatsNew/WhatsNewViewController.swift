@@ -10,7 +10,7 @@ import UIKit
 
 class WhatsNewViewController: UIViewController {
     enum Constants {
-        static let cellSize = CGSize(width: 230, height: 200)
+        static let cellSize = CGSize(width: 220, height: 200)
     }
     
     private let headerView = UIView()

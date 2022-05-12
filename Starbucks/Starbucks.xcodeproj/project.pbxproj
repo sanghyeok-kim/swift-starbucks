@@ -54,6 +54,9 @@
 		E07233EC282D0BE500AF3E16 /* RecommandMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233EB282D0BE500AF3E16 /* RecommandMenuViewModel.swift */; };
 		E07233EE282D0F9300AF3E16 /* WhatsNewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233ED282D0F9300AF3E16 /* WhatsNewDataSource.swift */; };
 		E07233F0282D0F9D00AF3E16 /* WhatsNewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233EF282D0F9D00AF3E16 /* WhatsNewCellView.swift */; };
+		E07233F2282D235100AF3E16 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233F1282D235100AF3E16 /* NSMutableAttributedString+Extension.swift */; };
+		E07233F5282D3BF000AF3E16 /* HomeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233F4282D3BF000AF3E16 /* HomeInfoView.swift */; };
+		E07233F8282D516200AF3E16 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07233F7282D516200AF3E16 /* GradientView.swift */; };
 		E08BB6AF28294347005ADEFA /* StarbucksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08BB6AE28294347005ADEFA /* StarbucksTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +123,9 @@
 		E07233EB282D0BE500AF3E16 /* RecommandMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandMenuViewModel.swift; sourceTree = "<group>"; };
 		E07233ED282D0F9300AF3E16 /* WhatsNewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewDataSource.swift; sourceTree = "<group>"; };
 		E07233EF282D0F9D00AF3E16 /* WhatsNewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewCellView.swift; sourceTree = "<group>"; };
+		E07233F1282D235100AF3E16 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
+		E07233F4282D3BF000AF3E16 /* HomeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoView.swift; sourceTree = "<group>"; };
+		E07233F7282D516200AF3E16 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E08BB6AC28294347005ADEFA /* StarbucksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarbucksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08BB6AE28294347005ADEFA /* StarbucksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksTests.swift; sourceTree = "<group>"; };
 		EB77E908CE60F89C1EB53248 /* Pods-Starbucks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.release.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.release.xcconfig"; sourceTree = "<group>"; };
@@ -317,6 +323,7 @@
 			children = (
 				E0723398282B7DB900AF3E16 /* UIColor+Extension.swift */,
 				E0723399282B7DB900AF3E16 /* Result+Extension.swift */,
+				E07233F1282D235100AF3E16 /* NSMutableAttributedString+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 		E072339A282B7DB900AF3E16 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E07233F6282D515800AF3E16 /* View */,
 				E07233D2282BCBA900AF3E16 /* PropertyWrapper */,
 				E072339B282B7DB900AF3E16 /* Log.swift */,
 				E07233D0282BCB5E00AF3E16 /* Container.swift */,
@@ -374,6 +382,7 @@
 		E07233D7282BD5B800AF3E16 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E07233F3282D3BD300AF3E16 /* HomeInfoView */,
 				E07233E4282D037500AF3E16 /* WhatsNew */,
 				E07233E1282CA70E00AF3E16 /* MainEvent */,
 				E07233DC282BDD9C00AF3E16 /* Recommand */,
@@ -410,6 +419,22 @@
 				E07233E7282D03A000AF3E16 /* WhatsNewViewModel.swift */,
 			);
 			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		E07233F3282D3BD300AF3E16 /* HomeInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				E07233F4282D3BF000AF3E16 /* HomeInfoView.swift */,
+			);
+			path = HomeInfoView;
+			sourceTree = "<group>";
+		};
+		E07233F6282D515800AF3E16 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E07233F7282D516200AF3E16 /* GradientView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E08BB6AD28294347005ADEFA /* StarbucksTests */ = {
@@ -643,6 +668,7 @@
 				E07233DB282BD71900AF3E16 /* RecommandMenuCellView.swift in Sources */,
 				E07233BE282B7DB900AF3E16 /* StarbucksTarget.swift in Sources */,
 				E07233C1282B7DB900AF3E16 /* Provider.swift in Sources */,
+				E07233F5282D3BF000AF3E16 /* HomeInfoView.swift in Sources */,
 				E07233D1282BCB5E00AF3E16 /* Container.swift in Sources */,
 				E07233BB282B7DB900AF3E16 /* Log.swift in Sources */,
 				E07233B1282B7DB900AF3E16 /* OrderTableViewDelegate.swift in Sources */,
@@ -650,6 +676,7 @@
 				E07233D6282BCC8100AF3E16 /* ImageManager.swift in Sources */,
 				E07233B8282B7DB900AF3E16 /* NetworkRepository.swift in Sources */,
 				E07233DE282BDDB200AF3E16 /* RecommandMenuDataSource.swift in Sources */,
+				E07233F8282D516200AF3E16 /* GradientView.swift in Sources */,
 				E07233C3282B7DB900AF3E16 /* HTTPMethod.swift in Sources */,
 				E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */,
 				E07233C0282B7DB900AF3E16 /* HTTPContentType.swift in Sources */,
@@ -664,6 +691,7 @@
 				E07233EE282D0F9300AF3E16 /* WhatsNewDataSource.swift in Sources */,
 				E07233E6282D039600AF3E16 /* WhatsNewViewController.swift in Sources */,
 				E07233BD282B7DB900AF3E16 /* StarbucksEntity.swift in Sources */,
+				E07233F2282D235100AF3E16 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */,
 				E07233B0282B7DB900AF3E16 /* OrderListViewController.swift in Sources */,
 				E07233B2282B7DB900AF3E16 /* OrderTableViewDataSource.swift in Sources */,

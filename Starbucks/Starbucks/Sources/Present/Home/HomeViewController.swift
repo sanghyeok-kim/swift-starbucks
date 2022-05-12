@@ -7,14 +7,21 @@
 
 import RxAppState
 import RxSwift
+import SnapKit
 import UIKit
 
 class HomeViewController: UIViewController {
+    enum Constants {
+        static let stickyViewHeight = 50.0
+        static let homeInfoViewHeight = 250.0
+    }
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = false
         scrollView.showsHorizontalScrollIndicator = true
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.bounces = false
         return scrollView
     }()
     
@@ -23,6 +30,11 @@ class HomeViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 40
         return stackView
+    }()
+    
+    private let homeInfoView: HomeInfoView = {
+        let view = HomeInfoView(stickViewHeight: Constants.stickyViewHeight)
+        return view
     }()
     
     private lazy var recommandMenuViewController: RecommandMenuViewController = {
@@ -42,11 +54,13 @@ class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModelProtocol
     private let disposeBag = DisposeBag()
+    private var topSafeArea: CGFloat = 0
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind()
+        attribute()
         layout()
     }
     
@@ -59,27 +73,83 @@ class HomeViewController: UIViewController {
         rx.viewDidLoad
             .bind(to: viewModel.action().loadHome)
             .disposed(by: disposeBag)
+        
+        rx.viewDidAppear
+            .map { _ in }
+            .withUnretained(self)
+            .bind(onNext: { vc, _ in
+                vc.navigationController?.isNavigationBarHidden = true
+            })
+            .disposed(by: disposeBag)
+        
+        rx.viewDidAppear
+            .withUnretained(self)
+            .bind(onNext: { vc, _ in
+                let window = UIApplication.shared.windows[0]
+                vc.topSafeArea = window.safeAreaInsets.top
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.state().titleMessage
+            .withUnretained(self)
+            .bind(onNext: { vc, message in
+                vc.homeInfoView.setMessage(message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func attribute() {
+        scrollView.delegate = self
     }
     
     private func layout() {
         view.addSubview(scrollView)
+        view.addSubview(homeInfoView)
         scrollView.addSubview(contentStackView)
         contentStackView.addArrangedSubview(recommandMenuViewController.view)
         contentStackView.addArrangedSubview(mainEventViewController.view)
         contentStackView.addArrangedSubview(whatsNewViewController.view)
         
+        contentStackView.setCustomSpacing(Constants.stickyViewHeight, after: homeInfoView)
+        
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalToSuperview()
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
         scrollView.contentLayoutGuide.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(contentStackView).offset(50)
+            $0.bottom.equalTo(contentStackView).offset(150)
         }
         
         contentStackView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(Constants.homeInfoViewHeight)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        homeInfoView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(Constants.homeInfoViewHeight)
+        }
+    }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var offset = 0.0
+        
+        let limiteScrollValue = Constants.homeInfoViewHeight - Constants.stickyViewHeight - topSafeArea
+        homeInfoView.setAlpha(1.0 - scrollView.contentOffset.y / limiteScrollValue)
+        
+        if scrollView.contentOffset.y < limiteScrollValue {
+            offset = (scrollView.contentOffset.y * -1)
+        } else {
+            offset = topSafeArea - Constants.homeInfoViewHeight + Constants.stickyViewHeight
+        }
+        
+        homeInfoView.snp.updateConstraints {
+            $0.top.equalToSuperview().offset(offset)
         }
     }
 }

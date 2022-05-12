@@ -71,7 +71,7 @@ class RecommandMenuViewController: UIViewController {
         viewModel.state().displayTitle
             .withUnretained(self)
             .bind(onNext: { vc, title in
-                vc.titleLabel.text = title
+                vc.titleLabel.attributedText = title
             })
             .disposed(by: disposeBag)
     }
@@ -91,8 +91,9 @@ class RecommandMenuViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
             $0.leading.equalToSuperview().offset(20)
-            $0.top.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
 
         menuCollectionView.snp.makeConstraints {

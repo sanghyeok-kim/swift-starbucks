@@ -17,7 +17,7 @@ protocol RecommandMenuViewModelAction {
 protocol RecommandMenuViewModelState {
     var loadedRecommandMenu: PublishRelay<[StarbucksEntity.ProductInfo]> { get }
     var loadedRecommandImage: PublishRelay<[[StarbucksEntity.ProductImageInfo]]> { get }
-    var displayTitle: PublishRelay<String> { get }
+    var displayTitle: PublishRelay<NSMutableAttributedString> { get }
 }
 
 protocol RecommandMenuViewModelBinding {
@@ -38,7 +38,7 @@ class RecommandMenuViewModel: RecommandMenuViewModelBinding, RecommandMenuViewMo
     
     let loadedRecommandMenu = PublishRelay<[StarbucksEntity.ProductInfo]>()
     let loadedRecommandImage = PublishRelay<[[StarbucksEntity.ProductImageInfo]]>()
-    let displayTitle = PublishRelay<String>()
+    let displayTitle = PublishRelay<NSMutableAttributedString>()
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()
@@ -67,8 +67,11 @@ class RecommandMenuViewModel: RecommandMenuViewModelBinding, RecommandMenuViewMo
             .disposed(by: disposeBag)
         
         loadedUserName
-            .map { "\($0)님을 위한 추천 메뉴" }
+            .map { NSMutableAttributedString()
+                    .attributedOption($0, options: [.foreground(color: .brown1)])
+                    .attributedOption("님을 위한 추천 메뉴")
+            }
             .bind(to: displayTitle)
-            .disposed(by: disposeBag)        
+            .disposed(by: disposeBag)
     }
 }

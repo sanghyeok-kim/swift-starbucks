@@ -14,6 +14,7 @@ protocol HomeViewModelAction {
 }
 
 protocol HomeViewModelState {
+    var titleMessage: PublishRelay<String> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -35,6 +36,8 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     let loadHome = PublishRelay<Void>()
     
     func state() -> HomeViewModelState { self }
+    
+    let titleMessage = PublishRelay<String>()
     
     let whatsNewViewModel: WhatsNewViewModelProtocol = WhatsNewViewModel()
     let mainEventViewModel: MainEventViewModelProtocol = MainEventViewModel()
@@ -59,7 +62,11 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
         
         requestHome
             .compactMap { $0.value?.displayName }
-            .bind(to: recommandMenuViewModel.action().loadedUserName)
+            .withUnretained(self)
+            .bind(onNext: { model, name in
+                model.titleMessage.accept("\(name)님\n오늘 하루도 고생 많으셨어요!")
+                model.recommandMenuViewModel.action().loadedUserName.accept(name)
+            })
             .disposed(by: disposeBag)
         
         requestHome
