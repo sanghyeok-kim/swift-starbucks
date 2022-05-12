@@ -11,7 +11,6 @@ import UIKit
 class CategoryTableViewCell: UITableViewCell {
     
     static var identifier: String { "\(self)" }
-    private let disposeBag = DisposeBag()
     
     private let menuImageView: UIImageView = {
         let imageView = UIImageView()
@@ -45,6 +44,7 @@ class CategoryTableViewCell: UITableViewCell {
     }()
     
     @Inject(\.imageManager) private var imageManager: ImageManager
+    private let disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -5,6 +5,7 @@
 //  Created by seongha shin on 2022/05/11.
 //
 
+import RxSwift
 import UIKit
 
 class RecommandMenuCellView: UICollectionViewCell {
@@ -21,11 +22,14 @@ class RecommandMenuCellView: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "클래식 스콘"
         label.font = .systemFont(ofSize: 15)
         label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
+    
+    @Inject(\.imageManager) private var imageManager: ImageManager
+    private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,11 +51,26 @@ class RecommandMenuCellView: UICollectionViewCell {
         }
         
         nameLabel.snp.makeConstraints {
+            $0.top.equalTo(thumbnailView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func setName(_ name: String) {
         nameLabel.text = name
+    }
+    
+    func setThumbnail(_ imageUrl: URL?) {
+        guard let url = imageUrl else {
+            return
+        }
+        
+        imageManager.loadImage(url: url).asObservable()
+            .withUnretained(self)
+            .observe(on: MainScheduler.asyncInstance)
+            .bind(onNext: { cell, image in
+                cell.thumbnailView.image = image
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -23,8 +23,14 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
     
     func requestDetail(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductDetail, APIError>> {
         provider
-            .request(.requestDetail(id))
+            .request(.requestProductInfo(id))
             .map(StarbucksEntity.ProductDetail.self)
+    }
+    
+    func requestDetailImage(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductImage, APIError>> {
+        provider
+            .request(.requestProductImage(id))
+            .map(StarbucksEntity.ProductImage.self)
     }
     
     func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>> {

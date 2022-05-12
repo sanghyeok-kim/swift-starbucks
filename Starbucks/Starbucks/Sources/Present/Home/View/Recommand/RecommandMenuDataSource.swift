@@ -10,10 +10,15 @@ import UIKit
 
 class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
     
-    private let products: [StarbucksEntity.ProductDatailData]
+    private var products: [StarbucksEntity.ProductInfo] = []
+    private var productimages: [[StarbucksEntity.ProductImageInfo]] = []
     
-    init(products: [StarbucksEntity.ProductDatailData]) {
+    func updateProducts(_ products: [StarbucksEntity.ProductInfo]) {
         self.products = products
+    }
+    
+    func updateProductImages(_ images: [[StarbucksEntity.ProductImageInfo]]) {
+        self.productimages = images
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -25,9 +30,12 @@ class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let product = products[indexPath.item]
+        let index = indexPath.item
+        let product = products[index]
+        let image = index >= productimages.count ? nil : productimages[index].first
         
         cell.setName(product.productName)
+        cell.setThumbnail(image?.imageUrl)
         return cell
     }
 }

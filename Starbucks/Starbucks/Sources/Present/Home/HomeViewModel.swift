@@ -15,7 +15,8 @@ protocol HomeViewModelAction {
 }
 
 protocol HomeViewModelState {
-    var loadedRecommandMenu: PublishRelay<[StarbucksEntity.ProductDatailData]> { get }
+    var loadedRecommandMenu: PublishRelay<[StarbucksEntity.ProductInfo]> { get }
+    var loadedRecommandImage: PublishRelay<[[StarbucksEntity.ProductImageInfo]]> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -33,7 +34,8 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
     
     func state() -> HomeViewModelState { self }
     
-    let loadedRecommandMenu = PublishRelay<[StarbucksEntity.ProductDatailData]>()
+    let loadedRecommandMenu = PublishRelay<[StarbucksEntity.ProductInfo]>()
+    let loadedRecommandImage = PublishRelay<[[StarbucksEntity.ProductImageInfo]]>()
         
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -64,6 +66,21 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
             .map { $0.compactMap { $0.view } }
             .bind(to: loadedRecommandMenu)
             .disposed(by: disposeBag)
+        
+        requestHome
+            .compactMap { $0.value?.yourRecommand.products }
+            .do { print($0) }
+            .flatMapLatest { ids in
+                Observable.zip( ids.map { id in
+                    self.starbucksRepository.requestDetailImage(id).asObservable()
+                        .compactMap { $0.value }
+                })
+            }
+            .map { $0.compactMap { $0.file }.filter { !$0.isEmpty } }
+            .bind(to: loadedRecommandImage)
+            .disposed(by: disposeBag)
+        
+        
         
         let requestEvent = action().loadEvent
             .withUnretained(self)

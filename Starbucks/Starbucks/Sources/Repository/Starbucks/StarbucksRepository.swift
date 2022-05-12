@@ -12,5 +12,6 @@ protocol StarbucksRepository {
     func requestHome() -> Single<Swift.Result<StarbucksEntity.Home, APIError>>
     func requestEvent() -> Single<Swift.Result<StarbucksEntity.HomeEvent, APIError>>
     func requestDetail(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductDetail, APIError>>
+    func requestDetailImage(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductImage, APIError>>
     func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>>
 }

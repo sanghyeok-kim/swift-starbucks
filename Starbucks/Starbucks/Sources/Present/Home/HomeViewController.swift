@@ -59,6 +59,13 @@ class HomeViewController: UIViewController {
                 vc.recommandMenuView.updateDataSource(details)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.state().loadedRecommandImage
+            .withUnretained(self)
+            .bind(onNext: { vc, images in
+                vc.recommandMenuView.updateDataSource(images)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {

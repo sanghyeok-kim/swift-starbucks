@@ -10,7 +10,8 @@ import Foundation
 enum StarbucksTarget: BaseTarget {
     case requestHome
     case requestEvent
-    case requestDetail(_ id: String)
+    case requestProductInfo(_ id: String)
+    case requestProductImage(_ id: String)
 }
 
 extension StarbucksTarget {
@@ -19,19 +20,21 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return URL(string: "https://api.codesquad.kr/starbuckst")
-        case .requestEvent:
+        case .requestEvent, .requestProductInfo, .requestProductImage:
             return URL(string: "https://www.starbucks.co.kr")
-        case .requestDetail:
-            return URL(string: "https://www.starbucks.co.kr/menu/productViewAjax.do")
         }
     }
     
     var path: String? {
         switch self {
-        case .requestHome, .requestDetail:
+        case .requestHome:
             return nil
         case .requestEvent:
             return "/whats_new/getIngList.do"
+        case .requestProductInfo:
+            return "/menu/productViewAjax.do"
+        case .requestProductImage:
+            return "/menu/productFileAjax.do"
         }
     }
     
@@ -41,8 +44,10 @@ extension StarbucksTarget {
             return nil
         case .requestEvent:
             return ["MENU_CD": "all"]
-        case .requestDetail(let id):
+        case .requestProductInfo(let id):
             return ["product_cd": id]
+        case .requestProductImage(let id):
+            return ["PRODUCT_CD": id]
         }
     }
     
@@ -50,7 +55,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .get
-        case .requestEvent, .requestDetail:
+        case .requestEvent, .requestProductInfo, .requestProductImage:
             return .post
         }
     }
@@ -59,7 +64,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .json
-        case .requestEvent, .requestDetail:
+        case .requestEvent, .requestProductInfo, .requestProductImage:
             return .urlencode
         }
     }

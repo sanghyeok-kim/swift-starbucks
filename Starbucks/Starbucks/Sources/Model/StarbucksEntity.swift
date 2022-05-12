@@ -59,14 +59,32 @@ extension StarbucksEntity {
 
 extension StarbucksEntity {
     struct ProductDetail: Decodable {
-        let view: ProductDatailData?
+        let view: ProductInfo?
     }
     
-    struct ProductDatailData: Decodable {
+    struct ProductInfo: Decodable {
         let productName: String
         
         enum CodingKeys: String, CodingKey {
             case productName = "product_NM"
+        }
+    }
+    
+    struct ProductImage: Decodable {
+        let file: [ProductImageInfo]?
+    }
+    
+    struct ProductImageInfo: Decodable {
+        let filePath: String
+        let imageUploadPath: URL
+        
+        enum CodingKeys: String, CodingKey {
+            case filePath = "file_PATH"
+            case imageUploadPath = "img_UPLOAD_PATH"
+        }
+        
+        var imageUrl: URL {
+            imageUploadPath.appendingPathComponent(filePath)
         }
     }
 }

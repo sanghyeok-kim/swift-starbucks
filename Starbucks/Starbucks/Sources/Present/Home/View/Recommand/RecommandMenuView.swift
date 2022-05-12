@@ -9,7 +9,7 @@ import UIKit
 
 class RecommandMenuView: UIView {
     enum Constants {
-        static let cellSize = CGSize(width: 130, height: 160)
+        static let cellSize = CGSize(width: 130, height: 180)
     }
     
     private let titleLabel: UILabel = {
@@ -33,7 +33,7 @@ class RecommandMenuView: UIView {
         return collectionView
     }()
     
-    private var dataSource: RecommandMenuDataSource?
+    private let dataSource = RecommandMenuDataSource()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,6 +47,7 @@ class RecommandMenuView: UIView {
     }
 
     private func attribute() {
+        menuCollectionView.dataSource = dataSource
         menuCollectionView.delegate = self
         menuCollectionView.reloadData()
     }
@@ -71,10 +72,16 @@ class RecommandMenuView: UIView {
         }
     }
     
-    func updateDataSource(_ products: [StarbucksEntity.ProductDatailData]) {
-        self.dataSource = RecommandMenuDataSource(products: products)
+    func updateDataSource(_ products: [StarbucksEntity.ProductInfo]) {
+        self.dataSource.updateProducts(products)
         DispatchQueue.main.async {
-            self.menuCollectionView.dataSource = self.dataSource
+            self.menuCollectionView.reloadData()
+        }
+    }
+    
+    func updateDataSource( _ images: [[StarbucksEntity.ProductImageInfo]]) {
+        self.dataSource.updateProductImages(images)
+        DispatchQueue.main.async {
             self.menuCollectionView.reloadData()
         }
     }
