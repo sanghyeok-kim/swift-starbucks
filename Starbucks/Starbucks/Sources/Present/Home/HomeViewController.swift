@@ -21,12 +21,23 @@ class HomeViewController: UIViewController {
     private let contentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 40
         return stackView
     }()
     
-    private let recommandMenuView: RecommandMenuView = {
-        let recommandMenuView = RecommandMenuView(frame: .zero)
+    private lazy var recommandMenuViewController: RecommandMenuViewController = {
+        let recommandMenuView = RecommandMenuViewController(viewModel: self.viewModel.recommandMenuViewModel)
         return recommandMenuView
+    }()
+    
+    private lazy var mainEventViewController: MainEventViewController = {
+        let viewController = MainEventViewController(viewModel: viewModel.mainEventViewModel)
+        return viewController
+    }()
+    
+    private lazy var whatsNewViewController: WhatsNewViewController = {
+        let viewController = WhatsNewViewController(viewModel: viewModel.whatsNewViewModel)
+        return viewController
     }()
     
     private let viewModel: HomeViewModelProtocol
@@ -48,30 +59,14 @@ class HomeViewController: UIViewController {
         rx.viewDidLoad
             .bind(to: viewModel.action().loadHome)
             .disposed(by: disposeBag)
-        
-        rx.viewDidLoad
-            .bind(to: viewModel.action().loadEvent)
-            .disposed(by: disposeBag)
-        
-        viewModel.state().loadedRecommandMenu
-            .withUnretained(self)
-            .bind(onNext: { vc, details in
-                vc.recommandMenuView.updateDataSource(details)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.state().loadedRecommandImage
-            .withUnretained(self)
-            .bind(onNext: { vc, images in
-                vc.recommandMenuView.updateDataSource(images)
-            })
-            .disposed(by: disposeBag)
     }
     
     private func layout() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
-        contentStackView.addArrangedSubview(recommandMenuView)
+        contentStackView.addArrangedSubview(recommandMenuViewController.view)
+        contentStackView.addArrangedSubview(mainEventViewController.view)
+        contentStackView.addArrangedSubview(whatsNewViewController.view)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -80,7 +75,7 @@ class HomeViewController: UIViewController {
         
         scrollView.contentLayoutGuide.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(contentStackView)
+            $0.bottom.equalTo(contentStackView).offset(50)
         }
         
         contentStackView.snp.makeConstraints {

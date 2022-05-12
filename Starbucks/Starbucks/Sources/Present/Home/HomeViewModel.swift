@@ -11,12 +11,9 @@ import RxSwift
 
 protocol HomeViewModelAction {
     var loadHome: PublishRelay<Void> { get }
-    var loadEvent: PublishRelay<Void> { get }
 }
 
 protocol HomeViewModelState {
-    var loadedRecommandMenu: PublishRelay<[StarbucksEntity.ProductInfo]> { get }
-    var loadedRecommandImage: PublishRelay<[[StarbucksEntity.ProductImageInfo]]> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -24,18 +21,24 @@ protocol HomeViewModelBinding {
     func state() -> HomeViewModelState
 }
 
-typealias HomeViewModelProtocol = HomeViewModelBinding
+protocol HomeViewModelProperty {
+    var whatsNewViewModel: WhatsNewViewModelProtocol { get }
+    var mainEventViewModel: MainEventViewModelProtocol { get }
+    var recommandMenuViewModel: RecommandMenuViewModelProtocol { get }
+}
 
-class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelState {
+typealias HomeViewModelProtocol = HomeViewModelBinding & HomeViewModelProperty
+
+class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelAction, HomeViewModelState {
     func action() -> HomeViewModelAction { self }
     
     let loadHome = PublishRelay<Void>()
-    let loadEvent = PublishRelay<Void>()
     
     func state() -> HomeViewModelState { self }
     
-    let loadedRecommandMenu = PublishRelay<[StarbucksEntity.ProductInfo]>()
-    let loadedRecommandImage = PublishRelay<[[StarbucksEntity.ProductImageInfo]]>()
+    let whatsNewViewModel: WhatsNewViewModelProtocol = WhatsNewViewModel()
+    let mainEventViewModel: MainEventViewModelProtocol = MainEventViewModel()
+    let recommandMenuViewModel: RecommandMenuViewModelProtocol = RecommandMenuViewModel()
         
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -48,58 +51,27 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelAction, HomeViewModelSta
                 model.starbucksRepository.requestHome()
             }
             .share()
-            
-        requestHome
-            .compactMap { $0.value }
-            .bind(onNext: {
-            })
-            .disposed(by: disposeBag)
         
         requestHome
             .compactMap { $0.value?.yourRecommand.products }
-            .flatMapLatest { ids in
-                Observable.zip( ids.map { id in
-                    self.starbucksRepository.requestDetail(id).asObservable()
-                        .compactMap { $0.value }
-                })
-            }
-            .map { $0.compactMap { $0.view } }
-            .bind(to: loadedRecommandMenu)
+            .bind(to: recommandMenuViewModel.action().loadedProducts)
             .disposed(by: disposeBag)
         
         requestHome
-            .compactMap { $0.value?.yourRecommand.products }
-            .do { print($0) }
-            .flatMapLatest { ids in
-                Observable.zip( ids.map { id in
-                    self.starbucksRepository.requestDetailImage(id).asObservable()
-                        .compactMap { $0.value }
-                })
-            }
-            .map { $0.compactMap { $0.file }.filter { !$0.isEmpty } }
-            .bind(to: loadedRecommandImage)
+            .compactMap { $0.value?.displayName }
+            .bind(to: recommandMenuViewModel.action().loadedUserName)
             .disposed(by: disposeBag)
         
-        
-        
-        let requestEvent = action().loadEvent
-            .withUnretained(self)
-            .flatMapLatest { model, _ in
-                model.starbucksRepository.requestEvent()
-            }
-            .share()
-        
-        requestEvent
-            .compactMap { $0.value }
-            .bind(onNext: {
-            })
+        requestHome
+            .compactMap { $0.value?.mainEvent }
+            .bind(to: mainEventViewModel.action().loadedEvent)
             .disposed(by: disposeBag)
         
         Observable
             .merge(
-                requestHome.compactMap { $0.error },
-                requestEvent.compactMap { $0.error })
-            .bind(onNext: {
+                requestHome.compactMap { $0.error }
+            )
+            .bind(onNext: { _ in
             })
             .disposed(by: disposeBag)
     }

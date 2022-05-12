@@ -11,7 +11,7 @@ class StarbucksViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        tabBar.tintColor = .green1
+        tabBar.tintColor = .starbuckGreen
         tabBar.unselectedItemTintColor = .grey145
         setUpTabBar()
     }

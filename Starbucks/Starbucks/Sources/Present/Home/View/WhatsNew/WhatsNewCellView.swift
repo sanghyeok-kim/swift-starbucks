@@ -1,30 +1,28 @@
 //
-//  SuggestionMenuCellView.swift
+//  WhatsNewCellView.swift
 //  Starbucks
 //
-//  Created by seongha shin on 2022/05/11.
+//  Created by seongha shin on 2022/05/12.
 //
 
 import RxSwift
 import UIKit
 
-class RecommandMenuCellView: UICollectionViewCell {
-    static let identifier = "RecommandMenuCellView"
+class WhatsNewCellView: UICollectionViewCell {
+    static let identifier = "WhatsNewCellView"
     
     private let thumbnailView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .brown
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = RecommandMenuViewController.Constants.cellSize.width / 2
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
-    private let nameLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13)
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.lineBreakMode = .byCharWrapping
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        label.textAlignment = .left
+        label.textColor = .black
         return label
     }()
     
@@ -43,28 +41,28 @@ class RecommandMenuCellView: UICollectionViewCell {
 
     private func layout() {
         addSubview(thumbnailView)
-        addSubview(nameLabel)
+        addSubview(titleLabel)
+        
+        let cellSize = frame.size
+        let imageAspect = 480.0 / 720.0
         
         thumbnailView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(snp.width)
+            $0.height.equalTo(cellSize.width * imageAspect)
         }
         
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(thumbnailView.snp.bottom).offset(13)
-            $0.leading.trailing.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(thumbnailView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
-    func setName(_ name: String) {
-        nameLabel.text = name
+    func setTitle(_ title: String) {
+        titleLabel.text = title
     }
     
-    func setThumbnail(_ imageUrl: URL?) {
-        guard let url = imageUrl else {
-            return
-        }
-        
+    func setThumbnail(uploadPath: URL, thumbnailName: String) {
+        let url = uploadPath.appendingPathComponent("/upload/promotion/" + thumbnailName)
         imageManager.loadImage(url: url).asObservable()
             .withUnretained(self)
             .observe(on: MainScheduler.asyncInstance)

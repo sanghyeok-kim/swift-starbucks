@@ -5,16 +5,16 @@
 //  Created by seongha shin on 2022/05/11.
 //
 
+import RxSwift
 import UIKit
 
-class RecommandMenuView: UIView {
+class RecommandMenuViewController: UIViewController {
     enum Constants {
         static let cellSize = CGSize(width: 130, height: 180)
     }
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "싱하 님을 위한 추천 메뉴"
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textColor = .black
@@ -24,7 +24,7 @@ class RecommandMenuView: UIView {
     private let menuCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         flowLayout.minimumLineSpacing = 15
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.isScrollEnabled = true
@@ -33,10 +33,15 @@ class RecommandMenuView: UIView {
         return collectionView
     }()
     
+    private let viewModel: RecommandMenuViewModelProtocol
+    private let disposeBag = DisposeBag()
     private let dataSource = RecommandMenuDataSource()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: RecommandMenuViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        bind()
         attribute()
         layout()
     }
@@ -44,6 +49,31 @@ class RecommandMenuView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func bind() {
+        viewModel.state().loadedRecommandMenu
+            .withUnretained(self)
+            .bind(onNext: { vc, products in
+                vc.dataSource.updateProducts(products)
+                vc.menuCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.state().loadedRecommandImage
+            .withUnretained(self)
+            .bind(onNext: { vc, images in
+                vc.dataSource.updateProductImages(images)
+                vc.menuCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.state().displayTitle
+            .withUnretained(self)
+            .bind(onNext: { vc, title in
+                vc.titleLabel.text = title
+            })
+            .disposed(by: disposeBag)
     }
 
     private func attribute() {
@@ -53,10 +83,10 @@ class RecommandMenuView: UIView {
     }
     
     private func layout() {
-        addSubview(titleLabel)
-        addSubview(menuCollectionView)
+        view.addSubview(titleLabel)
+        view.addSubview(menuCollectionView)
         
-        snp.makeConstraints {
+        view.snp.makeConstraints {
             $0.bottom.equalTo(menuCollectionView)
         }
         
@@ -71,23 +101,9 @@ class RecommandMenuView: UIView {
             $0.height.equalTo(Constants.cellSize.height)
         }
     }
-    
-    func updateDataSource(_ products: [StarbucksEntity.ProductInfo]) {
-        self.dataSource.updateProducts(products)
-        DispatchQueue.main.async {
-            self.menuCollectionView.reloadData()
-        }
-    }
-    
-    func updateDataSource( _ images: [[StarbucksEntity.ProductImageInfo]]) {
-        self.dataSource.updateProductImages(images)
-        DispatchQueue.main.async {
-            self.menuCollectionView.reloadData()
-        }
-    }
 }
 
-extension RecommandMenuView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RecommandMenuViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         Constants.cellSize
     }
