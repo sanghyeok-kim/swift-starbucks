@@ -11,6 +11,7 @@ import RxSwift
 
 protocol MainEventViewModelAction {
     var loadedEvent: PublishRelay<StarbucksEntity.MainEvent> { get }
+    var tappedEvent: PublishRelay<Void> { get }
 }
 
 protocol MainEventViewModelState {
@@ -28,6 +29,7 @@ class MainEventViewModel: MainEventViewModelBinding, MainEventViewModelAction, M
     func action() -> MainEventViewModelAction { self }
     
     var loadedEvent = PublishRelay<StarbucksEntity.MainEvent>()
+    var tappedEvent = PublishRelay<Void>()
     
     func state() -> MainEventViewModelState { self }
     

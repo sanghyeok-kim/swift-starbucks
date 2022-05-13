@@ -15,6 +15,7 @@ protocol HomeViewModelAction {
 
 protocol HomeViewModelState {
     var titleMessage: PublishRelay<String> { get }
+    var presentProductDetailView: PublishRelay<String> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -38,6 +39,7 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     func state() -> HomeViewModelState { self }
     
     let titleMessage = PublishRelay<String>()
+    let presentProductDetailView = PublishRelay<String>()
     
     let whatsNewViewModel: WhatsNewViewModelProtocol = WhatsNewViewModel()
     let mainEventViewModel: MainEventViewModelProtocol = MainEventViewModel()
@@ -46,6 +48,7 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
     private let disposeBag = DisposeBag()
+    private var homeData: StarbucksEntity.Home?
     
     init() {
         let requestHome = action().loadHome
@@ -54,6 +57,14 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
                 model.starbucksRepository.requestHome()
             }
             .share()
+        
+        requestHome
+            .compactMap { $0.value }
+            .withUnretained(self)
+            .bind(onNext: { model, homeData in
+                model.homeData = homeData
+            })
+            .disposed(by: disposeBag)
         
         requestHome
             .compactMap { $0.value?.yourRecommand.products }
@@ -79,6 +90,18 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
                 requestHome.compactMap { $0.error }
             )
             .bind(onNext: { _ in
+            })
+            .disposed(by: disposeBag)
+        
+        recommandMenuViewModel.action().selectedProduct
+            .withUnretained(self)
+            .compactMap { model, index in model.homeData?.yourRecommand.products?[index] }
+            .bind(to: presentProductDetailView)
+            .disposed(by: disposeBag)
+        
+        mainEventViewModel.action().tappedEvent
+            .bind(onNext: {
+                //TODO: Tapped Main Event
             })
             .disposed(by: disposeBag)
     }

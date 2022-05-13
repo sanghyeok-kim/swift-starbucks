@@ -18,6 +18,12 @@ class MainEventViewController: UIViewController {
         return imageView
     }()
     
+    private let eventButton: UIButton = {
+        let button = UIButton()
+        
+        return button
+    }()
+    
     @Inject(\.imageManager) private var imageManager: ImageManager
     private let viewModel: MainEventViewModelProtocol
     private let disposeBag = DisposeBag()
@@ -51,10 +57,15 @@ class MainEventViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        eventButton.rx.tap
+            .bind(to: viewModel.action().tappedEvent)
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
         view.addSubview(eventImageView)
+        view.addSubview(eventButton)
         
         view.snp.makeConstraints {
             $0.bottom.equalTo(eventImageView)
@@ -63,6 +74,10 @@ class MainEventViewController: UIViewController {
         eventImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(10)
+        }
+        
+        eventButton.snp.makeConstraints {
+            $0.edges.equalTo(eventImageView)
         }
     }
 }

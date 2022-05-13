@@ -16,7 +16,7 @@ enum AttributedStringOption {
 }
 
 extension NSMutableAttributedString {
-    func attributedOption(_ string: String, options: [AttributedStringOption] = []) -> NSMutableAttributedString {
+    func addString(_ string: String, options: [AttributedStringOption] = []) -> NSMutableAttributedString {
         var attributes = [NSAttributedString.Key: Any]()
         options.forEach { option in
             switch option {

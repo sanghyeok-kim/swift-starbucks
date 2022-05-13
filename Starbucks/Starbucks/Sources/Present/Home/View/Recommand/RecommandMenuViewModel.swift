@@ -12,6 +12,7 @@ import RxSwift
 protocol RecommandMenuViewModelAction {
     var loadedProducts: PublishRelay<[String]> { get }
     var loadedUserName: PublishRelay<String> { get }
+    var selectedProduct: PublishRelay<Int> { get }
 }
 
 protocol RecommandMenuViewModelState {
@@ -33,6 +34,7 @@ class RecommandMenuViewModel: RecommandMenuViewModelBinding, RecommandMenuViewMo
     
     let loadedProducts = PublishRelay<[String]>()
     let loadedUserName = PublishRelay<String>()
+    let selectedProduct = PublishRelay<Int>()
     
     func state() -> RecommandMenuViewModelState { self }
     
@@ -68,8 +70,8 @@ class RecommandMenuViewModel: RecommandMenuViewModelBinding, RecommandMenuViewMo
         
         loadedUserName
             .map { NSMutableAttributedString()
-                    .attributedOption($0, options: [.foreground(color: .brown1)])
-                    .attributedOption("님을 위한 추천 메뉴")
+                    .addString($0, options: [.foreground(color: .brown1)])
+                    .addString("님을 위한 추천 메뉴")
             }
             .bind(to: displayTitle)
             .disposed(by: disposeBag)

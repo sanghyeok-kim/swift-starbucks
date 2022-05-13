@@ -11,6 +11,7 @@ import RxSwift
 
 protocol WhatsNewViewModelAction {
     var loadEvent: PublishRelay<Void> { get }
+    var selectedEvent: PublishRelay<Int> { get }
 }
 
 protocol WhatsNewViewModelState {
@@ -28,6 +29,7 @@ class WhatsNewViewModel: WhatsNewViewModelBinding, WhatsNewViewModelAction, What
     func action() -> WhatsNewViewModelAction { self }
     
     let loadEvent = PublishRelay<Void>()
+    let selectedEvent = PublishRelay<Int>()
     
     func state() -> WhatsNewViewModelState { self }
     
@@ -53,7 +55,7 @@ class WhatsNewViewModel: WhatsNewViewModelBinding, WhatsNewViewModelAction, What
             .merge(
                 requestEvent.compactMap { $0.error }
             )
-            .bind(onNext: {
+            .bind(onNext: { _ in
             })
             .disposed(by: disposeBag)
     }

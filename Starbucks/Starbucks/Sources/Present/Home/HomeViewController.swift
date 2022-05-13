@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     enum Constants {
         static let stickyViewHeight = 50.0
         static let homeInfoViewHeight = 250.0
+        static let bottomOffset = 100.0
     }
     
     private let scrollView: UIScrollView = {
@@ -119,7 +120,7 @@ class HomeViewController: UIViewController {
         
         scrollView.contentLayoutGuide.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(contentStackView).offset(150)
+            $0.bottom.equalTo(contentStackView).offset(Constants.bottomOffset)
         }
         
         contentStackView.snp.makeConstraints {
@@ -132,6 +133,13 @@ class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Constants.homeInfoViewHeight)
         }
+        
+        viewModel.state().presentProductDetailView
+            .withUnretained(self)
+            .bind(onNext: { vc, product in
+                //TODO: Present Detail View
+            })
+            .disposed(by: disposeBag)
     }
 }
 
