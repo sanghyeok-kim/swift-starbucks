@@ -13,10 +13,11 @@ enum AttributedStringOption {
     case background(color: UIColor)
     case underLined
     case strikethrough
+    case paragraphStyle(_ style: NSMutableParagraphStyle)
 }
 
-extension NSMutableAttributedString {
-    func addString(_ string: String, options: [AttributedStringOption] = []) -> NSMutableAttributedString {
+extension NSAttributedString {
+    static func create(_ string: String, options: [AttributedStringOption] = []) -> NSAttributedString {
         var attributes = [NSAttributedString.Key: Any]()
         options.forEach { option in
             switch option {
@@ -30,9 +31,20 @@ extension NSMutableAttributedString {
                 attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue
             case .strikethrough:
                 attributes[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
+            case .paragraphStyle(let style):
+                attributes[.paragraphStyle] = style
             }
         }
-        self.append(NSAttributedString(string: string, attributes: attributes))
+        return NSAttributedString(string: string, attributes: attributes)
+    }
+}
+
+extension NSMutableAttributedString {
+    
+    func addStrings(_ strings: [NSAttributedString]) -> NSMutableAttributedString {
+        strings.forEach {
+            self.append($0)
+        }
         return self
     }
 }

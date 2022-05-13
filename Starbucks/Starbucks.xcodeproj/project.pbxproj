@@ -395,8 +395,8 @@
 			children = (
 				E07233DA282BD71900AF3E16 /* RecommandMenuCellView.swift */,
 				E07233DD282BDDB200AF3E16 /* RecommandMenuDataSource.swift */,
-				E07233D8282BD60200AF3E16 /* RecommandMenuViewController.swift */,
 				E07233EB282D0BE500AF3E16 /* RecommandMenuViewModel.swift */,
+				E07233D8282BD60200AF3E16 /* RecommandMenuViewController.swift */,
 			);
 			path = Recommand;
 			sourceTree = "<group>";

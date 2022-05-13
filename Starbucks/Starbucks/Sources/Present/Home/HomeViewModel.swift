@@ -27,6 +27,7 @@ protocol HomeViewModelProperty {
     var whatsNewViewModel: WhatsNewViewModelProtocol { get }
     var mainEventViewModel: MainEventViewModelProtocol { get }
     var recommandMenuViewModel: RecommandMenuViewModelProtocol { get }
+    var timeRecommandMenuViewModel: RecommandMenuViewModelProtocol { get }
 }
 
 typealias HomeViewModelProtocol = HomeViewModelBinding & HomeViewModelProperty
@@ -44,7 +45,8 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     let whatsNewViewModel: WhatsNewViewModelProtocol = WhatsNewViewModel()
     let mainEventViewModel: MainEventViewModelProtocol = MainEventViewModel()
     let recommandMenuViewModel: RecommandMenuViewModelProtocol = RecommandMenuViewModel()
-        
+    let timeRecommandMenuViewModel: RecommandMenuViewModelProtocol = RecommandMenuViewModel()
+    
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
     private let disposeBag = DisposeBag()
@@ -76,8 +78,20 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
             .withUnretained(self)
             .bind(onNext: { model, name in
                 model.titleMessage.accept("\(name)님\n오늘 하루도 고생 많으셨어요!")
-                model.recommandMenuViewModel.action().loadedUserName.accept(name)
+                let myRecommandTitle = NSMutableAttributedString().addStrings([
+                    .create(name, options: [.foreground(color: .brown1)]),
+                    .create("님을 위한 추천 메뉴")
+                ])
+                model.recommandMenuViewModel.state().displayTitle.accept(myRecommandTitle)
+                
+                let timeRecommandtitle = NSMutableAttributedString(string: "이 시간대 추천 메뉴")
+                model.timeRecommandMenuViewModel.state().displayTitle.accept(timeRecommandtitle)
             })
+            .disposed(by: disposeBag)
+        
+        requestHome
+            .compactMap { $0.value?.nowRecommand.products }
+            .bind(to: timeRecommandMenuViewModel.action().loadedProducts)
             .disposed(by: disposeBag)
         
         requestHome
@@ -93,16 +107,14 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
             })
             .disposed(by: disposeBag)
         
-        recommandMenuViewModel.action().selectedProduct
+        Observable
+            .merge(
+                recommandMenuViewModel.action().selectedProduct.asObservable(),
+                timeRecommandMenuViewModel.action().selectedProduct.asObservable()
+            )
             .withUnretained(self)
             .compactMap { model, index in model.homeData?.yourRecommand.products?[index] }
             .bind(to: presentProductDetailView)
-            .disposed(by: disposeBag)
-        
-        mainEventViewModel.action().tappedEvent
-            .bind(onNext: {
-                //TODO: Tapped Main Event
-            })
             .disposed(by: disposeBag)
     }
 }

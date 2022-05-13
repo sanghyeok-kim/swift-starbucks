@@ -38,8 +38,13 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var recommandMenuViewController: RecommandMenuViewController = {
-        let recommandMenuView = RecommandMenuViewController(viewModel: self.viewModel.recommandMenuViewModel)
+    private lazy var myRecommandMenuViewController: RecommandMenuViewController = {
+        let recommandMenuView = RecommandMenuViewController(type: .myMenu, viewModel: self.viewModel.recommandMenuViewModel)
+        return recommandMenuView
+    }()
+    
+    private lazy var timeRecommandMenuViewController: RecommandMenuViewController = {
+        let recommandMenuView = RecommandMenuViewController(type: .thisTime, viewModel: self.viewModel.timeRecommandMenuViewModel)
         return recommandMenuView
     }()
     
@@ -97,6 +102,16 @@ class HomeViewController: UIViewController {
                 vc.homeInfoView.setMessage(message)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.state().presentProductDetailView
+            .withUnretained(self)
+            .bind(onNext: { vc, product in
+                //TODO: Present Detail View
+                let viewController = OrderDetailViewController()
+                viewController.modalPresentationStyle = .fullScreen
+                vc.navigationController?.pushViewController(viewController, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -107,9 +122,10 @@ class HomeViewController: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(homeInfoView)
         scrollView.addSubview(contentStackView)
-        contentStackView.addArrangedSubview(recommandMenuViewController.view)
+        contentStackView.addArrangedSubview(myRecommandMenuViewController.view)
         contentStackView.addArrangedSubview(mainEventViewController.view)
         contentStackView.addArrangedSubview(whatsNewViewController.view)
+        contentStackView.addArrangedSubview(timeRecommandMenuViewController.view)
         
         contentStackView.setCustomSpacing(Constants.stickyViewHeight, after: homeInfoView)
         
@@ -133,13 +149,6 @@ class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Constants.homeInfoViewHeight)
         }
-        
-        viewModel.state().presentProductDetailView
-            .withUnretained(self)
-            .bind(onNext: { vc, product in
-                //TODO: Present Detail View
-            })
-            .disposed(by: disposeBag)
     }
 }
 

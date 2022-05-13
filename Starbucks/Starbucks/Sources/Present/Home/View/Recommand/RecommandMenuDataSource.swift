@@ -12,6 +12,12 @@ class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
     
     private var products: [StarbucksEntity.ProductInfo] = []
     private var productimages: [[StarbucksEntity.ProductImageInfo]] = []
+    private let type: RecommandMenuType
+    
+    init(type: RecommandMenuType) {
+        self.type = type
+        super.init()
+    }
     
     func updateProducts(_ products: [StarbucksEntity.ProductInfo]) {
         self.products = products
@@ -34,7 +40,15 @@ class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
         let product = products[index]
         let image = index >= productimages.count ? nil : productimages[index].first
         
-        cell.setName(product.productName)
+        var attributedStrings: [NSAttributedString] = []
+        if type == .thisTime {
+            let indexText: NSAttributedString = .create("\(index + 1)", options: [.font(.systemFont(ofSize: 20, weight: .bold))])
+            attributedStrings.append(indexText)
+        }
+        attributedStrings.append(.create(product.productName))
+        
+        let name = NSMutableAttributedString().addStrings(attributedStrings)
+        cell.setName(name)
         cell.setThumbnail(image?.imageUrl)
         return cell
     }

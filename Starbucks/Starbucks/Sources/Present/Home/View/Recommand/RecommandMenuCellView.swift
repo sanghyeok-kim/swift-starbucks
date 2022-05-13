@@ -56,8 +56,8 @@ class RecommandMenuCellView: UICollectionViewCell {
         }
     }
     
-    func setName(_ name: String) {
-        nameLabel.text = name
+    func setName(_ name: NSMutableAttributedString) {
+        nameLabel.attributedText = name
     }
     
     func setThumbnail(_ imageUrl: URL?) {

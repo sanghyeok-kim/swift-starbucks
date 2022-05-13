@@ -8,6 +8,10 @@
 import RxSwift
 import UIKit
 
+enum RecommandMenuType {
+    case myMenu, thisTime
+}
+
 class RecommandMenuViewController: UIViewController {
     enum Constants {
         static let cellSize = CGSize(width: 130, height: 180)
@@ -35,10 +39,11 @@ class RecommandMenuViewController: UIViewController {
     
     private let viewModel: RecommandMenuViewModelProtocol
     private let disposeBag = DisposeBag()
-    private let dataSource = RecommandMenuDataSource()
+    private let dataSource: RecommandMenuDataSource
     
-    init(viewModel: RecommandMenuViewModelProtocol) {
+    init(type: RecommandMenuType, viewModel: RecommandMenuViewModelProtocol) {
         self.viewModel = viewModel
+        self.dataSource = RecommandMenuDataSource(type: type)
         super.init(nibName: nil, bundle: nil)
         
         bind()
