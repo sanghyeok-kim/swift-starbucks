@@ -5,6 +5,8 @@
 //  Created by seongha shin on 2022/05/12.
 //
 
+import RxSwift
+import RxRelay
 import UIKit
 
 class HomeInfoView: UIView {
@@ -59,11 +61,14 @@ class HomeInfoView: UIView {
     }()
     
     private let stickViewHeight: CGFloat
+    private let disposeBag = DisposeBag()
+    
+    let tappedWhatsNewButton = PublishRelay<Void>()
     
     init(stickViewHeight: CGFloat) {
         self.stickViewHeight = stickViewHeight
         super.init(frame: .zero)
-        
+        bind()
         attribute()
         layout()
     }
@@ -71,6 +76,12 @@ class HomeInfoView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func bind() {
+        whatsNewButton.rx.tap
+            .bind(to: tappedWhatsNewButton)
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {

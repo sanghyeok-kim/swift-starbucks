@@ -16,6 +16,7 @@ protocol HomeViewModelAction {
 protocol HomeViewModelState {
     var titleMessage: PublishRelay<String> { get }
     var presentProductDetailView: PublishRelay<String> { get }
+    var presentWhatsNewListView: PublishRelay<Void> { get }
 }
 
 protocol HomeViewModelBinding {
@@ -41,6 +42,7 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     
     let titleMessage = PublishRelay<String>()
     let presentProductDetailView = PublishRelay<String>()
+    let presentWhatsNewListView = PublishRelay<Void>()
     
     let whatsNewViewModel: WhatsNewViewModelProtocol = WhatsNewViewModel()
     let mainEventViewModel: MainEventViewModelProtocol = MainEventViewModel()
@@ -115,6 +117,10 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
             .withUnretained(self)
             .compactMap { model, index in model.homeData?.yourRecommand.products?[index] }
             .bind(to: presentProductDetailView)
+            .disposed(by: disposeBag)
+        
+        whatsNewViewModel.action().tappedSeeAllButton
+            .bind(to: presentWhatsNewListView)
             .disposed(by: disposeBag)
     }
 }

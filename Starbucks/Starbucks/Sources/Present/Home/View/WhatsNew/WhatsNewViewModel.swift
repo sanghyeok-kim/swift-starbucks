@@ -12,10 +12,11 @@ import RxSwift
 protocol WhatsNewViewModelAction {
     var loadEvent: PublishRelay<Void> { get }
     var selectedEvent: PublishRelay<Int> { get }
+    var tappedSeeAllButton: PublishRelay<Void> { get }
 }
 
 protocol WhatsNewViewModelState {
-    var loadedEvent: PublishRelay<[StarbucksEntity.Event]> { get }
+    var loadedEvent: PublishRelay<[StarbucksEntity.Promotion]> { get }
 }
 
 protocol WhatsNewViewModelBinding {
@@ -26,14 +27,16 @@ protocol WhatsNewViewModelBinding {
 typealias WhatsNewViewModelProtocol = WhatsNewViewModelBinding
 
 class WhatsNewViewModel: WhatsNewViewModelBinding, WhatsNewViewModelAction, WhatsNewViewModelState {
+    
     func action() -> WhatsNewViewModelAction { self }
     
     let loadEvent = PublishRelay<Void>()
     let selectedEvent = PublishRelay<Int>()
+    let tappedSeeAllButton = PublishRelay<Void>()
     
     func state() -> WhatsNewViewModelState { self }
     
-    let loadedEvent = PublishRelay<[StarbucksEntity.Event]>()
+    let loadedEvent = PublishRelay<[StarbucksEntity.Promotion]>()
 
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()

@@ -84,7 +84,9 @@ class HomeViewController: UIViewController {
             .map { _ in }
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                vc.navigationController?.isNavigationBarHidden = true
+                vc.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+                vc.navigationController?.navigationBar.shadowImage = UIImage()
+                vc.navigationController?.navigationBar.backgroundColor = .clear
             })
             .disposed(by: disposeBag)
         
@@ -106,12 +108,24 @@ class HomeViewController: UIViewController {
         viewModel.state().presentProductDetailView
             .withUnretained(self)
             .bind(onNext: { vc, product in
-                //TODO: Present Detail View
                 let viewController = OrderDetailViewController()
-                viewController.modalPresentationStyle = .fullScreen
+                vc.navigationController?.pushViewController(viewController, animated: true)
+                vc.tabBarController?.tabBar.isHidden = true
+            })
+            .disposed(by: disposeBag)
+        
+        Observable
+            .merge(
+                homeInfoView.tappedWhatsNewButton.asObservable(),
+                viewModel.state().presentWhatsNewListView.asObservable()
+            )
+            .withUnretained(self)
+            .bind(onNext: { vc, _ in
+                let viewController = WhatsNewListViewController(viewModel: WhatsNewListViewModel())
                 vc.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func attribute() {

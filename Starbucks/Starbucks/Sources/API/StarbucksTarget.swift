@@ -9,7 +9,9 @@ import Foundation
 
 enum StarbucksTarget: BaseTarget {
     case requestHome
-    case requestEvent
+    case requestPromotion
+    case requestNews
+    case requestNotice
     case requestProductInfo(_ id: String)
     case requestProductImage(_ id: String)
 }
@@ -20,7 +22,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return URL(string: "https://api.codesquad.kr/starbuckst")
-        case .requestEvent, .requestProductInfo, .requestProductImage:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
             return URL(string: "https://www.starbucks.co.kr")
         }
     }
@@ -29,20 +31,24 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return nil
-        case .requestEvent:
+        case .requestPromotion:
             return "/whats_new/getIngList.do"
         case .requestProductInfo:
             return "/menu/productViewAjax.do"
         case .requestProductImage:
             return "/menu/productFileAjax.do"
+        case .requestNews:
+            return "/whats_new/newsListAjax.do"
+        case .requestNotice:
+            return "/whats_new/noticeListAjax.do"
         }
     }
     
     var parameter: [String: Any]? {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestNews, .requestNotice:
             return nil
-        case .requestEvent:
+        case .requestPromotion:
             return ["MENU_CD": "all"]
         case .requestProductInfo(let id):
             return ["product_cd": id]
@@ -53,9 +59,9 @@ extension StarbucksTarget {
     
     var method: HTTPMethod {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestNews, .requestNotice:
             return .get
-        case .requestEvent, .requestProductInfo, .requestProductImage:
+        case .requestPromotion, .requestProductInfo, .requestProductImage:
             return .post
         }
     }
@@ -64,7 +70,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .json
-        case .requestEvent, .requestProductInfo, .requestProductImage:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
             return .urlencode
         }
     }

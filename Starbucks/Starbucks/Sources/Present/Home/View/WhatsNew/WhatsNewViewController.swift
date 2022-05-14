@@ -72,6 +72,10 @@ class WhatsNewViewController: UIViewController {
                 vc.eventCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        seeAllButton.rx.tap
+            .bind(to: viewModel.action().tappedSeeAllButton)
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {

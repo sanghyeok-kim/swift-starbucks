@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		71E1C78E63597B5AEE24B83E /* Pods_Starbucks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */; };
 		9CFF3F031A8A9E5CAA2DDC05 /* Pods_StarbucksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */; };
+		E0039B56282FD92800298719 /* WhatsNewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0039B55282FD92800298719 /* WhatsNewListViewController.swift */; };
+		E0039B58282FD93200298719 /* WhatsNewListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0039B57282FD93200298719 /* WhatsNewListViewModel.swift */; };
+		E0108CD4282FEE4D00CC736C /* WhatsNewListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CD3282FEE4D00CC736C /* WhatsNewListDataSource.swift */; };
+		E0108CD6282FEF4A00CC736C /* WhatsNewListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CD5282FEF4A00CC736C /* WhatsNewListViewCell.swift */; };
 		E01B528328289D18009918AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01B528228289D18009918AE /* Assets.xcassets */; };
 		E0723058282A13C900AF3E16 /* StarbuckTargetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723057282A13C900AF3E16 /* StarbuckTargetTest.swift */; };
 		E07233AA282B7DB900AF3E16 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723381282B7DB900AF3E16 /* HomeViewModel.swift */; };
@@ -76,6 +80,10 @@
 		5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarbucksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Starbucks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		879C2C634B79C5B7E7318DE8 /* Pods-Starbucks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Starbucks.debug.xcconfig"; path = "Target Support Files/Pods-Starbucks/Pods-Starbucks.debug.xcconfig"; sourceTree = "<group>"; };
+		E0039B55282FD92800298719 /* WhatsNewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewListViewController.swift; sourceTree = "<group>"; };
+		E0039B57282FD93200298719 /* WhatsNewListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewListViewModel.swift; sourceTree = "<group>"; };
+		E0108CD3282FEE4D00CC736C /* WhatsNewListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewListDataSource.swift; sourceTree = "<group>"; };
+		E0108CD5282FEF4A00CC736C /* WhatsNewListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewListViewCell.swift; sourceTree = "<group>"; };
 		E01B527628289D17009918AE /* Starbucks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starbucks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01B528228289D18009918AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E01B528728289D18009918AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +170,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E0039B54282FD8C000298719 /* WhatsNewList */ = {
+			isa = PBXGroup;
+			children = (
+				E0039B59282FE27F00298719 /* View */,
+				E0108CD3282FEE4D00CC736C /* WhatsNewListDataSource.swift */,
+				E0039B57282FD93200298719 /* WhatsNewListViewModel.swift */,
+				E0039B55282FD92800298719 /* WhatsNewListViewController.swift */,
+			);
+			path = WhatsNewList;
+			sourceTree = "<group>";
+		};
+		E0039B59282FE27F00298719 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E0108CD5282FEF4A00CC736C /* WhatsNewListViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E01B526D28289D17009918AE = {
 			isa = PBXGroup;
 			children = (
@@ -235,10 +262,11 @@
 		E072337F282B7DB900AF3E16 /* Present */ = {
 			isa = PBXGroup;
 			children = (
-				E0723380282B7DB900AF3E16 /* Home */,
-				E0723383282B7DB900AF3E16 /* RootWindow.swift */,
-				E0723384282B7DB900AF3E16 /* Pay */,
 				E0723386282B7DB900AF3E16 /* TabBar */,
+				E0723380282B7DB900AF3E16 /* Home */,
+				E0039B54282FD8C000298719 /* WhatsNewList */,
+				E0723384282B7DB900AF3E16 /* Pay */,
+				E0723383282B7DB900AF3E16 /* RootWindow.swift */,
 				E0723388282B7DB900AF3E16 /* OrderDetail */,
 				E072338A282B7DB900AF3E16 /* OrderList */,
 				E072338C282B7DB900AF3E16 /* OrderCategory */,
@@ -661,6 +689,7 @@
 			files = (
 				E07233E3282CA71B00AF3E16 /* MainEventViewController.swift in Sources */,
 				E07233C2282B7DB900AF3E16 /* BaseTarget.swift in Sources */,
+				E0039B56282FD92800298719 /* WhatsNewListViewController.swift in Sources */,
 				E07233AF282B7DB900AF3E16 /* OrderDetailViewController.swift in Sources */,
 				E07233BA282B7DB900AF3E16 /* Result+Extension.swift in Sources */,
 				E07233C8282B7F5200AF3E16 /* CategoryEntity.swift in Sources */,
@@ -689,11 +718,13 @@
 				E07233AA282B7DB900AF3E16 /* HomeViewModel.swift in Sources */,
 				E07233B9282B7DB900AF3E16 /* UIColor+Extension.swift in Sources */,
 				E07233EE282D0F9300AF3E16 /* WhatsNewDataSource.swift in Sources */,
+				E0108CD4282FEE4D00CC736C /* WhatsNewListDataSource.swift in Sources */,
 				E07233E6282D039600AF3E16 /* WhatsNewViewController.swift in Sources */,
 				E07233BD282B7DB900AF3E16 /* StarbucksEntity.swift in Sources */,
 				E07233F2282D235100AF3E16 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */,
 				E07233B0282B7DB900AF3E16 /* OrderListViewController.swift in Sources */,
+				E0039B58282FD93200298719 /* WhatsNewListViewModel.swift in Sources */,
 				E07233B2282B7DB900AF3E16 /* OrderTableViewDataSource.swift in Sources */,
 				E07233B4282B7DB900AF3E16 /* CategoryTableViewCell.swift in Sources */,
 				E07233E8282D03A000AF3E16 /* WhatsNewViewModel.swift in Sources */,
@@ -703,6 +734,7 @@
 				E07233AD282B7DB900AF3E16 /* PayViewController.swift in Sources */,
 				E07233B3282B7DB900AF3E16 /* OrderCategoryViewController.swift in Sources */,
 				E07233B6282B7DB900AF3E16 /* StarbucksRepository.swift in Sources */,
+				E0108CD6282FEF4A00CC736C /* WhatsNewListViewCell.swift in Sources */,
 				E07233BF282B7DB900AF3E16 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

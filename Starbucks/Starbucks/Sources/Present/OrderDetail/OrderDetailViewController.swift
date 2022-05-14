@@ -14,6 +14,7 @@ class OrderDetailViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         bind()
+        attribute()
         layout()
     }
     
@@ -30,6 +31,10 @@ class OrderDetailViewController: UIViewController {
                 vc.navigationController?.isNavigationBarHidden = false
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func attribute() {
+        view.backgroundColor = .white
     }
     
     private func layout() {

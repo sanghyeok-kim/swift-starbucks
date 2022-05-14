@@ -8,9 +8,9 @@
 import UIKit
 
 class WhatsNewDataSource: NSObject, UICollectionViewDataSource {
-    private var events: [StarbucksEntity.Event] = []
+    private var events: [StarbucksEntity.Promotion] = []
     
-    func updateEvents(_ events: [StarbucksEntity.Event]) {
+    func updateEvents(_ events: [StarbucksEntity.Promotion]) {
         self.events = events
     }
     

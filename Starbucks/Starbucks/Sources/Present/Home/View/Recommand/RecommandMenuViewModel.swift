@@ -45,9 +45,10 @@ class RecommandMenuViewModel: RecommandMenuViewModelBinding, RecommandMenuViewMo
  
     init() {
         loadedProducts
-            .flatMapLatest { ids in
+            .withUnretained(self)
+            .flatMapLatest { model, ids in
                 Observable.zip( ids.map { id in
-                    self.starbucksRepository.requestDetail(id).asObservable()
+                    model.starbucksRepository.requestDetail(id).asObservable()
                         .compactMap { $0.value }
                 })
             }

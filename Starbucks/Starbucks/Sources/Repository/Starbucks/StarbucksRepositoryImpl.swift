@@ -15,10 +15,10 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
             .map(StarbucksEntity.Home.self)
     }
     
-    func requestEvent() -> Single<Swift.Result<StarbucksEntity.HomeEvent, APIError>> {
+    func requestEvent() -> Single<Swift.Result<StarbucksEntity.Promotions, APIError>> {
         provider
-            .request(.requestEvent)
-            .map(StarbucksEntity.HomeEvent.self)
+            .request(.requestPromotion)
+            .map(StarbucksEntity.Promotions.self)
     }
     
     func requestDetail(_ id: String) -> Single<Swift.Result<StarbucksEntity.ProductDetail, APIError>> {
@@ -48,5 +48,17 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
             observer(.success(.success(category.groups)))
             return Disposables.create { }
         }
+    }
+    
+    func requestNews() -> Single<Swift.Result<StarbucksEntity.Events, APIError>> {
+        provider
+            .request(.requestNews)
+            .map(StarbucksEntity.Events.self)
+    }
+    
+    func requestNotice() -> Single<Swift.Result<StarbucksEntity.Events, APIError>> {
+        provider
+            .request(.requestNotice)
+            .map(StarbucksEntity.Events.self)
     }
 }
