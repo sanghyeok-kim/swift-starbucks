@@ -28,15 +28,20 @@ class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        products.count
+        products.isEmpty ? 3 : products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommandMenuCellView.identifier, for: indexPath) as? RecommandMenuCellView else {
             return UICollectionViewCell()
         }
-        
         let index = indexPath.item
+        
+        if index >= products.count {
+            cell.emptyCell()
+            return cell
+        }
+        
         let product = products[index]
         let image = index >= productimages.count ? nil : productimages[index].first
         

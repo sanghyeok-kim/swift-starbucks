@@ -14,7 +14,7 @@ class MainEventViewController: UIViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .black.withAlphaComponent(0.5)
         return imageView
     }()
     

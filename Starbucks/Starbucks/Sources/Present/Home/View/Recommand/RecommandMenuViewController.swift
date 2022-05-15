@@ -22,6 +22,7 @@ class RecommandMenuViewController: UIViewController {
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textColor = .black
+        label.backgroundColor = .black.withAlphaComponent(0.1)
         return label
     }()
     
@@ -76,6 +77,7 @@ class RecommandMenuViewController: UIViewController {
         viewModel.state().displayTitle
             .withUnretained(self)
             .bind(onNext: { vc, title in
+                vc.titleLabel.backgroundColor = .white
                 vc.titleLabel.attributedText = title
             })
             .disposed(by: disposeBag)
@@ -96,7 +98,7 @@ class RecommandMenuViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview()
         }

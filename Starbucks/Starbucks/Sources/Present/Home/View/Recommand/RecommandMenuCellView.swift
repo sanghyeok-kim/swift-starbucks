@@ -57,6 +57,7 @@ class RecommandMenuCellView: UICollectionViewCell {
     }
     
     func setName(_ name: NSMutableAttributedString) {
+        nameLabel.backgroundColor = .white
         nameLabel.attributedText = name
     }
     
@@ -72,5 +73,9 @@ class RecommandMenuCellView: UICollectionViewCell {
                 cell.thumbnailView.image = image
             })
             .disposed(by: disposeBag)
+    }
+    
+    func emptyCell() {
+        thumbnailView.backgroundColor = .black.withAlphaComponent(0.1)
     }
 }

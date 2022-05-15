@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     private let contentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 40
+        stackView.spacing = 20
         return stackView
     }()
     
@@ -56,6 +56,12 @@ class HomeViewController: UIViewController {
     private lazy var whatsNewViewController: WhatsNewViewController = {
         let viewController = WhatsNewViewController(viewModel: viewModel.whatsNewViewModel)
         return viewController
+    }()
+    
+    private let backButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        barButton.tintColor = .black
+        return barButton
     }()
     
     private let viewModel: HomeViewModelProtocol
@@ -121,11 +127,11 @@ class HomeViewController: UIViewController {
             )
             .withUnretained(self)
             .bind(onNext: { vc, _ in
+                vc.navigationItem.backBarButtonItem = vc.backButton
                 let viewController = WhatsNewListViewController(viewModel: WhatsNewListViewModel())
                 vc.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
-        
     }
     
     private func attribute() {

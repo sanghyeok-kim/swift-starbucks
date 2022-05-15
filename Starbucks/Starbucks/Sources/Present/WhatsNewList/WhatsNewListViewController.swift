@@ -10,6 +10,12 @@ import UIKit
 
 class WhatsNewListViewController: UIViewController {
     
+    private let navigationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(WhatsNewListViewCell.self, forCellReuseIdentifier: WhatsNewListViewCell.identifier)
@@ -40,14 +46,6 @@ class WhatsNewListViewController: UIViewController {
             .bind(to: viewModel.action().loadEvents)
             .disposed(by: disposeBag)
         
-        rx.viewDidAppear
-            .map { _ in }
-            .withUnretained(self)
-            .bind(onNext: { vc, _ in
-                vc.navigationController?.isNavigationBarHidden = false
-            })
-            .disposed(by: disposeBag)
-        
         viewModel.state().loadedEvents
             .withUnretained(self)
             .bind(onNext: { vc, events in
@@ -60,12 +58,19 @@ class WhatsNewListViewController: UIViewController {
     private func attribute() {
         hidesBottomBarWhenPushed = true
         view.backgroundColor = .white
+        title = "What's New"
         
         tableView.dataSource = dataSource
     }
     
     private func layout() {
         view.addSubview(tableView)
+        view.addSubview(navigationView)
+        
+        navigationView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
+        }
         
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
