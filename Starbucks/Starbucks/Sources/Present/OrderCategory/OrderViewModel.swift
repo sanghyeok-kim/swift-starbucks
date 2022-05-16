@@ -14,7 +14,6 @@ protocol OrderViewModelAction {
     var tappedCategory: PublishRelay<Category.GroupType> { get }
     var tappedMenu: PublishRelay<Int> { get }
     var loadCategoryProducts: PublishRelay<String> { get }
-    
 }
 
 protocol OrderViewModelState {
@@ -98,22 +97,12 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
                 self?.categoryMenu[$1]?[$0]
             }
             .compactMap { $0?.groupId }
-            .bind(to: loadCategoryProducts)
+            .withUnretained(self)
+            .flatMapLatest { model, id in
+                model.starbucksRepository.requestCategoryProduct(id: id).asObservable()
+            }
+            .compactMap { $0.value }
+            .subscribe(onNext: { print($0.products) })
             .disposed(by: disposeBag)
-        
-        // TODO: 아래 string 을 받는 Observable 을 이용하는 방법을 참조하자.
-        let requestCategoryProduct = action().loadCategoryProducts
-            .share()
-//        loadedProducts
-//            .withUnretained(self)
-//            .flatMapLatest { model, ids in
-//                Observable.zip( ids.map { id in
-//                    model.starbucksRepository.requestDetail(id).asObservable()
-//                        .compactMap { $0.value }
-//                })
-//            }
-//            .map { $0.compactMap { $0.view } }
-//            .bind(to: loadedRecommandMenu)
-//            .disposed(by: disposeBag)
     }
 }
