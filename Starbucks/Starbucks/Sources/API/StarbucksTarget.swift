@@ -62,18 +62,18 @@ extension StarbucksTarget {
     
     var method: HTTPMethod {
         switch self {
-        case .requestHome, .requestNews, .requestNotice:
+        case .requestHome, .requestNews, .requestNotice, .requestCategoryProduct:
             return .get
-        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestCategoryProduct:
+        case .requestPromotion, .requestProductInfo, .requestProductImage :
             return .post
         }
     }
     
     var content: HTTPContentType {
         switch self {
-        case .requestHome, .requestCategoryProduct:
+        case .requestHome:
             return .json
-        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice, .requestCategoryProduct:
             return .urlencode
         }
     }

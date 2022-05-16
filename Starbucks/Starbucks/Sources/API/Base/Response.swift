@@ -65,7 +65,8 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Result<Respon
                 if (200...299).contains(response.statusCode) {
                     return .success(response)
                 }
-                
+                // TODO: - 제거해야할 Print
+                print("status code: \(response.statusCode)") // 412, header field 잘못 넣음
                 return .failure(APIError.unowned)
 //                let apiError = (error as? APIError) ?? APIError.underlying(error: error, response: response)
 //                return .failure(apiError)
