@@ -40,12 +40,11 @@ extension StarbucksEntity {
 }
 
 extension StarbucksEntity {
-    
-    struct HomeEvent: Decodable {
-        let list: [Event]
+    struct Promotions: Decodable {
+        let list: [Promotion]
     }
     
-    struct Event: Decodable {
+    struct Promotion: Decodable {
         let title: String
         let imageUploadPath: URL
         let thumbnail: String
@@ -54,6 +53,62 @@ extension StarbucksEntity {
             case title
             case imageUploadPath = "img_UPLOAD_PATH"
             case thumbnail = "mob_THUM"
+        }
+    }
+}
+
+extension StarbucksEntity {
+    struct Events: Decodable {
+        let list: [Event]
+    }
+    
+    struct Event: Decodable {
+        let title: String
+        let newsDate: String
+        let thumbnail: String
+        let startDate: String
+        
+        enum CodingKeys: String, CodingKey {
+            case title
+            case newsDate = "news_dt"
+            case thumbnail = "img_nm"
+            case startDate = "start_dt"
+        }
+        
+        var thumbnailUrl: URL? {
+            URL(string: "https://image.istarbucks.co.kr/upload/news/\(thumbnail)")
+        }
+    }
+}
+
+extension StarbucksEntity {
+    struct ProductDetail: Decodable {
+        let view: ProductInfo?
+    }
+    
+    struct ProductInfo: Decodable {
+        let productName: String
+        
+        enum CodingKeys: String, CodingKey {
+            case productName = "product_NM"
+        }
+    }
+    
+    struct ProductImage: Decodable {
+        let file: [ProductImageInfo]?
+    }
+    
+    struct ProductImageInfo: Decodable {
+        let filePath: String
+        let imageUploadPath: URL
+        
+        enum CodingKeys: String, CodingKey {
+            case filePath = "file_PATH"
+            case imageUploadPath = "img_UPLOAD_PATH"
+        }
+        
+        var imageUrl: URL {
+            imageUploadPath.appendingPathComponent(filePath)
         }
     }
 }

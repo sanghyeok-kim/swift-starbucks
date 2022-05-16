@@ -9,7 +9,12 @@ import Foundation
 
 enum StarbucksTarget: BaseTarget {
     case requestHome
-    case requestEvent
+    case requestPromotion
+    case requestNews
+    case requestNotice
+    case requestProductInfo(_ id: String)
+    case requestProductImage(_ id: String)
+    case requestCategoryProduct(_ id: String)
 }
 
 extension StarbucksTarget {
@@ -18,7 +23,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return URL(string: "https://api.codesquad.kr/starbuckst")
-        case .requestEvent:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice, .requestCategoryProduct:
             return URL(string: "https://www.starbucks.co.kr")
         }
     }
@@ -27,34 +32,48 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return nil
-        case .requestEvent:
+        case .requestPromotion:
             return "/whats_new/getIngList.do"
+        case .requestProductInfo:
+            return "/menu/productViewAjax.do"
+        case .requestProductImage:
+            return "/menu/productFileAjax.do"
+        case .requestNews:
+            return "/whats_new/newsListAjax.do"
+        case .requestNotice:
+            return "/whats_new/noticeListAjax.do"
+        case .requestCategoryProduct(let id):
+            return "/upload/json/menu/\(id).js"
         }
     }
     
     var parameter: [String: Any]? {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestNews, .requestNotice, .requestCategoryProduct:
             return nil
-        case .requestEvent:
+        case .requestPromotion:
             return ["MENU_CD": "all"]
+        case .requestProductInfo(let id):
+            return ["product_cd": id]
+        case .requestProductImage(let id):
+            return ["PRODUCT_CD": id]
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestNews, .requestNotice:
             return .get
-        case .requestEvent:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestCategoryProduct:
             return .post
         }
     }
     
     var content: HTTPContentType {
         switch self {
-        case .requestHome:
+        case .requestHome, .requestCategoryProduct:
             return .json
-        case .requestEvent:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
             return .urlencode
         }
     }

@@ -11,13 +11,13 @@ class StarbucksViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        tabBar.tintColor = .green1
+        tabBar.tintColor = .starbuckGreen
         tabBar.unselectedItemTintColor = .grey145
         setUpTabBar()
     }
     
     private func setUpTabBar() {
-        let homeViewController = HomeViewController(viewModel: HomeViewModel())
+        let homeViewController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
         homeViewController.tabBarItem.title = "Home"
         homeViewController.tabBarItem.image = UIImage(named: "ic_temp")
         

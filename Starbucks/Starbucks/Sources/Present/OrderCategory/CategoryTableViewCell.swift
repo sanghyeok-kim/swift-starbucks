@@ -5,6 +5,7 @@
 //  Created by 김상혁 on 2022/05/10.
 //
 
+import RxSwift
 import UIKit
 
 class CategoryTableViewCell: UITableViewCell {
@@ -12,10 +13,12 @@ class CategoryTableViewCell: UITableViewCell {
     static var identifier: String { "\(self)" }
     
     private let menuImageView: UIImageView = {
-        let image = UIImage(named: "mockImage.png")
-        let imageView = UIImageView(image: image)
+        let imageView = UIImageView()
+        imageView.backgroundColor = .gray
         imageView.layer.cornerRadius = 40
         imageView.clipsToBounds = true
+        imageView.layer.borderColor = UIColor.gray.cgColor
+        imageView.layer.borderWidth = 0.5
         return imageView
     }()
     
@@ -39,6 +42,9 @@ class CategoryTableViewCell: UITableViewCell {
         label.textColor = .systemGray
         return label
     }()
+    
+    @Inject(\.imageManager) private var imageManager: ImageManager
+    private let disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,5 +81,15 @@ class CategoryTableViewCell: UITableViewCell {
     
     func setSubName(text: String) {
         subNameLabel.text = text
+    }
+    
+    func setThumbnail(url: URL) {
+        imageManager.loadImage(url: url).asObservable()
+            .withUnretained(self)
+            .observe(on: MainScheduler.asyncInstance)
+            .bind(onNext: { cell, image in
+                cell.menuImageView.image = image
+            })
+            .disposed(by: disposeBag)
     }
 }
