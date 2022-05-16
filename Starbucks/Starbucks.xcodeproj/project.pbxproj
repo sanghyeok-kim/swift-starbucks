@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006FA0922832433A00281C4D /* CategoryProductEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006FA0912832433A00281C4D /* CategoryProductEntity.swift */; };
 		71E1C78E63597B5AEE24B83E /* Pods_Starbucks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */; };
 		9CFF3F031A8A9E5CAA2DDC05 /* Pods_StarbucksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */; };
 		E0039B56282FD92800298719 /* WhatsNewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0039B55282FD92800298719 /* WhatsNewListViewController.swift */; };
@@ -89,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		006FA0912832433A00281C4D /* CategoryProductEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProductEntity.swift; sourceTree = "<group>"; };
 		0179ED7916AEC19F665042EB /* Pods-StarbucksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarbucksTests.debug.xcconfig"; path = "Target Support Files/Pods-StarbucksTests/Pods-StarbucksTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3A9DAC6A7B755F657653AF4D /* Pods-StarbucksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarbucksTests.release.xcconfig"; path = "Target Support Files/Pods-StarbucksTests/Pods-StarbucksTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarbucksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -454,6 +456,7 @@
 			children = (
 				E072339E282B7DB900AF3E16 /* StarbucksEntity.swift */,
 				E07233C7282B7F5200AF3E16 /* CategoryEntity.swift */,
+				006FA0912832433A00281C4D /* CategoryProductEntity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				E0108CF6283365CE00CC736C /* UserStore.swift in Sources */,
 				E07233B8282B7DB900AF3E16 /* NetworkRepository.swift in Sources */,
 				E07233DE282BDDB200AF3E16 /* RecommandMenuDataSource.swift in Sources */,
+				006FA0922832433A00281C4D /* CategoryProductEntity.swift in Sources */,
 				E07233F8282D516200AF3E16 /* GradientView.swift in Sources */,
 				E07233C3282B7DB900AF3E16 /* HTTPMethod.swift in Sources */,
 				E0108CFB28338D3A00CC736C /* NavigationBarView.swift in Sources */,
