@@ -7,19 +7,23 @@
 
 import Foundation
 
-struct CategoryProductEntity: Codable {
+struct CategoryProductEntity: Decodable {
     let products: [Product]
+    
+    enum CodingKeys: String, CodingKey {
+        case products = "list"
+    }
 }
 
 // MARK: - Product
-struct Product: Codable {
-    let productCD, productNM, filePATH: String
-    let imgUPLOADPATH: String
+struct Product: Decodable {
+    let productCode, productName, filePath: String
+    let imgUploadPath: URL
 
     enum CodingKeys: String, CodingKey {
-        case productCD = "product_CD"
-        case productNM = "product_NM"
-        case filePATH = "file_PATH"
-        case imgUPLOADPATH = "img_UPLOAD_PATH"
+        case productCode = "product_CD"
+        case productName = "product_NM"
+        case filePath = "file_PATH"
+        case imgUploadPath = "img_UPLOAD_PATH"
     }
 }
