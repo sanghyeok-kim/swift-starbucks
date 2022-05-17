@@ -5,16 +5,18 @@
 //  Created by 김상혁 on 2022/05/10.
 //
 
-import UIKit
+import RxAppState
+import RxCocoa
 import RxSwift
 import SnapKit
+import UIKit
 
 class OrderListViewController: UIViewController {
 
     let tableView = UITableView()
-    let tableViewDatasource = OrderListTableViewDataSource()
     let tableViewHandler = OrderListTableViewDelegate()
     let viewModel: ListViewModelProtocol
+    var tableViewDatasource: OrderListTableViewDataSource?
     
     let categoryLabel: UILabel = {
         let label = UILabel()
@@ -27,10 +29,9 @@ class OrderListViewController: UIViewController {
     init(viewModel: ListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        attribute()
-        // TODO: VM 에서 list 의 첫번째 값을 categoryLabel.text 에 저장
-        layout()
         bind()
+        attribute()
+        layout()
     }
     
     @available(*, unavailable)
@@ -39,9 +40,21 @@ class OrderListViewController: UIViewController {
     }
     
     private func bind() {
+        rx.viewDidLoad
+            .bind(to: viewModel.action().loadList)
+            .disposed(by: disposeBag)
+        
         tableViewHandler.selectedCellIndex
             .subscribe(onNext: {
                 print($0)
+            })
+            .disposed(by: disposeBag)
+    
+        viewModel.state().loadedList
+            .withUnretained(self)
+            .subscribe(onNext: { model, list in
+                model.updateTableViewDatasource(list: list)
+                model.categoryLabel.text = list.first?.productCategory
             })
             .disposed(by: disposeBag)
     }
@@ -75,5 +88,15 @@ class OrderListViewController: UIViewController {
         tableView.dataSource = tableViewDatasource
         tableView.delegate = tableViewHandler
         tableView.reloadData()
+    }
+}
+
+extension OrderListViewController {
+    private func updateTableViewDatasource(list: [Product]) {
+        self.tableViewDatasource = OrderListTableViewDataSource(list: list)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.dataSource = self?.tableViewDatasource
+            self?.tableView.reloadData()
+        }
     }
 }

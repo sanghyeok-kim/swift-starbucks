@@ -13,6 +13,10 @@ class OrderListTableViewDataSource: NSObject, UITableViewDataSource {
     
     private var list: [Product] = []
     
+    init(list: [Product]) {
+        self.list = list
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }

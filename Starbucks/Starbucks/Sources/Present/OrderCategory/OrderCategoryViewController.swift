@@ -99,7 +99,8 @@ class OrderCategoryViewController: UIViewController {
         viewModel.state().loadedList
             .withUnretained(self)
             .subscribe(onNext: { model, list in
-                let orderListVC = OrderListViewController(viewModel: OrderListViewModel(list: list))
+                let viewModel = OrderListViewModel(list: list)
+                let orderListVC = OrderListViewController(viewModel: viewModel)
                 model.navigationItem.backBarButtonItem = model.backBarButtonItem
                 model.navigationController?.pushViewController(orderListVC, animated: true)
             })
@@ -166,9 +167,9 @@ class OrderCategoryViewController: UIViewController {
 extension OrderCategoryViewController {
     private func updateDatasource(menu: [Category.Group]) {
         self.tableViewDataSource = OrderTableViewDataSource(menus: menu)
-        DispatchQueue.main.async {
-            self.tableView.dataSource = self.tableViewDataSource
-            self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.dataSource = self?.tableViewDataSource
+            self?.tableView.reloadData()
         }
     }
 }

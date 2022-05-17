@@ -11,11 +11,12 @@ import RxSwift
 
 protocol ListViewModelAction {
     var loadDetail: PublishRelay<Int> { get }
+    var loadList: PublishRelay<Void> { get }
 }
 protocol ListViewModelState {
-    // TODO: - Entity Type 구체화되면 17 라인 변경
+    // TODO: - Entity Type 구체화되면 loadedDetail 타입 변경
     var loadedDetail: PublishRelay<Void> { get }
-    var selectedProduct: PublishRelay<String> { get }
+    var loadedList: PublishRelay<[Product]> { get }
 }
 
 protocol ListViewModelBinding {
@@ -34,18 +35,22 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
     func action() -> ListViewModelAction { self }
     
     let loadDetail = PublishRelay<Int>()
+    let loadList = PublishRelay<Void>()
     
     func state() -> ListViewModelState { self }
     
     let loadedDetail = PublishRelay<Void>()
-    let selectedProduct = PublishRelay<String>()
+    let loadedList = PublishRelay<[Product]>()
     
     init(list: [Product]) {
         self.list = list
-//        Observable.just(list)
-//            .first()
-//            .compactMap { $0?.first?.productCategory }
-//            .bind(to: selectedProduct)
-//            .disposed(by: disposeBag)
+        
+        action().loadList
+            .withUnretained(self)
+            .compactMap { model, _ in
+                model.list
+            }
+            .bind(to: loadedList)
+            .disposed(by: disposeBag)
     }
 }
