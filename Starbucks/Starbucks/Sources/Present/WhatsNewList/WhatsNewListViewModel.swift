@@ -14,7 +14,8 @@ protocol WhatsNewListViewAction {
 }
 
 protocol WhatsNewListViewState {
-    var loadedEvents: PublishRelay<[StarbucksEntity.Event]> { get }
+    var updateEvents: PublishRelay<[StarbucksEntity.Event]> { get }
+    var reloadEvents: PublishRelay<Void> { get }
 }
 
 protocol WhatsNewListViewBinding {
@@ -31,7 +32,8 @@ class WhatsNewListViewModel: WhatsNewListViewProtocol, WhatsNewListViewAction, W
     
     func state() -> WhatsNewListViewState { self }
     
-    let loadedEvents = PublishRelay<[StarbucksEntity.Event]>()
+    let updateEvents = PublishRelay<[StarbucksEntity.Event]>()
+    let reloadEvents = PublishRelay<Void>()
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()
@@ -49,7 +51,10 @@ class WhatsNewListViewModel: WhatsNewListViewProtocol, WhatsNewListViewAction, W
             }
             .scan(self.events, accumulator: +)
             .map { $0.sorted(by: { lhs, rhs in lhs.startDate > rhs.startDate }) }
-            .bind(to: loadedEvents)
+            .withUnretained(self)
+            .do { model, list in model.updateEvents.accept(list) }
+            .map { _ in }
+            .bind(to: reloadEvents)
             .disposed(by: disposeBag)
     }
 }

@@ -40,21 +40,8 @@ class MainEventViewModel: MainEventViewModelBinding, MainEventViewModelAction, M
     
     init() {
         loadedEvent
-            .map { $0.imageUploadPath.appendingPathComponent($0.thumbnail) }
+            .map { $0.imageUrl }
             .bind(to: loadedMainEventImage)
             .disposed(by: disposeBag)
-        
-//        let requestEvent = action().loadEvent
-//            .withUnretained(self)
-//            .flatMapLatest { model, _ in
-//                model.starbucksRepository.requestEvent()
-//            }
-//            .share()
-//
-//        requestEvent
-//            .compactMap { $0.value }
-//            .bind(onNext: {
-//            })
-//            .disposed(by: disposeBag)
     }
 }

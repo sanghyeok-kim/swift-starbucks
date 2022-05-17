@@ -25,7 +25,7 @@ class WhatsNewDataSource: NSObject, UICollectionViewDataSource {
         
         let event = events[indexPath.item]
         cell.setTitle(event.title)
-        cell.setThumbnail(uploadPath: event.imageUploadPath, thumbnailName: event.thumbnail)
+        cell.setThumbnail(url: event.imageUrl)
         return cell
     }
 }

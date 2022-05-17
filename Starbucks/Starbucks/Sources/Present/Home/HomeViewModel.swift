@@ -54,7 +54,7 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
     private let disposeBag = DisposeBag()
     private var homeData: StarbucksEntity.Home?
     
-    init() {
+    init() {        
         let requestHome = action().loadHome
             .withUnretained(self)
             .flatMapLatest { model, _ in
@@ -77,18 +77,23 @@ class HomeViewModel: HomeViewModelBinding, HomeViewModelProperty, HomeViewModelA
         
         requestHome
             .compactMap { $0.value?.displayName }
-            .withUnretained(self)
-            .bind(onNext: { model, name in
-                model.titleMessage.accept("\(name)님\n오늘 하루도 고생 많으셨어요!")
-                let myRecommandTitle = NSMutableAttributedString().addStrings([
-                    .create(name, options: [.foreground(color: .brown1)]),
-                    .create("님을 위한 추천 메뉴")
-                ])
-                model.recommandMenuViewModel.state().displayTitle.accept(myRecommandTitle)
-                
-                let timeRecommandtitle = NSMutableAttributedString(string: "이 시간대 추천 메뉴")
-                model.timeRecommandMenuViewModel.state().displayTitle.accept(timeRecommandtitle)
-            })
+            .map { "\($0)님\n오늘 하루도 고생 많으셨어요!" }
+            .bind(to: titleMessage)
+            .disposed(by: disposeBag)
+        
+        requestHome
+            .compactMap { $0.value?.displayName }
+            .map { NSMutableAttributedString().addStrings([
+                .create($0, options: [.foreground(color: .brown1)]),
+                .create("님을 위한 추천 메뉴")
+            ])
+            }
+            .bind(to: recommandMenuViewModel.state().displayTitle)
+            .disposed(by: disposeBag)
+        
+        requestHome
+            .map { _ in NSMutableAttributedString(string: "이 시간대 추천 메뉴") }
+            .bind(to: timeRecommandMenuViewModel.state().displayTitle)
             .disposed(by: disposeBag)
         
         requestHome

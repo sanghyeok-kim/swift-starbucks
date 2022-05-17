@@ -61,8 +61,7 @@ class WhatsNewCellView: UICollectionViewCell {
         titleLabel.text = title
     }
     
-    func setThumbnail(uploadPath: URL, thumbnailName: String) {
-        let url = uploadPath.appendingPathComponent("/upload/promotion/" + thumbnailName)
+    func setThumbnail(url: URL) {
         imageManager.loadImage(url: url).asObservable()
             .withUnretained(self)
             .observe(on: MainScheduler.asyncInstance)

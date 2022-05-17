@@ -9,17 +9,17 @@ import Foundation
 
 enum APIError: Error {
     case custom(message: String, debugMessage: String)
-    case jsonMapping(response: Response)
     case objectMapping(error: Error, response: Response)
     case underlying(error: Swift.Error, response: Response?)
+    case statusCode(response: Response)
     case unowned
 }
 
 extension APIError {
     var statusCode: Int {
         switch self {
-        case .jsonMapping(let response),
-             .objectMapping(_, let response):
+        case .objectMapping(_, let response),
+                .statusCode(let response):
             return response.statusCode
         case .underlying(_, let response):
             return response?.statusCode ?? -9999

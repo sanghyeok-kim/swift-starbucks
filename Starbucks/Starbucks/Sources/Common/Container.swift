@@ -14,5 +14,9 @@ class Container {
     
     lazy var starbucksRepository: StarbucksRepository = StarbucksRepositoryImpl()
     
+    lazy var cameraRepository: CameraRepository = CameraRepositoryImpl()
+    
     lazy var imageManager = ImageManager()
+    
+    lazy var userStore = UserStore()
 }

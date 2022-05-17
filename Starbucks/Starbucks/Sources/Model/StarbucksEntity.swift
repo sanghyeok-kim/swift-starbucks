@@ -36,6 +36,10 @@ extension StarbucksEntity {
             case imageUploadPath = "img_UPLOAD_PATH"
             case thumbnail = "mob_THUM"
         }
+        
+        var imageUrl: URL {
+            imageUploadPath.appendingPathComponent(thumbnail)
+        }
     }
 }
 
@@ -53,6 +57,10 @@ extension StarbucksEntity {
             case title
             case imageUploadPath = "img_UPLOAD_PATH"
             case thumbnail = "mob_THUM"
+        }
+        
+        var imageUrl: URL {
+            imageUploadPath.appendingPathComponent("/upload/promotion/" + thumbnail)
         }
     }
 }
@@ -109,6 +117,30 @@ extension StarbucksEntity {
         
         var imageUrl: URL {
             imageUploadPath.appendingPathComponent(filePath)
+        }
+    }
+}
+
+extension StarbucksEntity {
+    struct CardList: Codable {
+        let cards: [Card]
+    }
+    
+    struct Card: Codable {
+        let id: String
+        let name: String
+        let cardImageUrl: URL
+        private(set) var amount: Int
+        
+        init(name: String, cardImageUrl: URL, amount: Int) {
+            self.id = UUID().uuidString
+            self.name = name
+            self.cardImageUrl = cardImageUrl
+            self.amount = amount
+        }
+        
+        mutating func addAmount(_ amount: Int) {
+            self.amount += amount
         }
     }
 }

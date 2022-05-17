@@ -65,12 +65,12 @@ class WhatsNewViewController: UIViewController {
             .bind(to: viewModel.action().loadEvent)
             .disposed(by: disposeBag)
         
-        viewModel.state().loadedEvent
-            .withUnretained(self)
-            .bind(onNext: { vc, events in
-                vc.dataSource.updateEvents(events)
-                vc.eventCollectionView.reloadData()
-            })
+        viewModel.state().updateEvents
+            .bind(onNext: dataSource.updateEvents)
+            .disposed(by: disposeBag)
+        
+        viewModel.state().reloadEvents
+            .bind(onNext: eventCollectionView.reloadData)
             .disposed(by: disposeBag)
         
         seeAllButton.rx.tap

@@ -46,12 +46,12 @@ class WhatsNewListViewController: UIViewController {
             .bind(to: viewModel.action().loadEvents)
             .disposed(by: disposeBag)
         
-        viewModel.state().loadedEvents
-            .withUnretained(self)
-            .bind(onNext: { vc, events in
-                vc.dataSource.updateEvents(events)
-                vc.tableView.reloadData()
-            })
+        viewModel.state().updateEvents
+            .bind(onNext: dataSource.updateEvents)
+            .disposed(by: disposeBag)
+        
+        viewModel.state().reloadEvents
+            .bind(onNext: tableView.reloadData)
             .disposed(by: disposeBag)
     }
     

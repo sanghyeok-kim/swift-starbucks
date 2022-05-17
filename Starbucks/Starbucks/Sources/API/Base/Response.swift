@@ -24,9 +24,6 @@ class Response {
 
 extension Response {
     func map<D: Decodable>(_ type: D.Type, using decoder: JSONDecoder = JSONDecoder()) throws -> D {
-        if data.count < 1 {
-            throw APIError.jsonMapping(response: self)
-        }
         do {
             return try decoder.decode(D.self, from: data)
         } catch {
@@ -66,16 +63,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Result<Respon
                     return .success(response)
                 }
                 
-                return .failure(APIError.unowned)
-//                let apiError = (error as? APIError) ?? APIError.underlying(error: error, response: response)
-//                return .failure(apiError)
-//                do {
-//                    let serverReponse = try response.map(APIError.ServerResponse.self, atKeyPath: "error")
-//                    return .failure(APIError.serverDefined(response: response, serverResponse: serverReponse))
-//                } catch {
-//                    let apiError = (error as? APIError) ?? APIError.underlying(error: error, response: response)
-//                    return .failure(apiError)
-//                }
+                return .failure(APIError.statusCode(response: response))
             }
         }
     }

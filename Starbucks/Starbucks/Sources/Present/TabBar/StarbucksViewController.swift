@@ -21,7 +21,7 @@ class StarbucksViewController: UITabBarController {
         homeViewController.tabBarItem.title = "Home"
         homeViewController.tabBarItem.image = UIImage(named: "ic_temp")
         
-        let payViewController = PayViewController()
+        let payViewController = UINavigationController(rootViewController: PayViewController(viewModel: PayViewModel()))
         payViewController.tabBarItem.title = "Pay"
         payViewController.tabBarItem.image = UIImage(named: "ic_temp")
         

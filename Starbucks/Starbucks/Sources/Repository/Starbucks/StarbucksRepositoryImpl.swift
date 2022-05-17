@@ -36,16 +36,18 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
     func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>> {
         Single.create { observer in
             guard let url = Bundle.main.url(forResource: "Category", withExtension: "json"),
-                  let data = try? Data(contentsOf: url),
-                  let category = try? JSONDecoder().decode(Category.self, from: data) else {
-                
-                let response = Response(statusCode: -999, data: Data())
-                let error = APIError.jsonMapping(response: response)
-                observer(.success(.failure(error)))
+                  let data = try? Data(contentsOf: url) else {
+                observer(.success(.failure(.unowned)))
                 return Disposables.create { }
             }
             
-            observer(.success(.success(category.groups)))
+            let response = Response(statusCode: 200, data: data)
+            do {
+                let category = try response.map(Category.self)
+                observer(.success(.success(category.groups)))
+            } catch {
+                observer(.success(.failure(APIError.objectMapping(error: error, response: response))))
+            }
             return Disposables.create { }
         }
     }

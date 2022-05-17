@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     enum Constants {
         static let stickyViewHeight = 50.0
         static let homeInfoViewHeight = 250.0
-        static let bottomOffset = 100.0
+        static let bottomOffset = 150.0
     }
     
     private let scrollView: UIScrollView = {
@@ -105,10 +105,7 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.state().titleMessage
-            .withUnretained(self)
-            .bind(onNext: { vc, message in
-                vc.homeInfoView.setMessage(message)
-            })
+            .bind(onNext: homeInfoView.setMessage)
             .disposed(by: disposeBag)
         
         viewModel.state().presentProductDetailView

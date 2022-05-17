@@ -47,7 +47,7 @@ class RecommandMenuDataSource: NSObject, UICollectionViewDataSource {
         
         var attributedStrings: [NSAttributedString] = []
         if type == .thisTime {
-            let indexText: NSAttributedString = .create("\(index + 1)", options: [.font(.systemFont(ofSize: 20, weight: .bold))])
+            let indexText: NSAttributedString = .create("\(index + 1) ", options: [.font(.systemFont(ofSize: 20, weight: .bold))])
             attributedStrings.append(indexText)
         }
         attributedStrings.append(.create(product.productName))

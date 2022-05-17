@@ -16,7 +16,8 @@ protocol WhatsNewViewModelAction {
 }
 
 protocol WhatsNewViewModelState {
-    var loadedEvent: PublishRelay<[StarbucksEntity.Promotion]> { get }
+    var updateEvents: PublishRelay<[StarbucksEntity.Promotion]> { get }
+    var reloadEvents: PublishRelay<Void> { get }
 }
 
 protocol WhatsNewViewModelBinding {
@@ -36,7 +37,8 @@ class WhatsNewViewModel: WhatsNewViewModelBinding, WhatsNewViewModelAction, What
     
     func state() -> WhatsNewViewModelState { self }
     
-    let loadedEvent = PublishRelay<[StarbucksEntity.Promotion]>()
+    let updateEvents = PublishRelay<[StarbucksEntity.Promotion]>()
+    let reloadEvents = PublishRelay<Void>()
 
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()
@@ -51,7 +53,9 @@ class WhatsNewViewModel: WhatsNewViewModelBinding, WhatsNewViewModelAction, What
 
         requestEvent
             .compactMap { $0.value?.list }
-            .bind(to: loadedEvent)
+            .do { [weak self] list in self?.updateEvents.accept(list) }
+            .map { _ in }
+            .bind(to: reloadEvents)
             .disposed(by: disposeBag)
         
         Observable
