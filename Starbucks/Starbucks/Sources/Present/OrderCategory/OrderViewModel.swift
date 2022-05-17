@@ -12,14 +12,14 @@ import RxSwift
 protocol OrderViewModelAction {
     var loadCategory: PublishRelay<Void> { get }
     var tappedCategory: PublishRelay<Category.GroupType> { get }
-    var tappedMenu: PublishRelay<Int> { get }
-    var loadCategoryProducts: PublishRelay<String> { get }
+    var tapMenu: PublishRelay<Int> { get }
 }
 
 protocol OrderViewModelState {
     var loadedCategory: PublishRelay<[Category.Group]> { get }
     var selectedCategory: PublishRelay<Category.GroupType> { get }
     var selectedMenu: PublishRelay<Category.Group> { get }
+    var loadedList: PublishRelay<[Product]> { get }
 }
 
 protocol OrderViewModelBinding {
@@ -35,14 +35,14 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     let loadCategory = PublishRelay<Void>()
     let tappedCategory = PublishRelay<Category.GroupType>()
-    let tappedMenu = PublishRelay<Int>()
-    let loadCategoryProducts = PublishRelay<String>()
+    let tapMenu = PublishRelay<Int>()
     
     func state() -> OrderViewModelState { self }
     
     let loadedCategory = PublishRelay<[Category.Group]>()
     let selectedCategory = PublishRelay<Category.GroupType>()
     let selectedMenu = PublishRelay<Category.Group>()
+    let loadedList = PublishRelay<[Product]>()
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -92,7 +92,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
             .bind(to: loadedCategory)                   //선택한 카테고리 데이터 전달
             .disposed(by: disposeBag)
         
-        action().tappedMenu
+        let requestProducts = action().tapMenu
             .withLatestFrom(tappedCategory) { [weak self] in
                 self?.categoryMenu[$1]?[$0]
             }
@@ -101,8 +101,12 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
             .flatMapLatest { model, id in
                 model.starbucksRepository.requestCategoryProduct(id: id).asObservable()
             }
+            .share()
+        
+        requestProducts
             .compactMap { $0.value }
-            .subscribe(onNext: { print($0.products) })
+            .map { $0.products }
+            .bind(to: loadedList)
             .disposed(by: disposeBag)
     }
 }

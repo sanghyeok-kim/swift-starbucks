@@ -19,11 +19,16 @@ struct CategoryProductEntity: Decodable {
 struct Product: Decodable {
     let productCode, productName, filePath: String
     let imgUploadPath: URL
-
+    let productCategory: String
+    var completeUrl: URL { imgUploadPath.appendingPathComponent(filePath) }
+    let newBadge: String
+    
     enum CodingKeys: String, CodingKey {
         case productCode = "product_CD"
         case productName = "product_NM"
         case filePath = "file_PATH"
         case imgUploadPath = "img_UPLOAD_PATH"
+        case productCategory = "cate_NAME"
+        case newBadge = "newicon"
     }
 }
