@@ -1,24 +1,19 @@
 //
-//  OrderTableViewDelegate.swift
+//  OrderListTableViewDelegate.swift
 //  Starbucks
 //
-//  Created by 김상혁 on 2022/05/10.
+//  Created by YEONGJIN JANG on 2022/05/17.
 //
 
+import Foundation
 import RxRelay
 import RxSwift
-import UIKit
 
-protocol CellSelectionDetectable: AnyObject {
-    func didSelectCell(indexPath: IndexPath)
-}
-
-class OrderTableViewDelegate: NSObject, UITableViewDelegate {
+class OrderListTableViewDelegate: NSObject, UITableViewDelegate {
     
     let selectedCellIndex = PublishSubject<Int>()
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         selectedCellIndex
             .onNext(indexPath.row)
     }

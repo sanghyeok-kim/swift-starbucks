@@ -25,6 +25,12 @@ class OrderCategoryViewController: UIViewController {
         return label
     }()
     
+    private let backBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        barButtonItem.tintColor = .systemGray
+        return barButtonItem
+    }()
+    
     private let categoryView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
@@ -78,7 +84,7 @@ class OrderCategoryViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableViewHandler.selectedCellIndex
-            .bind(to: viewModel.action().tappedMenu)
+            .bind(to: viewModel.action().tapMenu)
             .disposed(by: disposeBag)
         
         viewModel.state().selectedCategory
@@ -87,6 +93,16 @@ class OrderCategoryViewController: UIViewController {
                 self.categoryButtons.enumerated().forEach { index, button in
                     button.isSelected = index == selectIndex
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.state().loadedList
+            .withUnretained(self)
+            .subscribe(onNext: { model, list in
+                let viewModel = OrderListViewModel(list: list)
+                let orderListVC = OrderListViewController(viewModel: viewModel)
+                model.navigationItem.backBarButtonItem = model.backBarButtonItem
+                model.navigationController?.pushViewController(orderListVC, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -151,9 +167,9 @@ class OrderCategoryViewController: UIViewController {
 extension OrderCategoryViewController {
     private func updateDatasource(menu: [Category.Group]) {
         self.tableViewDataSource = OrderTableViewDataSource(menus: menu)
-        DispatchQueue.main.async {
-            self.tableView.dataSource = self.tableViewDataSource
-            self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.dataSource = self?.tableViewDataSource
+            self?.tableView.reloadData()
         }
     }
 }

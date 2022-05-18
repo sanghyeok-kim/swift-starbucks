@@ -64,3 +64,11 @@ class StarbucksRepositoryImpl: NetworkRepository<StarbucksTarget>, StarbucksRepo
             .map(StarbucksEntity.Events.self)
     }
 }
+
+extension StarbucksRepositoryImpl {
+    func requestCategoryProduct(_ id: String) -> Single<Swift.Result<CategoryProductEntity, APIError>> {
+        provider
+            .request(.requestCategoryProduct(id))
+            .map(CategoryProductEntity.self)
+    }
+}

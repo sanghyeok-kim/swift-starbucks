@@ -5,8 +5,8 @@
 //  Created by seongha shin on 2022/05/12.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 import UIKit
 
 class HomeInfoView: UIView {

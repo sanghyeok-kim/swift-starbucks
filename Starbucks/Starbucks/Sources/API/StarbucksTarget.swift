@@ -14,6 +14,7 @@ enum StarbucksTarget: BaseTarget {
     case requestNotice
     case requestProductInfo(_ id: String)
     case requestProductImage(_ id: String)
+    case requestCategoryProduct(_ id: String)
 }
 
 extension StarbucksTarget {
@@ -22,7 +23,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return URL(string: "https://api.codesquad.kr/starbuckst")
-        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
+        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice, .requestCategoryProduct:
             return URL(string: "https://www.starbucks.co.kr")
         }
     }
@@ -41,12 +42,14 @@ extension StarbucksTarget {
             return "/whats_new/newsListAjax.do"
         case .requestNotice:
             return "/whats_new/noticeListAjax.do"
+        case .requestCategoryProduct(let id):
+            return "/upload/json/menu/\(id).js"
         }
     }
     
     var parameter: [String: Any]? {
         switch self {
-        case .requestHome, .requestNews, .requestNotice:
+        case .requestHome, .requestNews, .requestNotice, .requestCategoryProduct:
             return nil
         case .requestPromotion:
             return ["MENU_CD": "all"]
@@ -59,9 +62,9 @@ extension StarbucksTarget {
     
     var method: HTTPMethod {
         switch self {
-        case .requestHome, .requestNews, .requestNotice:
+        case .requestHome, .requestNews, .requestNotice, .requestCategoryProduct:
             return .get
-        case .requestPromotion, .requestProductInfo, .requestProductImage:
+        case .requestPromotion, .requestProductInfo, .requestProductImage :
             return .post
         }
     }
@@ -70,7 +73,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .json
-        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice:
+        case .requestPromotion, .requestProductImage, .requestNews, .requestProductInfo, .requestNotice, .requestCategoryProduct:
             return .urlencode
         }
     }

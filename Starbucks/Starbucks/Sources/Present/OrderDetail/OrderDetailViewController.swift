@@ -38,6 +38,5 @@ class OrderDetailViewController: UIViewController {
     }
     
     private func layout() {
-        
     }
 }
