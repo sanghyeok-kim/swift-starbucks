@@ -26,7 +26,7 @@
 		E0108CF42833658200CC736C /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CF32833658200CC736C /* UserDefault.swift */; };
 		E0108CF6283365CE00CC736C /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CF5283365CE00CC736C /* UserStore.swift */; };
 		E0108CF82833784800CC736C /* CardListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CF72833784800CC736C /* CardListViewDataSource.swift */; };
-		E0108CFB28338D3A00CC736C /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CFA28338D3A00CC736C /* NavigationBarView.swift */; };
+		E0108CFF2834A35200CC736C /* IntrinsicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0108CFE2834A35200CC736C /* IntrinsicTableView.swift */; };
 		E01B528328289D18009918AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01B528228289D18009918AE /* Assets.xcassets */; };
 		E0723058282A13C900AF3E16 /* StarbuckTargetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723057282A13C900AF3E16 /* StarbuckTargetTest.swift */; };
 		E07233AA282B7DB900AF3E16 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0723381282B7DB900AF3E16 /* HomeViewModel.swift */; };
@@ -111,7 +111,7 @@
 		E0108CF32833658200CC736C /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		E0108CF5283365CE00CC736C /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		E0108CF72833784800CC736C /* CardListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewDataSource.swift; sourceTree = "<group>"; };
-		E0108CFA28338D3A00CC736C /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		E0108CFE2834A35200CC736C /* IntrinsicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrinsicTableView.swift; sourceTree = "<group>"; };
 		E01B527628289D17009918AE /* Starbucks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starbucks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01B528228289D18009918AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E01B528728289D18009918AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -229,9 +229,9 @@
 		E0108CE02831310E00CC736C /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				E0108CFC2834A32900CC736C /* View */,
 				E0108CE12831314800CC736C /* CameraSession.swift */,
 				E0108CE32831E8D600CC736C /* CameraSessionError.swift */,
-				E0108CE7283260C200CC736C /* PreviewView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -255,10 +255,19 @@
 			path = CardList;
 			sourceTree = "<group>";
 		};
-		E0108CF928338D2800CC736C /* Common */ = {
+		E0108CFC2834A32900CC736C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E0108CFA28338D3A00CC736C /* NavigationBarView.swift */,
+				E0108CE7283260C200CC736C /* PreviewView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E0108CFD2834A33C00CC736C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E07233F7282D516200AF3E16 /* GradientView.swift */,
+				E0108CFE2834A35200CC736C /* IntrinsicTableView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -337,7 +346,6 @@
 		E072337F282B7DB900AF3E16 /* Present */ = {
 			isa = PBXGroup;
 			children = (
-				E0108CF928338D2800CC736C /* Common */,
 				E0723386282B7DB900AF3E16 /* TabBar */,
 				E0723380282B7DB900AF3E16 /* Home */,
 				E0039B54282FD8C000298719 /* WhatsNewList */,
@@ -345,6 +353,7 @@
 				E0723388282B7DB900AF3E16 /* OrderDetail */,
 				E072338A282B7DB900AF3E16 /* OrderList */,
 				E072338C282B7DB900AF3E16 /* OrderCategory */,
+				E0108CFD2834A33C00CC736C /* Common */,
 				E0723383282B7DB900AF3E16 /* RootWindow.swift */,
 			);
 			path = Present;
@@ -542,7 +551,6 @@
 		E07233F6282D515800AF3E16 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E07233F7282D516200AF3E16 /* GradientView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -769,6 +777,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0108CFF2834A35200CC736C /* IntrinsicTableView.swift in Sources */,
 				E07233E3282CA71B00AF3E16 /* MainEventViewController.swift in Sources */,
 				E07233C2282B7DB900AF3E16 /* BaseTarget.swift in Sources */,
 				E0039B56282FD92800298719 /* WhatsNewListViewController.swift in Sources */,
@@ -795,7 +804,6 @@
 				E07233DE282BDDB200AF3E16 /* RecommandMenuDataSource.swift in Sources */,
 				E07233F8282D516200AF3E16 /* GradientView.swift in Sources */,
 				E07233C3282B7DB900AF3E16 /* HTTPMethod.swift in Sources */,
-				E0108CFB28338D3A00CC736C /* NavigationBarView.swift in Sources */,
 				E07233C6282B7DB900AF3E16 /* SceneDelegate.swift in Sources */,
 				E07233C0282B7DB900AF3E16 /* HTTPContentType.swift in Sources */,
 				E07233AC282B7DB900AF3E16 /* RootWindow.swift in Sources */,

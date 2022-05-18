@@ -58,12 +58,6 @@ class HomeViewController: UIViewController {
         return viewController
     }()
     
-    private let backButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        barButton.tintColor = .black
-        return barButton
-    }()
-    
     private let viewModel: HomeViewModelProtocol
     private let disposeBag = DisposeBag()
     private var topSafeArea: CGFloat = 0
@@ -90,9 +84,10 @@ class HomeViewController: UIViewController {
             .map { _ in }
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                vc.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-                vc.navigationController?.navigationBar.shadowImage = UIImage()
-                vc.navigationController?.navigationBar.backgroundColor = .clear
+                vc.navigationController?.navigationBar.isHidden = true
+//                vc.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//                vc.navigationController?.navigationBar.shadowImage = UIImage()
+//                vc.navigationController?.navigationBar.backgroundColor = .clear
             })
             .disposed(by: disposeBag)
         
@@ -124,7 +119,6 @@ class HomeViewController: UIViewController {
             )
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                vc.navigationItem.backBarButtonItem = vc.backButton
                 let viewController = WhatsNewListViewController(viewModel: WhatsNewListViewModel())
                 vc.navigationController?.pushViewController(viewController, animated: true)
             })
