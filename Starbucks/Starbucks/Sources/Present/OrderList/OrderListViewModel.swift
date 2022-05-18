@@ -13,10 +13,12 @@ protocol ListViewModelAction {
     var loadDetail: PublishRelay<Int> { get }
     var loadList: PublishRelay<Void> { get }
 }
+
 protocol ListViewModelState {
-    // TODO: - Entity Type 구체화되면 loadedDetail 타입 변경
-    var loadedDetail: PublishRelay<Void> { get }
-    var loadedList: PublishRelay<[Product]> { get }
+    var loadedDetail: PublishRelay<StarbucksEntity.ProductDetail> { get }
+    var loadedDetailImage: PublishRelay<URL> { get }
+    var updatedList: PublishRelay<[Product]> { get }
+    var reloadedList: PublishRelay<Void> { get }
 }
 
 protocol ListViewModelBinding {
@@ -27,7 +29,6 @@ protocol ListViewModelBinding {
 typealias ListViewModelProtocol = ListViewModelBinding
 
 class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModelBinding {
-    let list: [Product]
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()
@@ -39,35 +40,29 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
     
     func state() -> ListViewModelState { self }
     
-    let loadedDetail = PublishRelay<Void>()
+    var loadedDetail = PublishRelay<StarbucksEntity.ProductDetail>()
+    var loadedDetailImage = PublishRelay<URL>()
     let loadedList = PublishRelay<[Product]>()
+    let updatedList = PublishRelay<[Product]>()
+    let reloadedList = PublishRelay<Void>()
     
-    init(list: [Product]) {
-        self.list = list
+    init(productCode: String) {
         
-        action().loadList
+        let requestProducts = action().loadList
             .withUnretained(self)
-            .compactMap { model, _ in
-                model.list
-            }
-            .bind(to: loadedList)
-            .disposed(by: disposeBag)
-        
-        let requestDetailList = action().loadDetail
-            .withUnretained(self)
-            .map { model, index in
-                model.list[index].productCode
-            }
-            .withUnretained(self)
-            .flatMapLatest { model, target in
-                model.starbucksRepository.requestDetail(target).asObservable()
+            .flatMapLatest { model, _ in
+                model.starbucksRepository.requestCategoryProduct(productCode).asObservable()
             }
             .share()
-
-        requestDetailList
-            .bind(onNext: {
-                print($0.value?.view as Any)
-            })
+            
+        requestProducts
+            .compactMap { $0.value?.products }
+            .withUnretained(self)
+            .do { model, products in
+                model.updatedList.accept(products)
+            }
+            .map { _ in }
+            .bind(to: reloadedList)
             .disposed(by: disposeBag)
     }
 }
