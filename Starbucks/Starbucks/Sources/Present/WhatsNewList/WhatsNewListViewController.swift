@@ -11,6 +11,7 @@ import UIKit
 class WhatsNewListViewController: UIViewController {
     enum Constants {
         static let navigationHeight = 50.0
+        static let tableHeaderViewHeight = 80.0
     }
     
     private let navigationView: UIView = {
@@ -34,21 +35,12 @@ class WhatsNewListViewController: UIViewController {
         return button
     }()
     
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.isPagingEnabled = false
-        scrollView.showsHorizontalScrollIndicator = true
-        scrollView.contentInsetAdjustmentBehavior = .never
-        return scrollView
-    }()
-    
-    private let scrollContentView = UIView()
-    
-    private let tableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView()
+    private let tableHeaderView = UIView()
+        
+    private let tableView: UITableView = {
+        let tableView = UITableView()
         tableView.register(WhatsNewListViewCell.self, forCellReuseIdentifier: WhatsNewListViewCell.identifier)
         tableView.estimatedRowHeight = 50
-        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -103,8 +95,9 @@ class WhatsNewListViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = .white
-        scrollView.delegate = self
         tableView.dataSource = dataSource
+        tableView.delegate = self
+        tableView.tableHeaderView = tableHeaderView
     }
     
     private func layout() {
@@ -112,11 +105,8 @@ class WhatsNewListViewController: UIViewController {
         navigationView.addSubview(titleLabel)
         navigationView.addSubview(backButton)
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(scrollContentView)
-        
-        scrollContentView.addSubview(tableTitleLabel)
-        scrollContentView.addSubview(tableView)
+        view.addSubview(tableView)
+        tableHeaderView.addSubview(tableTitleLabel)
         
         navigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -134,40 +124,31 @@ class WhatsNewListViewController: UIViewController {
             $0.width.height.equalTo(navigationView.snp.height)
         }
         
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.bottom)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-        }
-        
-        scrollView.contentLayoutGuide.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(scrollContentView)
-        }
-        
-        scrollContentView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(tableView)
+        tableHeaderView.snp.makeConstraints {
+            $0.height.equalTo(Constants.tableHeaderViewHeight)
+            $0.width.equalToSuperview()
         }
         
         tableTitleLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(tableTitleLabel.snp.bottom)
+            $0.top.equalTo(navigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
 
-extension WhatsNewListViewController: UIScrollViewDelegate {
+extension WhatsNewListViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var alpha: CGFloat = 0
         if scrollView.contentOffset.y < 0 {
             alpha = 0
         } else {
-            alpha = scrollView.contentOffset.y / titleLabel.frame.size.height
+            alpha = scrollView.contentOffset.y / tableHeaderView.frame.height
             alpha = alpha > 1 ? 1 : alpha
         }
         
