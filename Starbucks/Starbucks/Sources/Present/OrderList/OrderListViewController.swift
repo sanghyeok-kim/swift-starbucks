@@ -15,7 +15,7 @@ class OrderListViewController: UIViewController {
 
     private let tableView = UITableView()
     private let tableViewHandler = OrderListTableViewDelegate()
-    private let viewModel: ListViewModelProtocol
+    private let viewModel: OrderListViewModelProtocol
     private var tableViewDatasource = OrderListTableViewDataSource()
     
     private let categoryLabel: UILabel = {
@@ -26,7 +26,7 @@ class OrderListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    init(viewModel: ListViewModelProtocol) {
+    init(viewModel: OrderListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind()
