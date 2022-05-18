@@ -5,9 +5,9 @@
 //  Created by 김상혁 on 2022/05/10.
 //
 
-import UIKit
-import RxSwift
 import RxRelay
+import RxSwift
+import UIKit
 
 class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     
@@ -19,7 +19,7 @@ class OrderTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menus.count
+        menus.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

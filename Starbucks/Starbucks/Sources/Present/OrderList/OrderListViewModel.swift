@@ -66,7 +66,7 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
 
         requestDetailList
             .bind(onNext: {
-                print($0.value?.view)
+                print($0.value?.view as Any)
             })
             .disposed(by: disposeBag)
     }
