@@ -99,7 +99,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
             .compactMap { $0?.groupId }
             .withUnretained(self)
             .flatMapLatest { model, id in
-                model.starbucksRepository.requestCategoryProduct(id: id).asObservable()
+                model.starbucksRepository.requestCategoryProduct( id).asObservable()
             }
             .share()
         

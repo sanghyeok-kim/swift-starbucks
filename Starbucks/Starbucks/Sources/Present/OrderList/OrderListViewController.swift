@@ -45,9 +45,7 @@ class OrderListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableViewHandler.selectedCellIndex
-            .subscribe(onNext: {
-                print($0)
-            })
+            .bind(to: viewModel.action().loadDetail)
             .disposed(by: disposeBag)
     
         viewModel.state().loadedList

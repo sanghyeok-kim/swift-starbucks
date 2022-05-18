@@ -73,7 +73,7 @@ extension StarbucksTarget {
         switch self {
         case .requestHome:
             return .json
-        case .requestPromotion, .requestProductInfo, .requestProductImage, .requestNews, .requestNotice, .requestCategoryProduct:
+        case .requestPromotion, .requestProductImage, .requestNews, .requestProductInfo, .requestNotice, .requestCategoryProduct:
             return .urlencode
         }
     }

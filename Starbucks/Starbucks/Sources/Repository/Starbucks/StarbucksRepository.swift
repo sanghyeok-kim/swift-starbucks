@@ -16,5 +16,5 @@ protocol StarbucksRepository {
     func requestCategory() -> Single<Swift.Result<[Category.Group], APIError>>
     func requestNews() -> Single<Swift.Result<StarbucksEntity.Events, APIError>>
     func requestNotice() -> Single<Swift.Result<StarbucksEntity.Events, APIError>>
-    func requestCategoryProduct(id: String) -> Single<Swift.Result<CategoryProductEntity, APIError>> 
+    func requestCategoryProduct(_ id: String) -> Single<Swift.Result<CategoryProductEntity, APIError>>
 }

@@ -52,5 +52,22 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
             }
             .bind(to: loadedList)
             .disposed(by: disposeBag)
+        
+        let requestDetailList = action().loadDetail
+            .withUnretained(self)
+            .map { model, index in
+                model.list[index].productCode
+            }
+            .withUnretained(self)
+            .flatMapLatest { model, target in
+                model.starbucksRepository.requestDetail(target).asObservable()
+            }
+            .share()
+
+        requestDetailList
+            .bind(onNext: {
+                print($0.value?.view)
+            })
+            .disposed(by: disposeBag)
     }
 }
