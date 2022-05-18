@@ -18,7 +18,7 @@ protocol OrderViewModelAction {
 protocol OrderViewModelState {
     var loadedCategory: PublishRelay<[Category.Group]> { get }
     var selectedCategory: PublishRelay<Category.GroupType> { get }
-    var selectedProductCode: PublishRelay<String> { get }
+    var selectedSubCategory: PublishRelay<Category.Group> { get }
 }
 
 protocol OrderViewModelBinding {
@@ -40,7 +40,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     let loadedCategory = PublishRelay<[Category.Group]>()
     let selectedCategory = PublishRelay<Category.GroupType>()
-    let selectedProductCode = PublishRelay<String>()
+    let selectedSubCategory = PublishRelay<Category.Group>()
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -92,10 +92,10 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
 
         action().tapMenu
             .withLatestFrom(tappedCategory) { [weak self] in
-                self?.categoryMenu[$1]?[$0].groupId
+                self?.categoryMenu[$1]?[$0]
             }
             .compactMap { $0 }
-            .bind(to: selectedProductCode)
+            .bind(to: selectedSubCategory)
             .disposed(by: disposeBag)
     }
 }

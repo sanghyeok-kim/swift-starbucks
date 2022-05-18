@@ -105,10 +105,10 @@ class OrderCategoryViewController: UIViewController {
                 .disposed(by: disposeBag)
         }
         
-        viewModel.state().selectedProductCode
+        viewModel.state().selectedSubCategory
             .withUnretained(self)
-            .bind(onNext: { model, productCode in
-                let viewModel = OrderListViewModel(productCode: productCode)
+            .bind(onNext: { model, subCategory in
+                let viewModel = OrderListViewModel(subCategory: subCategory.groupId, title: subCategory.title)
                 let orderListVC = OrderListViewController(viewModel: viewModel)
                 model.navigationItem.backBarButtonItem = model.backBarButtonItem
                 model.navigationController?.pushViewController(orderListVC, animated: true)
