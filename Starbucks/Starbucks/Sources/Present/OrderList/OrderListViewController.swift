@@ -13,12 +13,12 @@ import UIKit
 
 class OrderListViewController: UIViewController {
 
-    let tableView = UITableView()
-    let tableViewHandler = OrderListTableViewDelegate()
-    let viewModel: ListViewModelProtocol
-    var tableViewDatasource: OrderListTableViewDataSource?
+    private let tableView = UITableView()
+    private let tableViewHandler = OrderListTableViewDelegate()
+    private let viewModel: ListViewModelProtocol
+    private var tableViewDatasource = OrderListTableViewDataSource()
     
-    let categoryLabel: UILabel = {
+    private let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 28, weight: .bold)
         return label
@@ -40,20 +40,29 @@ class OrderListViewController: UIViewController {
     }
     
     private func bind() {
+        
         rx.viewDidLoad
             .bind(to: viewModel.action().loadList)
+            .disposed(by: disposeBag)
+        
+        rx.viewDidLoad
+            .bind(to: viewModel.action().updateTitle)
+            .disposed(by: disposeBag)
+        
+        viewModel.state().updatedTitle
+            .bind(to: categoryLabel.rx.text)
             .disposed(by: disposeBag)
         
         tableViewHandler.selectedCellIndex
             .bind(to: viewModel.action().loadDetail)
             .disposed(by: disposeBag)
     
-        viewModel.state().loadedList
-            .withUnretained(self)
-            .subscribe(onNext: { model, list in
-                model.updateTableViewDatasource(list: list)
-                model.categoryLabel.text = list.first?.productCategory
-            })
+        viewModel.state().updatedList
+            .bind(onNext: tableViewDatasource.update)
+            .disposed(by: disposeBag)
+            
+        viewModel.state().reloadedList
+            .bind(onNext: tableView.reloadData)
             .disposed(by: disposeBag)
     }
     
@@ -86,15 +95,5 @@ class OrderListViewController: UIViewController {
         tableView.dataSource = tableViewDatasource
         tableView.delegate = tableViewHandler
         tableView.reloadData()
-    }
-}
-
-extension OrderListViewController {
-    private func updateTableViewDatasource(list: [Product]) {
-        self.tableViewDatasource = OrderListTableViewDataSource(list: list)
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.dataSource = self?.tableViewDatasource
-            self?.tableView.reloadData()
-        }
     }
 }
