@@ -96,9 +96,35 @@ extension StarbucksEntity {
     
     struct ProductInfo: Decodable {
         let productName: String
+        let productEnglishName: String
+        let productCode: String
+        let recommendDescription: String
+        let hotAvailable: String
+        let kilocalorie: String
+        let fat: String
+        let sturatedFat: String
+        let transFat: String
+        let cholesterol: String
+        let sugars: String
+        let protein: String
+        let caffeine: String
+        let allergy: String
         
         enum CodingKeys: String, CodingKey {
             case productName = "product_NM"
+            case productEnglishName = "product_ENGNM"
+            case productCode = "product_CD"
+            case recommendDescription = "recommend"
+            case hotAvailable = "hot_YN"
+            case kilocalorie = "kcal"
+            case fat
+            case sturatedFat = "sat_FAT"
+            case transFat = "trans_FAT"
+            case cholesterol
+            case sugars
+            case protein
+            case caffeine
+            case allergy
         }
     }
     

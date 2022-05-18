@@ -96,16 +96,6 @@ class OrderCategoryViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.state().loadedList
-            .withUnretained(self)
-            .subscribe(onNext: { model, list in
-                let viewModel = OrderListViewModel(list: list)
-                let orderListVC = OrderListViewController(viewModel: viewModel)
-                model.navigationItem.backBarButtonItem = model.backBarButtonItem
-                model.navigationController?.pushViewController(orderListVC, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
         categoryButtons.enumerated().forEach { index, button in
             button.rx.tap
                 .compactMap { _ in
@@ -114,6 +104,16 @@ class OrderCategoryViewController: UIViewController {
                 .bind(to: viewModel.action().tappedCategory)
                 .disposed(by: disposeBag)
         }
+        
+        viewModel.state().selectedSubCategory
+            .withUnretained(self)
+            .bind(onNext: { model, subCategory in
+                let viewModel = OrderListViewModel(subCategory: subCategory.groupId, title: subCategory.title)
+                let orderListVC = OrderListViewController(viewModel: viewModel)
+                model.navigationItem.backBarButtonItem = model.backBarButtonItem
+                model.navigationController?.pushViewController(orderListVC, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {

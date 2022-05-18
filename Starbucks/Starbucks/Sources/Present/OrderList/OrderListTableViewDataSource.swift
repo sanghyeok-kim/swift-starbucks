@@ -11,14 +11,10 @@ import UIKit
 
 class OrderListTableViewDataSource: NSObject, UITableViewDataSource {
     
-    private var list: [Product] = []
-    
-    init(list: [Product]) {
-        self.list = list
-    }
+    private var products: [Product] = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        list.count
+        products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -26,10 +22,14 @@ class OrderListTableViewDataSource: NSObject, UITableViewDataSource {
                 as? CategoryTableViewCell else {
                     return UITableViewCell()
                 }
-        let indexCell = list[indexPath.row]
+        let indexCell = products[indexPath.row]
         cell.setMenuName(text: indexCell.productName)
 //        cell.setSubName(text: <#T##String#>)
         cell.setThumbnail(url: indexCell.completeUrl)
         return cell
+    }
+    
+    func update(products: [Product]) {
+        self.products = products
     }
 }

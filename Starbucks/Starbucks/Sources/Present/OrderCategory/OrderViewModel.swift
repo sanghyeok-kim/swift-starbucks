@@ -18,8 +18,7 @@ protocol OrderViewModelAction {
 protocol OrderViewModelState {
     var loadedCategory: PublishRelay<[Category.Group]> { get }
     var selectedCategory: PublishRelay<Category.GroupType> { get }
-    var selectedMenu: PublishRelay<Category.Group> { get }
-    var loadedList: PublishRelay<[Product]> { get }
+    var selectedSubCategory: PublishRelay<Category.Group> { get }
 }
 
 protocol OrderViewModelBinding {
@@ -41,8 +40,7 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
     
     let loadedCategory = PublishRelay<[Category.Group]>()
     let selectedCategory = PublishRelay<Category.GroupType>()
-    let selectedMenu = PublishRelay<Category.Group>()
-    let loadedList = PublishRelay<[Product]>()
+    let selectedSubCategory = PublishRelay<Category.Group>()
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     
@@ -91,22 +89,13 @@ class OrderViewModel: OrderViewModelAction, OrderViewModelState, OrderViewModelB
             .compactMap { model, type in model.categoryMenu[type] }         //선택한 카테고리 데이터 반환
             .bind(to: loadedCategory)                   //선택한 카테고리 데이터 전달
             .disposed(by: disposeBag)
-        
-        let requestProducts = action().tapMenu
+
+        action().tapMenu
             .withLatestFrom(tappedCategory) { [weak self] in
                 self?.categoryMenu[$1]?[$0]
             }
-            .compactMap { $0?.groupId }
-            .withUnretained(self)
-            .flatMapLatest { model, id in
-                model.starbucksRepository.requestCategoryProduct( id).asObservable()
-            }
-            .share()
-        
-        requestProducts
-            .compactMap { $0.value }
-            .map { $0.products }
-            .bind(to: loadedList)
+            .compactMap { $0 }
+            .bind(to: selectedSubCategory)
             .disposed(by: disposeBag)
     }
 }
