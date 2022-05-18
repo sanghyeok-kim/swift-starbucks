@@ -40,8 +40,17 @@ class OrderListViewController: UIViewController {
     }
     
     private func bind() {
+        
         rx.viewDidLoad
             .bind(to: viewModel.action().loadList)
+            .disposed(by: disposeBag)
+        
+        rx.viewDidLoad
+            .bind(to: viewModel.action().updateTitle)
+            .disposed(by: disposeBag)
+        
+        viewModel.state().updatedTitle
+            .bind(to: categoryLabel.rx.text)
             .disposed(by: disposeBag)
         
         tableViewHandler.selectedCellIndex

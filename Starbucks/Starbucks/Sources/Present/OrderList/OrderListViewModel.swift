@@ -12,6 +12,7 @@ import RxSwift
 protocol ListViewModelAction {
     var loadDetail: PublishRelay<Int> { get }
     var loadList: PublishRelay<Void> { get }
+    var updateTitle: PublishRelay<Void> { get }
 }
 
 protocol ListViewModelState {
@@ -19,6 +20,7 @@ protocol ListViewModelState {
     var loadedDetailImage: PublishRelay<URL> { get }
     var updatedList: PublishRelay<[Product]> { get }
     var reloadedList: PublishRelay<Void> { get }
+    var updatedTitle: PublishRelay<String> { get }
 }
 
 protocol ListViewModelBinding {
@@ -37,21 +39,27 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
     
     let loadDetail = PublishRelay<Int>()
     let loadList = PublishRelay<Void>()
+    let updateTitle = PublishRelay<Void>()
     
     func state() -> ListViewModelState { self }
     
     var loadedDetail = PublishRelay<StarbucksEntity.ProductDetail>()
     var loadedDetailImage = PublishRelay<URL>()
-    let loadedList = PublishRelay<[Product]>()
     let updatedList = PublishRelay<[Product]>()
     let reloadedList = PublishRelay<Void>()
+    let updatedTitle = PublishRelay<String>()
     
-    init(productCode: String) {
+    init(subCategory: String, title: String) {
+        
+        action().updateTitle
+            .map { title }
+            .bind(to: state().updatedTitle)
+            .disposed(by: disposeBag)
         
         let requestProducts = action().loadList
             .withUnretained(self)
             .flatMapLatest { model, _ in
-                model.starbucksRepository.requestCategoryProduct(productCode).asObservable()
+                model.starbucksRepository.requestCategoryProduct(subCategory).asObservable()
             }
             .share()
             
