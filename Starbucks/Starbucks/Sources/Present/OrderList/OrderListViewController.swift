@@ -13,10 +13,10 @@ import UIKit
 
 class OrderListViewController: UIViewController {
 
-    let tableView = UITableView()
-    let tableViewHandler = OrderListTableViewDelegate()
-    let viewModel: ListViewModelProtocol
-    var tableViewDatasource = OrderListTableViewDataSource()
+    private let tableView = UITableView()
+    private let tableViewHandler = OrderListTableViewDelegate()
+    private let viewModel: ListViewModelProtocol
+    private var tableViewDatasource = OrderListTableViewDataSource()
     
     private let categoryLabel: UILabel = {
         let label = UILabel()
