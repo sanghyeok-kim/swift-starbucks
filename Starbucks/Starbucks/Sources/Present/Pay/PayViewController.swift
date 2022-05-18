@@ -11,12 +11,6 @@ import UIKit
 
 class PayViewController: UIViewController {
     
-    private let customNavigationBarView: NavigationBarView = {
-        let view = NavigationBarView()
-        view.title = "Pay"
-        return view
-    }()
-    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = false
@@ -89,9 +83,11 @@ class PayViewController: UIViewController {
             .map { _ in }
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                vc.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-                vc.navigationController?.navigationBar.shadowImage = UIImage()
-                vc.navigationController?.navigationBar.backgroundColor = .clear
+                let titleColor: UIColor = .black.withAlphaComponent(0)
+                vc.title = "Pay"
+                vc.navigationController?.navigationBar.barTintColor = .white
+                vc.navigationController?.navigationBar.isTranslucent = false
+                vc.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: titleColor]
                 vc.navigationItem.rightBarButtonItem = vc.tappedAddCard
             })
             .disposed(by: disposeBag)
@@ -134,7 +130,6 @@ class PayViewController: UIViewController {
     
     private func layout() {
         view.addSubview(scrollView)
-        view.addSubview(customNavigationBarView)
         view.addSubview(chargeView)
         
         scrollView.addSubview(contentStackView)
@@ -143,11 +138,6 @@ class PayViewController: UIViewController {
         titleView.addSubview(titleLabel)
         chargeView.addSubview(previewView)
         chargeView.addSubview(captureButton)
-        
-        customNavigationBarView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
-        }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -199,6 +189,6 @@ extension PayViewController: UIScrollViewDelegate {
             alpha = alpha > 1 ? 1 : alpha
         }
         
-        customNavigationBarView.setAlpha(alpha)
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
     }
 }
