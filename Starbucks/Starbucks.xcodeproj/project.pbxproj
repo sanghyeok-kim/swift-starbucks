@@ -464,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				E0108CE02831310E00CC736C /* Camera */,
-				E07233F6282D515800AF3E16 /* View */,
 				E07233D2282BCBA900AF3E16 /* PropertyWrapper */,
 				E072339B282B7DB900AF3E16 /* Log.swift */,
 				E07233D0282BCB5E00AF3E16 /* Container.swift */,
@@ -564,13 +563,6 @@
 				E07233F4282D3BF000AF3E16 /* HomeInfoView.swift */,
 			);
 			path = HomeInfoView;
-			sourceTree = "<group>";
-		};
-		E07233F6282D515800AF3E16 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		E08BB6AD28294347005ADEFA /* StarbucksTests */ = {
