@@ -10,14 +10,13 @@ import RxRelay
 import RxSwift
 
 protocol OrderListViewModelAction {
-    var loadDetail: PublishRelay<Int> { get }
+    var loadProductCode: PublishRelay<Int> { get }
     var loadList: PublishRelay<Void> { get }
     var updateTitle: PublishRelay<Void> { get }
 }
 
 protocol OrderListViewModelState {
-    var loadedDetail: PublishRelay<StarbucksEntity.ProductDetail> { get }
-    var loadedDetailImage: PublishRelay<URL> { get }
+    var loadedProductCode: PublishRelay<String> { get }
     var updatedList: PublishRelay<[Product]> { get }
     var reloadedList: PublishRelay<Void> { get }
     var updatedTitle: PublishRelay<String> { get }
@@ -37,14 +36,13 @@ class OrderListViewModel: OrderListViewModelAction, OrderListViewModelState, Ord
     
     func action() -> OrderListViewModelAction { self }
     
-    let loadDetail = PublishRelay<Int>()
+    let loadProductCode = PublishRelay<Int>()
     let loadList = PublishRelay<Void>()
     let updateTitle = PublishRelay<Void>()
     
     func state() -> OrderListViewModelState { self }
     
-    var loadedDetail = PublishRelay<StarbucksEntity.ProductDetail>()
-    var loadedDetailImage = PublishRelay<URL>()
+    var loadedProductCode = PublishRelay<String>()
     let updatedList = PublishRelay<[Product]>()
     let reloadedList = PublishRelay<Void>()
     let updatedTitle = PublishRelay<String>()
@@ -62,7 +60,7 @@ class OrderListViewModel: OrderListViewModelAction, OrderListViewModelState, Ord
                 model.starbucksRepository.requestCategoryProduct(subCategory).asObservable()
             }
             .share()
-            
+        
         requestProducts
             .compactMap { $0.value?.products }
             .withUnretained(self)
@@ -71,6 +69,14 @@ class OrderListViewModel: OrderListViewModelAction, OrderListViewModelState, Ord
             }
             .map { _ in }
             .bind(to: reloadedList)
+            .disposed(by: disposeBag)
+        
+        action().loadProductCode
+            .withLatestFrom(requestProducts) {
+                $1.value?.products[$0]
+            }
+            .compactMap { $0?.productCode }
+            .bind(to: loadedProductCode)
             .disposed(by: disposeBag)
     }
 }

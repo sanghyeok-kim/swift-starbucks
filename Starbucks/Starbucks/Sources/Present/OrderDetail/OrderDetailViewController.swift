@@ -10,8 +10,10 @@ import UIKit
 
 class OrderDetailViewController: UIViewController {
     private let disposeBag = DisposeBag()
-
-    init() {
+    private let viewModel: OrderDetailViewModelProtocol
+    
+    init(viewModel: OrderDetailViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind()
         attribute()

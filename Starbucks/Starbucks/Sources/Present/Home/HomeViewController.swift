@@ -105,10 +105,13 @@ class HomeViewController: UIViewController {
         
         viewModel.state().presentProductDetailView
             .withUnretained(self)
-            .bind(onNext: { vc, product in
-                let viewController = OrderDetailViewController()
-                vc.navigationController?.pushViewController(viewController, animated: true)
-                vc.tabBarController?.tabBar.isHidden = true
+            .bind(onNext: { currentVC, productCode in
+                let viewModel = OrderDetailViewModel(productCode: productCode)
+                let presentVC = OrderDetailViewController(viewModel: viewModel)
+                presentVC.title = productCode
+                currentVC.navigationController?.navigationBar.isHidden = false
+                currentVC.navigationController?.pushViewController(presentVC, animated: true)
+                //TODO: presentVC의 BackButton을 presentVC가 스스로 만들기
             })
             .disposed(by: disposeBag)
         
