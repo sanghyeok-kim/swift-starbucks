@@ -80,14 +80,20 @@ class HomeViewController: UIViewController {
             .bind(to: viewModel.action().loadHome)
             .disposed(by: disposeBag)
         
-        rx.viewDidAppear
-            .map { _ in }
+        rx.viewWillAppear
             .withUnretained(self)
-            .bind(onNext: { vc, _ in
-                vc.navigationController?.navigationBar.isHidden = true
+            .bind(onNext: { vc, animated in
+                vc.navigationController?.setNavigationBarHidden(true, animated: animated)
 //                vc.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //                vc.navigationController?.navigationBar.shadowImage = UIImage()
 //                vc.navigationController?.navigationBar.backgroundColor = .clear
+            })
+            .disposed(by: disposeBag)
+        
+        rx.viewWillDisappear
+            .withUnretained(self)
+            .bind(onNext: { vc, animated in
+                vc.navigationController?.setNavigationBarHidden(false, animated: animated)
             })
             .disposed(by: disposeBag)
         
@@ -120,6 +126,7 @@ class HomeViewController: UIViewController {
             .withUnretained(self)
             .bind(onNext: { vc, _ in
                 let viewController = WhatsNewListViewController(viewModel: WhatsNewListViewModel())
+                vc.navigationItem.backButtonTitle = ""
                 vc.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
@@ -127,6 +134,7 @@ class HomeViewController: UIViewController {
     
     private func attribute() {
         scrollView.delegate = self
+        view.backgroundColor = .white
     }
     
     private func layout() {

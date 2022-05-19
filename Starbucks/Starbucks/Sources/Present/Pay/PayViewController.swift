@@ -25,18 +25,7 @@ class PayViewController: UIViewController {
         stackView.spacing = 20
         return stackView
     }()
-    
-    private let titleView = UIView()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Pay"
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
-    
+        
     private lazy var cardListViewController: CardListViewController = {
         let viewController = CardListViewController(viewModel: viewModel.cardListViewModel)
         return viewController
@@ -79,16 +68,23 @@ class PayViewController: UIViewController {
     }
     
     private func bind() {
-        rx.viewDidAppear
-            .map { _ in }
+        rx.viewWillAppear
             .withUnretained(self)
-            .bind(onNext: { vc, _ in
-                let titleColor: UIColor = .black.withAlphaComponent(0)
-                vc.title = "Pay"
-                vc.navigationController?.navigationBar.barTintColor = .white
-                vc.navigationController?.navigationBar.isTranslucent = false
-                vc.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: titleColor]
-                vc.navigationItem.rightBarButtonItem = vc.tappedAddCard
+            .bind(onNext: { vc, animated in
+                vc.navigationController?.navigationBar.prefersLargeTitles = true
+
+                let appearance = UINavigationBarAppearance()
+                appearance.backgroundColor = .white
+                appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+                appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+
+                vc.navigationController?.navigationBar.tintColor = .black
+                //기본상태( 스크롤 있는 경우 아래로 이동했을 때 )
+                vc.navigationController?.navigationBar.standardAppearance = appearance
+                //가로화면으로 볼 때
+                vc.navigationController?.navigationBar.compactAppearance = appearance
+                //스크롤의 최 상단일 때
+                vc.navigationController?.navigationBar.scrollEdgeAppearance = appearance
             })
             .disposed(by: disposeBag)
         
@@ -125,7 +121,8 @@ class PayViewController: UIViewController {
     }
     
     private func attribute() {
-        scrollView.delegate = self
+        title = "Pay"
+        navigationItem.rightBarButtonItem = tappedAddCard
     }
     
     private func layout() {
@@ -133,9 +130,7 @@ class PayViewController: UIViewController {
         view.addSubview(chargeView)
         
         scrollView.addSubview(contentStackView)
-        contentStackView.addArrangedSubview(titleView)
         contentStackView.addArrangedSubview(cardListViewController.view)
-        titleView.addSubview(titleLabel)
         chargeView.addSubview(previewView)
         chargeView.addSubview(captureButton)
         
@@ -154,15 +149,6 @@ class PayViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
         }
         
-        titleView.snp.makeConstraints {
-            $0.height.equalTo(titleLabel)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-        }
-        
         chargeView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -176,19 +162,5 @@ class PayViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.width.height.equalTo(100)
         }
-    }
-}
-
-extension PayViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var alpha: CGFloat = 0
-        if scrollView.contentOffset.y < 0 {
-            alpha = 0
-        } else {
-            alpha = scrollView.contentOffset.y / titleLabel.frame.size.height
-            alpha = alpha > 1 ? 1 : alpha
-        }
-        
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
     }
 }
