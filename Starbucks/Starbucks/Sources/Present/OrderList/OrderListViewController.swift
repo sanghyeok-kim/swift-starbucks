@@ -71,7 +71,6 @@ class OrderListViewController: UIViewController {
                 let viewModel = OrderDetailViewModel(productCode: productCode)
                 let presentVC = OrderDetailViewController(viewModel: viewModel)
                 presentVC.title = productCode
-
                 currentVC.navigationController?.pushViewController(presentVC, animated: true)
             })
             .disposed(by: disposeBag)
