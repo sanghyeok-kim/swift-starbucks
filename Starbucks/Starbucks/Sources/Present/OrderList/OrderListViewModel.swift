@@ -9,42 +9,40 @@ import Foundation
 import RxRelay
 import RxSwift
 
-protocol ListViewModelAction {
-    var loadDetail: PublishRelay<Int> { get }
+protocol OrderListViewModelAction {
+    var loadProductCode: PublishRelay<Int> { get }
     var loadList: PublishRelay<Void> { get }
     var updateTitle: PublishRelay<Void> { get }
 }
 
-protocol ListViewModelState {
-    var loadedDetail: PublishRelay<StarbucksEntity.ProductDetail> { get }
-    var loadedDetailImage: PublishRelay<URL> { get }
+protocol OrderListViewModelState {
+    var loadedProductCode: PublishRelay<String> { get }
     var updatedList: PublishRelay<[Product]> { get }
     var reloadedList: PublishRelay<Void> { get }
     var updatedTitle: PublishRelay<String> { get }
 }
 
-protocol ListViewModelBinding {
-    func action() -> ListViewModelAction
-    func state() -> ListViewModelState
+protocol OrderListViewModelBinding {
+    func action() -> OrderListViewModelAction
+    func state() -> OrderListViewModelState
 }
 
-typealias ListViewModelProtocol = ListViewModelBinding
+typealias OrderListViewModelProtocol = OrderListViewModelBinding
 
-class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModelBinding {
+class OrderListViewModel: OrderListViewModelAction, OrderListViewModelState, OrderListViewModelBinding {
     
     @Inject(\.starbucksRepository) private var starbucksRepository: StarbucksRepository
     private let disposeBag = DisposeBag()
     
-    func action() -> ListViewModelAction { self }
+    func action() -> OrderListViewModelAction { self }
     
-    let loadDetail = PublishRelay<Int>()
+    let loadProductCode = PublishRelay<Int>()
     let loadList = PublishRelay<Void>()
     let updateTitle = PublishRelay<Void>()
     
-    func state() -> ListViewModelState { self }
+    func state() -> OrderListViewModelState { self }
     
-    var loadedDetail = PublishRelay<StarbucksEntity.ProductDetail>()
-    var loadedDetailImage = PublishRelay<URL>()
+    var loadedProductCode = PublishRelay<String>()
     let updatedList = PublishRelay<[Product]>()
     let reloadedList = PublishRelay<Void>()
     let updatedTitle = PublishRelay<String>()
@@ -62,7 +60,7 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
                 model.starbucksRepository.requestCategoryProduct(subCategory).asObservable()
             }
             .share()
-            
+        
         requestProducts
             .compactMap { $0.value?.products }
             .withUnretained(self)
@@ -71,6 +69,14 @@ class OrderListViewModel: ListViewModelAction, ListViewModelState, ListViewModel
             }
             .map { _ in }
             .bind(to: reloadedList)
+            .disposed(by: disposeBag)
+        
+        action().loadProductCode
+            .withLatestFrom(requestProducts) {
+                $1.value?.products[$0]
+            }
+            .compactMap { $0?.productCode }
+            .bind(to: loadedProductCode)
             .disposed(by: disposeBag)
     }
 }

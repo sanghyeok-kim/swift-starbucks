@@ -15,7 +15,7 @@ class OrderListViewController: UIViewController {
 
     private let tableView = UITableView()
     private let tableViewHandler = OrderListTableViewDelegate()
-    private let viewModel: ListViewModelProtocol
+    private let viewModel: OrderListViewModelProtocol
     private var tableViewDatasource = OrderListTableViewDataSource()
     
     private let categoryLabel: UILabel = {
@@ -26,7 +26,7 @@ class OrderListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    init(viewModel: ListViewModelProtocol) {
+    init(viewModel: OrderListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind()
@@ -52,10 +52,6 @@ class OrderListViewController: UIViewController {
         viewModel.state().updatedTitle
             .bind(to: categoryLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        tableViewHandler.selectedCellIndex
-            .bind(to: viewModel.action().loadDetail)
-            .disposed(by: disposeBag)
     
         viewModel.state().updatedList
             .bind(onNext: tableViewDatasource.update)
@@ -63,6 +59,21 @@ class OrderListViewController: UIViewController {
             
         viewModel.state().reloadedList
             .bind(onNext: tableView.reloadData)
+            .disposed(by: disposeBag)
+        
+        tableViewHandler.selectedCellIndex
+            .bind(to: viewModel.action().loadProductCode)
+            .disposed(by: disposeBag)
+        
+        viewModel.state().loadedProductCode
+            .withUnretained(self)
+            .bind(onNext: { currentVC, productCode in
+                let viewModel = OrderDetailViewModel(productCode: productCode)
+                let presentVC = OrderDetailViewController(viewModel: viewModel)
+                presentVC.title = productCode
+
+                currentVC.navigationController?.pushViewController(presentVC, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

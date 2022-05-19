@@ -12,6 +12,7 @@
 		006FA0962833775400281C4D /* OrderListTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006FA0952833775400281C4D /* OrderListTableViewDelegate.swift */; };
 		006FA0982833785B00281C4D /* OrderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006FA0972833785B00281C4D /* OrderListViewModel.swift */; };
 		00AC77CD2833FA3B00BBBF43 /* DetailListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AC77CC2833FA3B00BBBF43 /* DetailListEntity.swift */; };
+		1E71CB232835154C00F6D2D0 /* OrderDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E71CB222835154C00F6D2D0 /* OrderDetailViewModel.swift */; };
 		71E1C78E63597B5AEE24B83E /* Pods_Starbucks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */; };
 		9CFF3F031A8A9E5CAA2DDC05 /* Pods_StarbucksTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */; };
 		E0039B56282FD92800298719 /* WhatsNewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0039B55282FD92800298719 /* WhatsNewListViewController.swift */; };
@@ -100,6 +101,7 @@
 		006FA0972833785B00281C4D /* OrderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewModel.swift; sourceTree = "<group>"; };
 		00AC77CC2833FA3B00BBBF43 /* DetailListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListEntity.swift; sourceTree = "<group>"; };
 		0179ED7916AEC19F665042EB /* Pods-StarbucksTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarbucksTests.debug.xcconfig"; path = "Target Support Files/Pods-StarbucksTests/Pods-StarbucksTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1E71CB222835154C00F6D2D0 /* OrderDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewModel.swift; sourceTree = "<group>"; };
 		3A9DAC6A7B755F657653AF4D /* Pods-StarbucksTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarbucksTests.release.xcconfig"; path = "Target Support Files/Pods-StarbucksTests/Pods-StarbucksTests.release.xcconfig"; sourceTree = "<group>"; };
 		5FB5B0DED07CE08CC9C4C6F9 /* Pods_StarbucksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarbucksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		663577AC173C2F6DE7BEDD8F /* Pods_Starbucks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Starbucks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				E0723389282B7DB900AF3E16 /* OrderDetailViewController.swift */,
+				1E71CB222835154C00F6D2D0 /* OrderDetailViewModel.swift */,
 			);
 			path = OrderDetail;
 			sourceTree = "<group>";
@@ -844,6 +847,7 @@
 				E07233F2282D235100AF3E16 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E0108CF02833403900CC736C /* CardListViewCell.swift in Sources */,
 				E07233D4282BCBBC00AF3E16 /* Inject.swift in Sources */,
+				1E71CB232835154C00F6D2D0 /* OrderDetailViewModel.swift in Sources */,
 				E07233B0282B7DB900AF3E16 /* OrderListViewController.swift in Sources */,
 				E0039B58282FD93200298719 /* WhatsNewListViewModel.swift in Sources */,
 				E07233B2282B7DB900AF3E16 /* OrderTableViewDataSource.swift in Sources */,
